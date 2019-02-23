@@ -1,5 +1,7 @@
-HEADERS += \
-    $$PWD/BCLoginWidget.h
+include($$PWD/BKLoginController/BKLoginController.pri)
+include($$PWD/BKLoginData/BKLoginData.pri)
+include($$PWD/BKLoginView/BKLoginView.pri)
 
-SOURCES += \
-    $$PWD/BCLoginWidget.cpp
+INCLUDEPATH += $$PWD/BKLoginController
+INCLUDEPATH += $$PWD/BKLoginData
+INCLUDEPATH += $$PWD/BKLoginView

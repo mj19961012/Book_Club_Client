@@ -235,8 +235,15 @@ Makefile: ..\Book_Club_Client.pro C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\win32-m
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\toolchain.prf \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\default_pre.prf \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\win32\default_pre.prf \
+		..\BKLogin\BKLoginController\BKLoginController.pri \
+		..\BKLogin\BKLoginData\BKLoginData.pri \
+		..\BKLogin\BKLoginView\BKLoginView.pri \
 		..\BKLogin\BKLogin.pri \
 		..\BKApp\BKApp.pri \
+		..\BKCommon\BKCommonApi\BKCommonApi.pri \
+		..\BKCommon\BKCommonController\BKCommonController.pri \
+		..\BKCommon\BkCommonData\BkCommonData.pri \
+		..\BKCommon\BKCommonGui\BKCommonGui.pri \
 		..\BKCommon\BKCommon.pri \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\resolve_config.prf \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\exclusive_builds_post.prf \
@@ -422,8 +429,15 @@ C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\common\msvc-version.conf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\toolchain.prf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\default_pre.prf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\win32\default_pre.prf:
+..\BKLogin\BKLoginController\BKLoginController.pri:
+..\BKLogin\BKLoginData\BKLoginData.pri:
+..\BKLogin\BKLoginView\BKLoginView.pri:
 ..\BKLogin\BKLogin.pri:
 ..\BKApp\BKApp.pri:
+..\BKCommon\BKCommonApi\BKCommonApi.pri:
+..\BKCommon\BKCommonController\BKCommonController.pri:
+..\BKCommon\BkCommonData\BkCommonData.pri:
+..\BKCommon\BKCommonGui\BKCommonGui.pri:
 ..\BKCommon\BKCommon.pri:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\resolve_config.prf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\exclusive_builds_post.prf:
