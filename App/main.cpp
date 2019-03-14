@@ -5,8 +5,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    BCMainWindow w;
-    w.show();
+    BCMainWindow::getInstance()->show();
 
     return a.exec();
 }
