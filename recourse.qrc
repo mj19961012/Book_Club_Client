@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/common/close.png</file>
+        <file>res/common/main_logo.png</file>
+        <file>res/common/maxsize.png</file>
+        <file>res/common/minsize.png</file>
+        <file>res/Login/login_close.png</file>
+        <file>res/common/logo.png</file>
+        <file>res/Login/password.png</file>
+        <file>res/Login/phone.png</file>
+    </qresource>
+</RCC>

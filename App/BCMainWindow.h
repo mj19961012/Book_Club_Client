@@ -2,6 +2,7 @@
 #define BCMAINWINDOW_H
 
 #include <QMainWindow>
+#include "BCCommonEnumData.h"
 
 class BCMainWindow : public QMainWindow
 {
@@ -13,10 +14,14 @@ private:
 
 private:
     void init();
-    void initData();
 
+    void addPage();
+
+    void showPage();
 private:
     static BCMainWindow* m_BCMainWindow;
+
+    class BCLoginWidget* mLoginWidget{};
 };
 
 #endif // BCMAINWINDOW_H

@@ -33,3 +33,6 @@ INCLUDEPATH += \
 
 FORMS += \
         bc_start_window.ui
+
+RESOURCES += \
+    recourse.qrc

@@ -238,6 +238,7 @@ Makefile: ..\Book_Club_Client.pro C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\win32-m
 		..\Login\Controller\Controller.pri \
 		..\Login\Data\Data.pri \
 		..\Login\View\View.pri \
+		..\Login\Widgets\Widgets.pri \
 		..\Login\Login.pri \
 		..\App\App.pri \
 		..\Common\Api\Api.pri \
@@ -432,6 +433,7 @@ C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\win32\default_pre.prf:
 ..\Login\Controller\Controller.pri:
 ..\Login\Data\Data.pri:
 ..\Login\View\View.pri:
+..\Login\Widgets\Widgets.pri:
 ..\Login\Login.pri:
 ..\App\App.pri:
 ..\Common\Api\Api.pri:

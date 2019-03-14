@@ -1,11 +1,12 @@
-#include "BCMainWindow.h"
+#include "BCLoginWindow.h"
 #include <QApplication>
 #include <iostream>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    BCMainWindow::getInstance()->show();
+    BCLoginWindow window;
+    window.show();
 
     return a.exec();
 }

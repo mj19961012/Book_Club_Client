@@ -1,5 +1,5 @@
 HEADERS += \
-    $$PWD/BCLoginWidget.h
+    $$PWD/BCLoginWindow.h
 
 SOURCES += \
-    $$PWD/BCLoginWidget.cpp
+    $$PWD/BCLoginWindow.cpp
