@@ -1,4 +1,6 @@
-#include"BCMessageManager.h"
+﻿#include"BCMessageManager.h"
+
+BCMessageManager* BCMessageManager::mMessageManager = nullptr;
 
 BCMessageManager::BCMessageManager()
 {
@@ -12,16 +14,12 @@ BCMessageManager::~BCMessageManager()
 
 BCMessageManager * BCMessageManager::getInstance()
 {
-    static BCMessageManager * instance = new BCMessageManager;
-    if(instance != nullptr)
+    if(mMessageManager == nullptr)
     {
-        return instance;
+        mMessageManager = new BCMessageManager;
+        return mMessageManager;
     }
-    else
-    {
-        instance = new BCMessageManager;
-        return instance;
-    }
+    return mMessageManager;
 }
 
 void BCMessageManager::BCLoginHandle(std::string username,std::string password)
