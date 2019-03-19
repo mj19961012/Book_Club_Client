@@ -11,9 +11,8 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -21,24 +20,25 @@ QT_BEGIN_NAMESPACE
 class Ui_BC_Start_Window
 {
 public:
-    QMenuBar *menubar;
     QWidget *centralwidget;
-    QStatusBar *statusbar;
+    QLabel *b;
 
     void setupUi(QMainWindow *BC_Start_Window)
     {
         if (BC_Start_Window->objectName().isEmpty())
             BC_Start_Window->setObjectName(QStringLiteral("BC_Start_Window"));
-        BC_Start_Window->resize(800, 600);
-        menubar = new QMenuBar(BC_Start_Window);
-        menubar->setObjectName(QStringLiteral("menubar"));
-        BC_Start_Window->setMenuBar(menubar);
+        BC_Start_Window->setWindowModality(Qt::ApplicationModal);
+        BC_Start_Window->resize(710, 420);
+        BC_Start_Window->setMinimumSize(QSize(710, 420));
+        BC_Start_Window->setMaximumSize(QSize(710, 420));
         centralwidget = new QWidget(BC_Start_Window);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
+        b = new QLabel(centralwidget);
+        b->setObjectName(QStringLiteral("b"));
+        b->setGeometry(QRect(130, 120, 100, 100));
+        b->setMinimumSize(QSize(100, 100));
+        b->setMaximumSize(QSize(100, 100));
         BC_Start_Window->setCentralWidget(centralwidget);
-        statusbar = new QStatusBar(BC_Start_Window);
-        statusbar->setObjectName(QStringLiteral("statusbar"));
-        BC_Start_Window->setStatusBar(statusbar);
 
         retranslateUi(BC_Start_Window);
 
@@ -48,6 +48,7 @@ public:
     void retranslateUi(QMainWindow *BC_Start_Window)
     {
         BC_Start_Window->setWindowTitle(QApplication::translate("BC_Start_Window", "MainWindow", nullptr));
+        b->setText(QApplication::translate("BC_Start_Window", "TextLabel", nullptr));
     } // retranslateUi
 
 };

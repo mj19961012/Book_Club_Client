@@ -26,6 +26,6 @@ BCMessageManager * BCMessageManager::getInstance()
 
 void BCMessageManager::BCLoginHandle(std::string username,std::string password)
 {
-
+    
 }
 

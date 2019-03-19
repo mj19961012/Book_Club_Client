@@ -8,7 +8,9 @@ public :
     BCMessageManager();
     ~BCMessageManager();
     static BCMessageManager * getInstance();
-    void BCLoginHandle();
+    void BCLoginHandle(std::string username,std::string password);
+public:
+    
 private:
     user_info current_user;
 };
