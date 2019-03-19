@@ -229,7 +229,7 @@ Makefile: ..\Book_Club_Client.pro C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\win32-m
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\qt_config.prf \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\win32-msvc\qmake.conf \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\spec_post.prf \
-		.qmake.stash \
+		..\.qmake.stash \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\exclusive_builds.prf \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\common\msvc-version.conf \
 		C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\toolchain.prf \
@@ -424,7 +424,7 @@ C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\qt_functions.prf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\qt_config.prf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\win32-msvc\qmake.conf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\spec_post.prf:
-.qmake.stash:
+..\.qmake.stash:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\exclusive_builds.prf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\common\msvc-version.conf:
 C:\Qt\Qt5.11.3\5.11.3\msvc2015\mkspecs\features\toolchain.prf:
@@ -475,7 +475,7 @@ clean: release-clean debug-clean  FORCE
 	-$(DEL_FILE) Book_Club_Client.exp
 distclean: release-distclean debug-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) .qmake.stash Book_Club_Client.lib
+	-$(DEL_FILE) Book_Club_Client.lib
 
 release-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)
