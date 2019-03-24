@@ -1,13 +1,14 @@
 #ifndef BCCOMMONAPIDEF_HPP
 #define BCCOMMONAPIDEF_HPP
 
-#define BC_API_URL "http://api.sdyilianyi.com"
-#define BC_API_LOGIN "/client/user/login"
+#define BC_API_URL "http://192.168.1.9:8080"
+#define BC_API_INIT_CITY "/init/city_dictionary"
 #define BC_API_REGIST "/client/user/regist"
+#define BC_API_LOGIN "/client/user/login"
 
+#define BC_CONTENTTYPE_HEADER "application/x-www-form-urlencoded"
 
-
-#define GET_API(X) API_URL X
+#define GET_API(X) BC_API_URL X
 
 #define OVERTIME 10000
 
