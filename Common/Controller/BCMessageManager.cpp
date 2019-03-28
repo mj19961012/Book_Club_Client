@@ -6,6 +6,10 @@
 #include<QNetworkReply>
 #include<QDebug>
 #include"nlohmann_json.hpp"
+#include <QUuid>
+
+#include <QImage>
+#include <QBuffer>
 
 BCMessageManager* BCMessageManager::mMessageManager = nullptr;
 
@@ -32,6 +36,14 @@ BCMessageManager * BCMessageManager::getInstance()
 void BCMessageManager::BCLoginHandle(std::string username,std::string password)
 {
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_LOGIN), "");
+}
+
+void BCMessageManager::BCRegistHandle(QString username, QString password, QString nickname, QString school, QString headimage, QString city)
+{
+	QString userid = QUuid::createUuid().toString();
+	QString parametes = QString("userid=%1&username=%2&password=%3&nickname=%4&school=%5&city=%6&headimage=%7").arg(userid).arg(username).arg(password).arg(nickname).arg(school).arg(city).arg(BCImageToBase64(headimage).toStdString().c_str());
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_REGIST), parametes);
+	qDebug() << "BCRegistHandle json_str:" << reply_str.length() << "\n";
 }
 
 void BCMessageManager::BCSystemInit()
@@ -70,9 +82,9 @@ void BCMessageManager::BCSystemInit()
 
 QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter, QString contenttype)
 {
-	QString url_str = GET_API(BC_API_INIT_CITY);
+// 	QString url_str = GET_API(BC_API_INIT_CITY);
 
-	qDebug() << "BCSystemInit url_str:" << url_str << "\n";
+	qDebug() << "BCHttpRequestHandle url_str:" << requrl << "\n";
 
 	QUrl url(requrl);
 	QNetworkAccessManager m_accessManager;
@@ -97,4 +109,32 @@ QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter,
 	QString reply_str = reply->readAll();
 
 	return reply_str;
+}
+
+QByteArray BCMessageManager::BCImageToBase64(QString imgpath)
+{
+	QImage image(imgpath);
+	QByteArray ba;
+	QBuffer buf(&ba);
+	image.save(&buf, "PNG", 20);
+	QByteArray hexed = ba.toBase64();
+	buf.close();
+	return hexed;
+}
+
+QPixmap BCMessageManager::BCBase64ToImage(QByteArray data, bool issave, QString savepath)
+{
+	QByteArray Ret_bytearray;
+	Ret_bytearray = QByteArray::fromBase64(data);
+	QBuffer buffer(&Ret_bytearray);
+
+	buffer.open(QIODevice::WriteOnly);
+	QPixmap imageresult;
+	imageresult.loadFromData(Ret_bytearray);
+
+	if (issave && savepath != "")
+	{
+		imageresult.save(savepath);
+	}
+	return imageresult;
 }

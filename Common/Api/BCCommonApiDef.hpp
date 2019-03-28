@@ -1,7 +1,7 @@
 #ifndef BCCOMMONAPIDEF_HPP
 #define BCCOMMONAPIDEF_HPP
 
-#define BC_API_URL "http://192.168.1.9:8080"
+#define BC_API_URL "http://192.168.1.3:8123"
 #define BC_API_INIT_CITY "/init/city_dictionary"
 #define BC_API_REGIST "/client/user/regist"
 #define BC_API_LOGIN "/client/user/login"
