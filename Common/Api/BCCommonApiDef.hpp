@@ -6,6 +6,10 @@
 #define BC_API_REGIST "/client/user/regist"
 #define BC_API_LOGIN "/client/user/login"
 
+#define BC_API_UPLOAD_SIMPLE_FILE "/clint/file/upload"
+#define BC_API_GET_FILE_INFO "/clint/file/getinfo"
+#define BC_API_DOWNLOAD_SIMPLE_FILE "/clint/file/download"
+
 #define BC_CONTENTTYPE_HEADER "application/x-www-form-urlencoded"
 
 #define GET_API(X) BC_API_URL X

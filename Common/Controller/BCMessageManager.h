@@ -20,6 +20,9 @@ public :
     QString BCHttpRequestHandle(QString requrl,QString parameter,QString contenttype = BC_CONTENTTYPE_HEADER);
 	QByteArray BCImageToBase64(QString imgpath);
 	QPixmap BCBase64ToImage(QByteArray data, bool issave, QString savepath = "");
+	QString BCUpLoadSimpleFile(QString filepath);
+	QString BCGetFileInfo(QString filemd5);
+	QByteArray BCDownLoadSimpleFile(QString filemd5);
 public:
     QMap<QString,QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString,QString> mBCParentCityInfoMap;
