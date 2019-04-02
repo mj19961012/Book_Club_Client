@@ -1,11 +1,11 @@
-﻿#include"BCMessageManager.h"
-#include<QUrl>
-#include<QNetworkAccessManager>
-#include<QNetworkRequest>
-#include<QApplication>
-#include<QNetworkReply>
-#include<QDebug>
-#include"nlohmann_json.hpp"
+﻿#include "BCMessageManager.h"
+#include <QUrl>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QApplication>
+#include <QNetworkReply>
+#include <QDebug>
+#include "nlohmann_json.hpp"
 #include <QUuid>
 #include <QHttpMultiPart>
 #include <QImage>
@@ -143,7 +143,7 @@ QPixmap BCMessageManager::BCBase64ToImage(QByteArray data, bool issave, QString 
 
 QString BCMessageManager::BCUpLoadSimpleFile(QString filepath)
 {
-	QUrl url = GET_API(BC_API_UPLOAD_SIMPLE_FILE);
+    QUrl url = QUrl(GET_API(BC_API_UPLOAD_SIMPLE_FILE));
 
 	QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
