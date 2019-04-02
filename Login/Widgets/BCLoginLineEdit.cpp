@@ -1,11 +1,27 @@
-#include "BCLoginLineEdit.h"
+﻿#include "BCLoginLineEdit.h"
 #include <QPainter>
 #include <QRegExpValidator>
 
 BCLoginLineEdit::BCLoginLineEdit(QWidget *parent)
     :QWidget (parent)
+    ,mMaxLength(0)
 {
     init();
+}
+
+void BCLoginLineEdit::clear()
+{
+    mLineEdit->clear();
+}
+
+bool BCLoginLineEdit::isEmpty() const
+{
+    return mLineEdit->text().isEmpty();
+}
+
+bool BCLoginLineEdit::isMaxInputLength() const
+{
+    return mLineEdit->text().length() == mMaxLength ? true : false;
 }
 
 void BCLoginLineEdit::setType(BCLoginLineEditEnum type)
@@ -44,7 +60,8 @@ void BCLoginLineEdit::paintEvent(QPaintEvent *event)
     painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     painter.setPen(Qt::NoPen);
 
-    painter.setBrush(QColor(255,255,255));
+    painter.setBrush(QColor(247,187,100));
+    painter.setOpacity(0.3);
     painter.drawRoundedRect(0,0,this->width(),this->height(),this->height()/2,this->height()/2,Qt::AbsoluteSize);
 }
 
@@ -52,7 +69,7 @@ void BCLoginLineEdit::init()
 {
     mMainHLayout = new QHBoxLayout(this);
 
-    mMainHLayout->setContentsMargins(4,0,this->height()/2,0);
+    mMainHLayout->setContentsMargins(20,0,this->height()/2,0);
     mMainHLayout->setSpacing(20);
 
     addIconLabel();
@@ -75,7 +92,10 @@ void BCLoginLineEdit::addLineEdit()
     mLineEdit = new QLineEdit(this);
     mLineEdit->setFixedHeight(this->height());
     mLineEdit->setObjectName("mLineEdit");
-    mLineEdit->setStyleSheet(QString("QLineEdit#mLineEdit{border:0px;}"));
+    mLineEdit->setStyleSheet(QString("QLineEdit#mLineEdit{"
+                                     "background:transparent;"
+                                     "border:0px;"
+                                     "}"));
 
     QFont font;
     font.setFamily("Microsoft YaHei");

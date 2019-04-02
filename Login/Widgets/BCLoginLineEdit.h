@@ -1,4 +1,4 @@
-#ifndef BCLOGINLINEEDIT_H
+﻿#ifndef BCLOGINLINEEDIT_H
 #define BCLOGINLINEEDIT_H
 
 #include <QWidget>
@@ -12,6 +12,12 @@ class BCLoginLineEdit : public QWidget
     Q_OBJECT
 public:
     explicit BCLoginLineEdit(QWidget *parent = nullptr);
+
+    void clear();
+
+    bool isEmpty() const;
+
+    bool isMaxInputLength() const;
 
     void setImage(QString imgPath);
 
@@ -36,6 +42,8 @@ private:
 
     class QLabel* mLabel{};
     class QLineEdit* mLineEdit{};
+
+    int mMaxLength;
 };
 
 #endif // BCLOGINLINEEDIT_H

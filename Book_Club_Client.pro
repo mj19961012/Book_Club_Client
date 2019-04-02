@@ -31,8 +31,7 @@ INCLUDEPATH += \
     $$PWD/App \
     $$PWD/Common \
 
-FORMS += \
-        bc_start_window.ui
+FORMS +=
 
 RESOURCES += \
     recourse.qrc

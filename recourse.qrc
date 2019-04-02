@@ -8,5 +8,13 @@
         <file>res/common/logo.png</file>
         <file>res/Login/password.png</file>
         <file>res/Login/phone.png</file>
+        <file>res/common/exit.png</file>
+        <file>res/common/miniSize.png</file>
+        <file>res/common/registerClose.png</file>
+        <file>res/NavigationBar/Activity.png</file>
+        <file>res/NavigationBar/Message.png</file>
+        <file>res/NavigationBar/Mine.png</file>
+        <file>res/NavigationBar/QuestionAnswer.png</file>
+        <file>res/NavigationBar/Search.png</file>
     </qresource>
 </RCC>
