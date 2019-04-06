@@ -13,27 +13,27 @@ void BCNavigationBarItem::setType(NavigationBar::BCNavigationBarEnum itemEnum)
     switch(itemEnum)
     {
     case NavigationBar::Postings:
-        setIcon(QIcon(":/res/NavigationBar/QuestionAnswer.png"));
+        setIcon(QIcon(":/res/NavigationBar/postings.png"));
         setIconSize(QSize(55,55));
         setText(QStringLiteral("问答"));
         break;
     case NavigationBar::Activity:
-        setIcon(QIcon(":/res/NavigationBar/Activity.png"));
+        setIcon(QIcon(":/res/NavigationBar/activity.png"));
         setIconSize(QSize(55,55));
         setText(QStringLiteral("活动"));
         break;
     case NavigationBar::Message:
-        setIcon(QIcon(":/res/NavigationBar/Message.png"));
+        setIcon(QIcon(":/res/NavigationBar/message.png"));
         setIconSize(QSize(55,55));
         setText(QStringLiteral("消息"));
         break;
     case NavigationBar::Search:
-        setIcon(QIcon(":/res/NavigationBar/Search.png"));
+        setIcon(QIcon(":/res/NavigationBar/search.png"));
         setIconSize(QSize(55,55));
         setText(QStringLiteral("搜索"));
         break;
     case NavigationBar::MineInfo:
-        setIcon(QIcon(":/res/NavigationBar/Mine.png"));
+        setIcon(QIcon(":/res/NavigationBar/mine.png"));
         setIconSize(QSize(55,55));
         setText(QStringLiteral("我的"));
         break;

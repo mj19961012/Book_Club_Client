@@ -23,7 +23,7 @@ void BCLoginWidget::paintEvent(QPaintEvent *event)
     painter.setPen(Qt::NoPen);
 
     painter.setBrush(QColor(247,187,100));
-    painter.setOpacity(0.7);
+    painter.setOpacity(0.3);
     painter.drawRect(0,0,this->width(),this->height());
 }
 

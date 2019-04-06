@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/common/exit.png</file>
+        <file>res/common/minisize.png</file>
+        <file>res/NavigationBar/activity.png</file>
+        <file>res/NavigationBar/message.png</file>
+        <file>res/NavigationBar/mine.png</file>
+        <file>res/NavigationBar/postings.png</file>
+        <file>res/NavigationBar/search.png</file>
+    </qresource>
+</RCC>

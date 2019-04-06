@@ -84,7 +84,7 @@ void BCMainWindow::initToolButton()
 
 void BCMainWindow::initStyle()
 {
-    mMiniSizeButton->setImageStyle(":/res/common/miniSize.png");
+    mMiniSizeButton->setImageStyle(":/res/common/minisize.png");
     mExitButton->setImageStyle(":/res/common/exit.png");
 }
 
