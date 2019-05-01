@@ -259,6 +259,10 @@ void from_json(const nlohmann::json &j,message_info & message)
     {
         message.message_state = j["message_state"].get<int>();
     }
+	if (j.find("message_type") != j.end())
+	{
+		message.message_type = j["message_type"].get<int>();
+	}
 }
 
 void to_json(nlohmann::json &j,const interest_list & interest)

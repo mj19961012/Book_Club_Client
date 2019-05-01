@@ -21,7 +21,13 @@ int main(int argc, char *argv[])
 //	QString school = "NCIST";
 
 
-// 	BCMessageManager::getInstance()->BCSystemInit();
+// 	BCMessageManager::getInstance()->BCGetMessageListHandle();
+	QString message_body = "BCMessageManager::getInstance()->BCSendMessageHandle()";
+	QString sender_id = "2c1d394d222493560df2c793d660a133";
+	QString accepter_id = "2c1d394d222493560df2c793d660a134";
+	QString session_id = "2c1d394d222493560df2c793d660a134";
+	int message_type = 1;
+	BCMessageManager::getInstance()->BCSendMessageHandle(message_body, sender_id, accepter_id, session_id, message_type);
 // 	BCMessageManager::getInstance()->BCRegistHandle(phone_number, pass_word, nick_name, school, head_image, city);
 // 
 // 2c1d394d772493560df2c793d660a134

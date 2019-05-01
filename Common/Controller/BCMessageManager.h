@@ -16,6 +16,8 @@ public :
     static BCMessageManager * getInstance();
     void BCLoginHandle(std::string username,std::string password);
 	void BCRegistHandle(QString username, QString password, QString nickname, QString school, QString headimage, QString city);
+	void BCGetMessageListHandle();
+	bool BCSendMessageHandle(QString messgae_body, QString sender_id, QString accepter_id, QString session_id, int message_type);
     void BCSystemInit();
     QString BCHttpRequestHandle(QString requrl,QString parameter,QString contenttype = BC_CONTENTTYPE_HEADER);
 	QByteArray BCImageToBase64(QString imgpath);
@@ -26,6 +28,7 @@ public :
 public:
     QMap<QString,QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString,QString> mBCParentCityInfoMap;
+	QMap<QString, message_info> mBCMessageListMap;
 private:
     static BCMessageManager* mMessageManager;
 

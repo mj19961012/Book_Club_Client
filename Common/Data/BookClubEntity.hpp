@@ -66,17 +66,18 @@ struct action_info
 
 struct message_info
 {
-    int id;
-    std::string message_id;
-    std::string messgae_body;
-    std::string sender_id;
-    std::string accepter_id;
-    std::string session_id;
-    std::string send_time;
-    int message_state;
+	int id;
+	std::string message_id;
+	std::string messgae_body;
+	std::string sender_id;
+	std::string accepter_id;
+	std::string session_id;
+	std::string send_time;
+	int message_state;
+	int message_type;
 
-    friend void to_json(nlohmann::json &j,const message_info & message);
-    friend void from_json(const nlohmann::json &j,message_info & message);
+	friend void to_json(nlohmann::json &j, const message_info & message);
+	friend void from_json(const nlohmann::json &j, message_info & message);
 };
 struct interest_list
 {

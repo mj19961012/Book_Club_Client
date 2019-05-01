@@ -11,6 +11,7 @@
 #include <QImage>
 #include <QBuffer>
 #include <QFileInfo>
+#include <QDateTime>
 
 BCMessageManager* BCMessageManager::mMessageManager = nullptr;
 
@@ -46,6 +47,50 @@ void BCMessageManager::BCRegistHandle(QString username, QString password, QStrin
 	qDebug() << "BCRegistHandle parametes:" << parametes << "\n";
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_REGIST), parametes);
 	qDebug() << "BCRegistHandle json_str:" << reply_str.length() << "\n";
+}
+
+void BCMessageManager::BCGetMessageListHandle()
+{
+	QString parametes = QString("userid=%1").arg(current_user.user_id.c_str());
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_MESSAGE_LIST), parametes);
+	qDebug() << "BCGetMessageListHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCGetMessageListHandle json_str:" << reply_str << "\n";
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+
+	if (json_str["code"] == 200)
+	{
+		nlohmann::json json_list = json_str["list"];
+
+		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
+		{
+			auto temp_value = (*iter).get<message_info>();
+			qDebug() << "mBCMessageListMap-temp_value-message_id:" << temp_value.message_id.c_str() << "\n";
+			mBCMessageListMap[temp_value.message_id.c_str()] = temp_value;
+		}
+		qDebug() << "Dictionary Data parsing complete" << "\n";
+		qDebug() << "mBCMessageListMap-size:" << mBCMessageListMap.count() << "\n";
+	}
+	else
+	{
+		qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
+	}
+}
+
+bool BCMessageManager::BCSendMessageHandle(QString messgae_body, QString sender_id, QString accepter_id, QString session_id, int message_type)
+{
+	QString message_id = QUuid::createUuid().toString();
+	long send_time = QDateTime::currentDateTime().toTime_t();
+	QString parametes = QString("message_id=%1&messgae_body=%2&sender_id=%3&accepter_id=%4&session_id=%5&send_time=%6&message_type=%7").arg(message_id).arg(messgae_body).arg(sender_id).arg(accepter_id).arg(session_id).arg(send_time).arg(message_type);
+	qDebug() << "BCSendMessageHandle parametes:" << parametes << "\n";
+
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_SEND_MESSAGE), parametes);
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+
+	qDebug() << "BCSendMessageHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCSendMessageHandle json_str[\"msg\"]:" << json_str["msg"].get<std::string>().c_str() << "\n";
+
+
+	return json_str["code"] == 200;
 }
 
 void BCMessageManager::BCSystemInit()

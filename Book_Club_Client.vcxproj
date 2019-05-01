@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{88726F66-4E3E-337C-8F9C-BB95C5535AEB}</ProjectGuid>
+    <RootNamespace>Book_Club_Client</RootNamespace>
+    <Keyword>Qt4VSv1.0</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <PlatformToolset>v140</PlatformToolset>
+    <OutputDirectory>release\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+    <IntermediateDirectory>release\</IntermediateDirectory>
+    <PrimaryOutput>Book_Club_Client</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <PlatformToolset>v140</PlatformToolset>
+    <OutputDirectory>debug\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>Application</ConfigurationType>
+    <IntermediateDirectory>debug\</IntermediateDirectory>
+    <PrimaryOutput>Book_Club_Client</PrimaryOutput>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(QtMsBuild)'=='' or !Exists('$(QtMsBuild)\qt.targets')">
+    <QtMsBuild>$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Book_Club_Client</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\build</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Book_Club_Client</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;Login\Controller;Login\Data;Login\View;Login\Widgets;Common\Api;Common\Controller;Common\Data;Common\Gui;Login;App;Common;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtWidgets;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtGui;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtANGLE;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtNetwork;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtCore;release;\include;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>release\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>None</DebugInformationFormat>
+      <DisableSpecificWarnings>4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;QT_DEPRECATED_WARNINGS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\qtmain.lib;shell32.lib;D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\Qt5Widgets.lib;D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\Qt5Gui.lib;D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\Qt5Network.lib;D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib;C:\opensslx86\lib;C:\Utils\my_sql\mysql-5.6.11-win32\lib;C:\Utils\postgresqlx86\pgsql\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkIncremental>false</LinkIncremental>
+      <OutputFile>$(OutDir)\Book_Club_Client.exe</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;QT_DEPRECATED_WARNINGS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <QtMoc>
+      <QTDIR>D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015</QTDIR>
+      <OutputFile>$(Configuration)\moc_%(Filename).cpp</OutputFile>
+      <Define>UNICODE;_UNICODE;$(Platform);QT_DEPRECATED_WARNINGS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB</Define>
+      <CompilerFlavor>msvc</CompilerFlavor>
+      <Include>./$(Configuration)/moc_predefs.h</Include>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <InputFile>%(FullPath)</InputFile>
+      <DynamicSource>output</DynamicSource>
+      <IncludePath>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/mkspecs/$(Platform)-msvc;.;./Login/Controller;./Login/Data;./Login/View;./Login/Widgets;./Common/Api;./Common/Controller;./Common/Data;./Common/Gui;./Login;./App;./Common;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtWidgets;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtGui;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtANGLE;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtNetwork;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtCore;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\ATLMFC\INCLUDE;C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um;C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared;C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um;C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt</IncludePath>
+    </QtMoc>
+    <QtRcc>
+      <OutputFile>$(Configuration)\qrc_%(Filename).cpp</OutputFile>
+      <Compression>default</Compression>
+      <QTDIR>D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015</QTDIR>
+      <InitFuncName>recourse</InitFuncName>
+      <InputFile>%(FullPath)</InputFile>
+      <ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription>
+    </QtRcc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;.;Login\Controller;Login\Data;Login\View;Login\Widgets;Common\Api;Common\Controller;Common\Data;Common\Gui;Login;App;Common;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtWidgets;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtGui;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtANGLE;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtNetwork;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\include\QtCore;debug;\include;..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\mkspecs\win32-msvc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>debug\</AssemblerListingLocation>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4577;4467;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;QT_DEPRECATED_WARNINGS;QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ProgramDataBaseFileName>$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\qtmaind.lib;shell32.lib;D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\Qt5Widgetsd.lib;D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\Qt5Guid.lib;D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\Qt5Networkd.lib;D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\lib;C:\opensslx86\lib;C:\Utils\my_sql\mysql-5.6.11-win32\lib;C:\Utils\postgresqlx86\pgsql\lib;$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <OutputFile>$(OutDir)\Book_Club_Client.exe</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;_UNICODE;WIN32;QT_DEPRECATED_WARNINGS;QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <QtRcc>
+      <QTDIR>D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015</QTDIR>
+      <OutputFile>$(Configuration)\qrc_%(Filename).cpp</OutputFile>
+      <InputFile>%(FullPath)</InputFile>
+      <Compression>default</Compression>
+      <InitFuncName>recourse</InitFuncName>
+      <ExecutionDescription>Rcc'ing %(Identity)...</ExecutionDescription>
+    </QtRcc>
+    <QtMoc>
+      <QTDIR>D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015</QTDIR>
+      <OutputFile>$(Configuration)\moc_%(Filename).cpp</OutputFile>
+      <Define>UNICODE;_UNICODE;$(Platform);QT_DEPRECATED_WARNINGS;QT_WIDGETS_LIB;QT_GUI_LIB;QT_NETWORK_LIB;QT_CORE_LIB</Define>
+      <CompilerFlavor>msvc</CompilerFlavor>
+      <Include>./$(Configuration)/moc_predefs.h</Include>
+      <ExecutionDescription>Moc'ing %(Identity)...</ExecutionDescription>
+      <InputFile>%(FullPath)</InputFile>
+      <DynamicSource>output</DynamicSource>
+      <IncludePath>.\GeneratedFiles\$(ConfigurationName);.\GeneratedFiles;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/mkspecs/$(Platform)-msvc;.;./Login/Controller;./Login/Data;./Login/View;./Login/Widgets;./Common/Api;./Common/Controller;./Common/Data;./Common/Gui;./Login;./App;./Common;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtWidgets;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtGui;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtANGLE;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtNetwork;D:/INCLUDE/QT/QT5.11.3/5.11.3/MSVC2015/include/QtCore;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\INCLUDE;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\ATLMFC\INCLUDE;C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\ucrt;C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um;C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\shared;C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\um;C:\Program Files (x86)\Windows Kits\10\include\10.0.17763.0\winrt</IncludePath>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Login\Controller\BCLoginController.cpp" />
+    <ClCompile Include="Login\View\BCLoginInputWidget.cpp" />
+    <ClCompile Include="Login\Widgets\BCLoginLineEdit.cpp" />
+    <ClCompile Include="Login\View\BCLoginWidget.cpp" />
+    <ClCompile Include="Common\Gui\BCMainWidget.cpp" />
+    <ClCompile Include="App\BCMainWindow.cpp" />
+    <ClCompile Include="Common\Controller\BCMessageManager.cpp" />
+    <ClCompile Include="Common\Gui\BCNavigationBar.cpp" />
+    <ClCompile Include="Common\Gui\BCNavigationBarItem.cpp" />
+    <ClCompile Include="Common\Gui\BCPolymorphicButton.cpp" />
+    <ClCompile Include="Common\Gui\BCPolymorphicLabel.cpp" />
+    <ClCompile Include="Login\Widgets\BCRegisterLineEdit.cpp" />
+    <ClCompile Include="Login\View\BCRegisterWidget.cpp" />
+    <ClCompile Include="Common\Gui\BCToastTips.cpp" />
+    <ClCompile Include="Common\Data\BookClubEntity.cpp" />
+    <ClCompile Include="App\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common\Api\BCCommonApiDef.hpp" />
+    <ClInclude Include="Common\Data\BCCommonEnumData.h" />
+    <ClInclude Include="Common\Data\BCCommonHttpData.h" />
+    <ClInclude Include="Login\Controller\BCLoginController.h" />
+    <ClInclude Include="Login\Data\BCLoginEnumData.h" />
+    <QtMoc Include="Login\View\BCLoginInputWidget.h">
+    </QtMoc>
+    <QtMoc Include="Login\Widgets\BCLoginLineEdit.h">
+    </QtMoc>
+    <QtMoc Include="Login\View\BCLoginWidget.h">
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCMainWidget.h">
+    </QtMoc>
+    <QtMoc Include="App\BCMainWindow.h">
+    </QtMoc>
+    <ClInclude Include="Common\Controller\BCMessageManager.h" />
+    <QtMoc Include="Common\Gui\BCNavigationBar.h">
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCNavigationBarItem.h">
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCPolymorphicButton.h">
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCPolymorphicLabel.h">
+    </QtMoc>
+    <QtMoc Include="Login\Widgets\BCRegisterLineEdit.h">
+    </QtMoc>
+    <QtMoc Include="Login\View\BCRegisterWidget.h">
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCToastTips.h">
+    </QtMoc>
+    <ClInclude Include="Common\Data\BookClubEntity.hpp" />
+    <ClInclude Include="Common\Data\nlohmann_json.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="debug\moc_predefs.h.cbt">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zi -MDd -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E ..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;debug\moc_predefs.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generate moc_predefs.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">debug\moc_predefs.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="release\moc_predefs.h.cbt">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\mkspecs\features\data\dummy.cpp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cl -Bx"$(QTDIR)\bin\qmake.exe" -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -O2 -MD -W3 -w34100 -w34189 -w44996 -w44456 -w44457 -w44458 -wd4577 -wd4467 -E ..\..\..\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\mkspecs\features\data\dummy.cpp 2&gt;NUL &gt;release\moc_predefs.h</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generate moc_predefs.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">release\moc_predefs.h;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\NavigationBar\activity.png" />
+    <None Include="res\common\exit.png" />
+    <None Include="res\NavigationBar\message.png" />
+    <None Include="res\NavigationBar\mine.png" />
+    <None Include="res\common\minisize.png" />
+    <None Include="res\NavigationBar\postings.png" />
+    <QtRcc Include="recourse.qrc">
+    </QtRcc>
+    <None Include="res\NavigationBar\search.png" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Qt5Version_x0020_Win32="msvc2015" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

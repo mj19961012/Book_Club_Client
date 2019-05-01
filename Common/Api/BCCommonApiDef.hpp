@@ -10,6 +10,9 @@
 #define BC_API_GET_FILE_INFO "/clint/file/getinfo"
 #define BC_API_DOWNLOAD_SIMPLE_FILE "/clint/file/download"
 
+#define BC_API_GET_MESSAGE_LIST "/clint/message/get_list"
+#define BC_API_SEND_MESSAGE "/clint/message/send_msg"
+
 #define BC_CONTENTTYPE_HEADER "application/x-www-form-urlencoded"
 
 #define GET_API(X) BC_API_URL X
