@@ -45,6 +45,7 @@ object_script.*.Debug
 *.moc
 moc_*.cpp
 moc_*.h
+moc_*.h.cbt
 qrc_*.cpp
 ui_*.h
 *.qmlc
