@@ -27,19 +27,16 @@ struct user_info
 };
 struct article_info
 {
-    int id;
-    std::string article_id;
-    std::string article_title;
-    std::string article_content;
-    std::string author_id;
-    int article_type;
-    std::string release_time;
-    int supporting_number;
-    int page_view;
-    int comment_number;
-    std::string first_file;
-    std::string second_file;
-    std::string third_file;
+	int id;
+	std::string article_id;
+	std::string article_title;
+	std::string article_content;
+	std::string author_id;
+	int article_type;
+	std::string release_time;
+	int supporting_number;
+	int page_view;
+	int comment_number;
 
     friend void to_json(nlohmann::json &j,const article_info & article);
     friend void from_json(const nlohmann::json &j,article_info & article);

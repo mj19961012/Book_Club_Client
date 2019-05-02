@@ -13,6 +13,12 @@
 #define BC_API_GET_MESSAGE_LIST "/clint/message/get_list"
 #define BC_API_SEND_MESSAGE "/clint/message/send_msg"
 
+#define BC_API_GET_ARTICLES_LIST "/clint/article/get_list"
+#define BC_API_RELEASE_ARTICLE "/clint/article/release"
+
+#define BC_API_GET_ACTIVITIES_LIST "/clint/action/get_list"
+#define BC_API_RELEASE_ACTION "/clint/action/release"
+
 #define BC_CONTENTTYPE_HEADER "application/x-www-form-urlencoded"
 
 #define GET_API(X) BC_API_URL X
