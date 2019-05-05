@@ -2,6 +2,9 @@
 #define BCREGISTERWIDGET_H
 
 #include <QWidget>
+#include "BCPolymorphicButton.h"
+#include "BCRegisterLineEdit.h"
+#include "BCRegisterCityButton.h"
 
 class BCRegisterWidget : public QWidget
 {
@@ -25,7 +28,15 @@ private:
     void initConnect();
 
 private:
-    class BCPolymorphicButton* mCloseButton{};
+    BCPolymorphicButton* mCloseButton{};
+
+    BCRegisterLineEdit* mNameLineEdit{};
+    BCRegisterCityButton *mCityButton{};
+    BCRegisterLineEdit* mSchoolLineEdit{};
+    BCRegisterLineEdit* mPhoneLineEdit{};
+    BCRegisterLineEdit* mPasswordLineEdit{};
+
+    BCPolymorphicButton* mRegisterButton{};
 };
 
 #endif // BCREGISTERWIDGET_H

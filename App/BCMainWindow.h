@@ -5,6 +5,9 @@
 #include <QLayout>
 #include <QStackedWidget>
 #include "BCCommonEnumData.h"
+#include "BCLoginWidget.h"
+#include "BCMainWidget.h"
+#include "BCPolymorphicButton.h"
 
 class BCMainWindow : public QMainWindow
 {
@@ -41,14 +44,14 @@ private:
     static BCMainWindow* m_BCMainWindow;
 
     /// \brief 主窗体堆叠窗口
-    class QStackedWidget* mStackedWidget{};
+    QStackedWidget* mStackedWidget{};
     /// \brief 登录
-    class BCLoginWidget* mLoginWidget{};
+    BCLoginWidget* mLoginWidget{};
     /// \brief 主widget
-    class BCMainWidget* mMainWidget{};
+    BCMainWidget* mMainWidget{};
 
-    class BCPolymorphicButton* mMiniSizeButton{};
-    class BCPolymorphicButton* mExitButton{};
+    BCPolymorphicButton* mMiniSizeButton{};
+    BCPolymorphicButton* mExitButton{};
 };
 
 #endif // BCMAINWINDOW_H

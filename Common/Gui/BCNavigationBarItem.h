@@ -15,11 +15,15 @@ public:
 
     void setIsSelected(bool isSelected);
 
+protected:
+    void paintEvent(QPaintEvent *event);
+
 private:
     void init();
 
     void initStyle();
 private:
+    bool mIsSelected{false};
 };
 
 #endif // BCNAVIGATIONBARITEM_H

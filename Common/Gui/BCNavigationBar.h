@@ -11,6 +11,10 @@ public:
     explicit BCNavigationBar(QWidget *parent = nullptr);
 
     void setSelectItem(NavigationBar::BCNavigationBarEnum barEnum);
+
+signals:
+    void sigNavigationBarClicked(NavigationBar::BCNavigationBarEnum);
+
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);

@@ -4,7 +4,9 @@ HEADERS += \
     $$PWD/BCNavigationBarItem.h \
     $$PWD/BCPolymorphicLabel.h \
     $$PWD/BCMainWidget.h \
-    $$PWD/BCToastTips.h
+    $$PWD/BCToastTips.h \
+    $$PWD/BCInputContentAndFileWidget.h \
+    $$PWD/BCFileWidget.h
 
 SOURCES += \
     $$PWD/BCNavigationBar.cpp \
@@ -12,4 +14,6 @@ SOURCES += \
     $$PWD/BCNavigationBarItem.cpp \
     $$PWD/BCPolymorphicLabel.cpp \
     $$PWD/BCMainWidget.cpp \
-    $$PWD/BCToastTips.cpp
+    $$PWD/BCToastTips.cpp \
+    $$PWD/BCInputContentAndFileWidget.cpp \
+    $$PWD/BCFileWidget.cpp

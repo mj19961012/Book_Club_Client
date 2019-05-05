@@ -1,5 +1,6 @@
 ﻿#include "BCNavigationBarItem.h"
 #include "BCPolymorphicLabel.h"
+#include <QPainter>
 
 BCNavigationBarItem::BCNavigationBarItem(QWidget *parent)
     :QToolButton(parent)
@@ -42,30 +43,28 @@ void BCNavigationBarItem::setType(NavigationBar::BCNavigationBarEnum itemEnum)
 
 void BCNavigationBarItem::setIsSelected(bool isSelected)
 {
-    if(isSelected)
+    mIsSelected = isSelected;
+    update();
+}
+
+void BCNavigationBarItem::paintEvent(QPaintEvent *event)
+{
+    QToolButton::paintEvent(event);
+
+    QPainter painter(this);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    painter.setPen(Qt::NoPen);
+
+    painter.setBrush(QColor(255,255,255));
+    if(mIsSelected)
     {
-        setStyleSheet(QString("QToolButton{"
-                              "background-color: rgba(255,255,255,100);"
-                              "}"
-                              "QToolButton:hover{"
-                              "background-color:transparent;"
-                              "}"
-                              "QToolButton:pressed{"
-                              "background-color:transparent;"
-                              "}"));
+        painter.setOpacity(0.5);
     }
     else
     {
-        setStyleSheet(QString("QToolButton{"
-                              "background-color:transparent;"
-                              "}"
-                              "QToolButton:hover{"
-                              "background-color:transparent;"
-                              "}"
-                              "QToolButton:pressed{"
-                              "background-color:transparent;"
-                              "}"));
+        painter.setOpacity(0);
     }
+    painter.drawRect(0,0,this->width(),this->height());
 }
 
 void BCNavigationBarItem::init()

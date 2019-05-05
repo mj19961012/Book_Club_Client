@@ -25,11 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include($$PWD/Login/Login.pri)
 include($$PWD/App/App.pri)
 include($$PWD/Common/Common.pri)
+include($$PWD/Activity/Activity.pri)
+include($$PWD/Message/Message.pri)
+include($$PWD/Mine/Mine.pri)
+include($$PWD/Posting/Posting.pri)
+include($$PWD/Search/Search.pri)
 
 INCLUDEPATH += \
     $$PWD/Login \
     $$PWD/App \
     $$PWD/Common \
+    $$PWD/Activity \
+    $$PWD/Message \
+    $$PWD/Mine \
+    $$PWD/Posting \
+    $$PWD/Search \
 
 FORMS +=
 

@@ -1,5 +1,6 @@
 ﻿#include "BCMainWidget.h"
 #include "BCNavigationBar.h"
+#include <QPainter>
 
 BCMainWidget::BCMainWidget(QWidget *parent)
     :QWidget(parent)
@@ -14,12 +15,14 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
     switch(pageEnum)
     {
     case Page::Postings:
+        mStackWidget->setCurrentWidget(mPostingWidget);
         break;
     case Page::PostDetail:
         break;
     case Page::PostMaster:
         break;
     case Page::PublishPost:
+        mStackWidget->setCurrentWidget(mPublishPostWidget);
         break;
     case Page::Activity:
         break;
@@ -43,6 +46,13 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
 void BCMainWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
+
+    QPainter painter(this);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    painter.setPen(Qt::NoPen);
+
+    painter.setBrush(QColor(255,255,255));
+    painter.drawRect(0,0,this->width(),this->height());
 }
 
 void BCMainWidget::resizeEvent(QResizeEvent *event)
@@ -54,11 +64,46 @@ void BCMainWidget::resizeEvent(QResizeEvent *event)
     mStackWidget->setGeometry(300,0,this->width() - 300,this->height());
 }
 
+void BCMainWidget::slotNavigationBarSelected(NavigationBar::BCNavigationBarEnum enumData)
+{
+    switch(enumData)
+    {
+    case NavigationBar::Postings:
+        showPage(Page::Postings);
+        break;
+    case NavigationBar::Activity:
+        showPage(Page::Activity);
+        break;
+    case NavigationBar::Message:
+        showPage(Page::Message);
+        break;
+    case NavigationBar::Search:
+        showPage(Page::Search);
+        break;
+    case NavigationBar::MineInfo:
+        showPage(Page::PersonalInformation);
+        break;
+    }
+}
+
 void BCMainWidget::init()
 {
     mNavigationBar = new BCNavigationBar(this);
 
     mStackWidget = new QStackedWidget(this);
+
+    addPage(Page::Postings);
+    addPage(Page::PostDetail);
+    addPage(Page::PostMaster);
+    addPage(Page::PublishPost);
+    addPage(Page::Activity);
+    addPage(Page::ActivityDetail);
+    addPage(Page::PublishActivity);
+    addPage(Page::Message);
+    addPage(Page::Chat);
+    addPage(Page::PersonalInformation);
+    addPage(Page::MineFocus);
+    addPage(Page::Search);
 }
 
 void BCMainWidget::initStyle()
@@ -68,7 +113,7 @@ void BCMainWidget::initStyle()
 
 void BCMainWidget::initConnect()
 {
-
+    connect(mNavigationBar,&BCNavigationBar::sigNavigationBarClicked,this,&BCMainWidget::slotNavigationBarSelected);
 }
 
 void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
@@ -76,28 +121,56 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     switch(pageEnum)
     {
     case Page::Postings:
+    {
+        mPostingWidget = new BCPostingWidget(this);
+        mStackWidget->addWidget(mPostingWidget);
         break;
+    }
     case Page::PostDetail:
+    {
         break;
+    }
     case Page::PostMaster:
+    {
         break;
+    }
     case Page::PublishPost:
+    {
+        mPublishPostWidget = new BCPublishPostWidget(this);
+        mStackWidget->addWidget(mPublishPostWidget);
         break;
+    }
     case Page::Activity:
+    {
         break;
+    }
     case Page::ActivityDetail:
+    {
         break;
+    }
     case Page::PublishActivity:
+    {
         break;
+    }
     case Page::Message:
+    {
         break;
+    }
     case Page::Chat:
+    {
         break;
+    }
     case Page::PersonalInformation:
+    {
         break;
+    }
     case Page::MineFocus:
+    {
         break;
+    }
     case Page::Search:
+    {
         break;
+    }
     }
 }

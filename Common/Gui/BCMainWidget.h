@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QStackedWidget>
 #include "BCCommonEnumData.h"
+#include "BCPostingWidget.h"
+#include "BCPublishPostWidget.h"
 
 class BCMainWidget : public QWidget
 {
@@ -15,7 +17,8 @@ public:
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
-
+private slots:
+    void slotNavigationBarSelected(NavigationBar::BCNavigationBarEnum enumData);
 private:
     void init();
 
@@ -28,6 +31,9 @@ private:
     class BCNavigationBar *mNavigationBar{};
     /// \brief 堆叠窗口
     class QStackedWidget *mStackWidget{};
+
+    BCPostingWidget *mPostingWidget{};
+    BCPublishPostWidget *mPublishPostWidget{};
 };
 
 #endif // BCMAINWIDGET_H

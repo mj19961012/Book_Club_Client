@@ -38,7 +38,7 @@ void BCLoginInputWidget::paintEvent(QPaintEvent *event)
     painter.drawRoundedRect(0,0,this->width(),this->height(),40,40,Qt::AbsoluteSize);
 
     QPixmap pixmap;
-    pixmap.load(":/res/common/logo.png");
+    pixmap.load(":/res/common/start_logo.png");
     painter.drawPixmap(this->width()/2 - 96/2,40,96,100,pixmap.scaled(96,100,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
 
     QFont font;

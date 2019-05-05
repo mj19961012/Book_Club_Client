@@ -10,6 +10,7 @@ public:
     explicit BCRegisterLineEdit(QWidget* parent = nullptr);
 
 private:
+    void init();
 };
 
 #endif // BCREGISTERLINEEDIT_H

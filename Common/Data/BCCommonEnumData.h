@@ -1,5 +1,5 @@
-﻿#ifndef BKCOMMONENUMDATA_H
-#define BKCOMMONENUMDATA_H
+﻿#ifndef BCCOMMONENUMDATA_H
+#define BCCOMMONENUMDATA_H
 
 namespace BasePage
 {
@@ -42,4 +42,39 @@ namespace NavigationBar
     };
 }
 
-#endif // BKCOMMONENUMDATA_H
+namespace Subject
+{
+    enum BCSubjectEnum
+    {
+        /// \brief 全部
+        All = 1,
+        /// \brief 经济学
+        Economics,
+        /// \brief 法学
+        Law,
+        /// \brief 工学
+        Engineering,
+        /// \brief 教育学
+        Pedagogy,
+        /// \brief 文学
+        Literature,
+        /// \brief 历史学
+        History,
+        /// \brief 哲学
+        Philosophy,
+        /// \brief 理学
+        Science,
+        /// \brief 农学
+        Agronomy,
+        /// \brief 艺术学
+        ArtTheory,
+        /// \brief 管理学
+        Management,
+        /// \brief 军事学
+        MilitaryScience,
+        /// \brief 医学
+        Medicine,
+    };
+}
+
+#endif // BCCOMMONENUMDATA_H

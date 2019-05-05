@@ -7,5 +7,14 @@
         <file>res/NavigationBar/mine.png</file>
         <file>res/NavigationBar/postings.png</file>
         <file>res/NavigationBar/search.png</file>
+        <file>res/common/main_logo.png</file>
+        <file>res/common/start_logo.png</file>
+        <file>res/Login/password.png</file>
+        <file>res/Login/phone.png</file>
+        <file>res/common/registerClose.png</file>
+        <file>res/Login/down.png</file>
+        <file>res/common/back.png</file>
+        <file>res/common/addFile.png</file>
+        <file>res/common/file.png</file>
     </qresource>
 </RCC>

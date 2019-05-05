@@ -9,6 +9,7 @@ BCNavigationBar::BCNavigationBar(QWidget *parent)
 {
     init();
     initStyle();
+    initConnect();
 }
 
 void BCNavigationBar::setSelectItem(NavigationBar::BCNavigationBarEnum barEnum)
@@ -65,7 +66,7 @@ void BCNavigationBar::paintEvent(QPaintEvent *event)
     painter.drawRect(0,0,this->width(),this->height());
 
     QPixmap pixmap;
-    pixmap.load(":/res/common/logo.png");
+    pixmap.load(":/res/common/start_logo.png");
     painter.drawPixmap(this->width()/2 - 100/2,50,100,100,pixmap.scaled(100,100,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
 }
 
@@ -100,6 +101,8 @@ void BCNavigationBar::init()
 
     mMineInfoItem = new BCNavigationBarItem(this);
     mMineInfoItem->setType(NavigationBar::MineInfo);
+
+    setSelectItem(NavigationBar::Postings);
 }
 
 void BCNavigationBar::initStyle()
@@ -113,21 +116,26 @@ void BCNavigationBar::initConnect()
 {
     connect(mPostingsItem,&BCNavigationBarItem::clicked,this,[this](){
         setSelectItem(NavigationBar::Postings);
+        emit sigNavigationBarClicked(NavigationBar::Postings);
     });
 
     connect(mActivityItem,&BCNavigationBarItem::clicked,this,[this](){
         setSelectItem(NavigationBar::Activity);
+        emit sigNavigationBarClicked(NavigationBar::Activity);
     });
 
     connect(mMessageItem,&BCNavigationBarItem::clicked,this,[this](){
         setSelectItem(NavigationBar::Message);
+        emit sigNavigationBarClicked(NavigationBar::Message);
     });
 
     connect(mSearchItem,&BCNavigationBarItem::clicked,this,[this](){
         setSelectItem(NavigationBar::Search);
+        emit sigNavigationBarClicked(NavigationBar::Search);
     });
 
     connect(mMineInfoItem,&BCNavigationBarItem::clicked,this,[this](){
         setSelectItem(NavigationBar::MineInfo);
+        emit sigNavigationBarClicked(NavigationBar::MineInfo);
     });
 }

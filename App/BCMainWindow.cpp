@@ -1,7 +1,4 @@
 ﻿#include "BCMainWindow.h"
-#include "BCLoginWidget.h"
-#include "BCMainWidget.h"
-#include "BCPolymorphicButton.h"
 #include <QApplication>
 #include <QDesktopWidget>
 
@@ -95,7 +92,7 @@ void BCMainWindow::initConnect()
     });
 
     connect(mExitButton,&BCPolymorphicButton::clicked,this,[](){
-        qApp->exit();
+        qApp->exit(0);
     });
 }
 
