@@ -15,9 +15,11 @@
 
 #define BC_API_GET_ARTICLES_LIST "/clint/article/get_list"
 #define BC_API_RELEASE_ARTICLE "/clint/article/release"
+#define BC_API_GET_DETAIL_OF_ATRICLE "/clint/article/get_detail"
 
 #define BC_API_GET_ACTIVITIES_LIST "/clint/action/get_list"
 #define BC_API_RELEASE_ACTION "/clint/action/release"
+#define BC_API_GET_DETAIL_OF_ACTION "/clint/action/get_detail"
 
 #define BC_CONTENTTYPE_HEADER "application/x-www-form-urlencoded"
 

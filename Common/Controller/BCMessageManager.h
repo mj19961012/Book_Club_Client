@@ -17,6 +17,12 @@ public :
     void BCLoginHandle(std::string username,std::string password);
 	void BCRegistHandle(QString username, QString password, QString nickname, QString school, QString headimage, QString city);
 	void BCGetMessageListHandle();
+	void BCGetArticlesListHandle(int pagenum = -1,int pagesize = 20);
+	bool BCReleaseArticleHandle(QString title,QString content,int type);
+	bool BCReleaseActionHandle(QString title,QString content,QString city,QString begintime,QString endtime,QString first,QString second,QString third);
+	bool BCGetDetailsOfTheArticle(QString articleid);
+	void BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum = -1, int pagesize = 20);
+	bool BCGetDetailsOfTheaction(QString actionid);
 	bool BCSendMessageHandle(QString messgae_body, QString sender_id, QString accepter_id, QString session_id, int message_type);
     void BCSystemInit();
     QString BCHttpRequestHandle(QString requrl,QString parameter,QString contenttype = BC_CONTENTTYPE_HEADER);
@@ -29,10 +35,15 @@ public:
     QMap<QString,QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString,QString> mBCParentCityInfoMap;
 	QMap<QString, message_info> mBCMessageListMap;
+	QMap<QString, article_info> mBCArticlesListMap;
+	QMap<QString, action_info> mBCActivitiesListMap;
+	QMap<QString, QMap<QString, message_info>> mBCCommentListMap;
 private:
     static BCMessageManager* mMessageManager;
 
     user_info current_user;
+	int m_activities_page_num;
+	int m_articles_page_num;
 };
 
 #endif // BCMESSAGEMANAHER_H
