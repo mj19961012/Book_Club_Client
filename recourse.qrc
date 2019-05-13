@@ -16,5 +16,6 @@
         <file>res/common/back.png</file>
         <file>res/common/addFile.png</file>
         <file>res/common/file.png</file>
+        <file>res/common/defaultHeadImage.png</file>
     </qresource>
 </RCC>

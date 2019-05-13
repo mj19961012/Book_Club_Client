@@ -1,5 +1,10 @@
 ﻿#include "BCRegisterWidget.h"
+#include <QImage>
+#include <QPixmap>
 #include <QPainter>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include "BCDataManager.h"
 
 BCRegisterWidget::BCRegisterWidget(QWidget *parent)
     :QWidget (parent)
@@ -78,6 +83,8 @@ void BCRegisterWidget::resizeEvent(QResizeEvent *event)
 
     mCloseButton->setGeometry(this->width() - 70,25,32,32);
 
+    mImageView->setGeometry(this->width()/2 - 50,100,100,100);
+
     mNameLineEdit->setGeometry(this->width()/2 - 250,220,500,50);
     mCityButton->setGeometry(this->width()/2 - 250,300,500,50);
     mSchoolLineEdit->setGeometry(this->width()/2 - 250,380,500,50);
@@ -93,21 +100,23 @@ void BCRegisterWidget::init()
 {
     mCloseButton = new BCPolymorphicButton(this);
 
-    mNameLineEdit = new BCRegisterLineEdit(this);
+    mImageView = new BCImageView(this,true);
+
+    mNameLineEdit = new BCInformationLineEdit(this);
     mNameLineEdit->setMaxLength(12);
     mNameLineEdit->setPlaceholderText(QStringLiteral("昵称"));
 
     mCityButton = new BCRegisterCityButton(this);
 
-    mSchoolLineEdit = new BCRegisterLineEdit(this);
+    mSchoolLineEdit = new BCInformationLineEdit(this);
     mSchoolLineEdit->setMaxLength(12);
     mSchoolLineEdit->setPlaceholderText(QStringLiteral("所在学校（选填）"));
 
-    mPhoneLineEdit = new BCRegisterLineEdit(this);
+    mPhoneLineEdit = new BCInformationLineEdit(this);
     mPhoneLineEdit->setMaxLength(11);
     mPhoneLineEdit->setPlaceholderText(QStringLiteral("手机号码"));
 
-    mPasswordLineEdit = new BCRegisterLineEdit(this);
+    mPasswordLineEdit = new BCInformationLineEdit(this);
     mPasswordLineEdit->setMaxLength(12);
     mPasswordLineEdit->setPlaceholderText(QStringLiteral("设置密码"));
 
@@ -119,11 +128,14 @@ void BCRegisterWidget::initStyle()
 {
     mCloseButton->setImageStyle(":/res/common/registerClose.png");
 
+    mImageView->setDefaultImage(":/res/common/defaultHeadImage.png");
+    mImageView->setToolTip(QStringLiteral("从计算机中选择头像"));
+
     mRegisterButton->setColorStyle("rgba(247,187,100,1)",
                                    "rgba(247,187,100,0.8)",
                                    "rgba(247,187,100,1)",
                                    "rgba(247,187,100,1)",
-                                   "white",25,0,"transparent");
+                                   "white",0,"transparent",25);
     mRegisterButton->setFontStyle(20);
 }
 
@@ -131,5 +143,31 @@ void BCRegisterWidget::initConnect()
 {
     connect(mCloseButton,&BCPolymorphicButton::clicked,this,[this](){
         emit sigRegisterCloseButtonClicked();
+    });
+
+    connect(mImageView,&BCImageView::clicked,this,[this](){
+        QFileDialog fileDialog(this);//定义文件对话框类
+        fileDialog.setWindowTitle((QStringLiteral("打开图片")));//定义文件对话框标题
+        fileDialog.setDirectory(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));//设置默认文件路径
+        fileDialog.setNameFilter(tr("Images(*.png;*.jpg;*.jpeg)"));//设置文件过滤器
+        fileDialog.setFileMode(QFileDialog::ExistingFiles);//设置可以选择多个文件,默认为只能选择一个文件QFileDialog::ExistingFiles
+        fileDialog.setViewMode(QFileDialog::List);//设置视图模式
+        //打印所有选择的文件的路径
+        if(fileDialog.exec())
+        {
+            QString fileName = fileDialog.selectedFiles()[0];
+            QImage image;
+            QPixmap pixmap;
+            if(image.load(fileName))
+            {
+                pixmap = QPixmap::fromImage(image.scaled(mImageView->size(),Qt::KeepAspectRatio));
+                QString path = BCDataManager::instance().getUserHeadImgPath() + "/HeadImage.png";
+                if(pixmap.save(path))
+                {
+                    qDebug() << "头像保存成功，路径为：" << path;
+                    mImageView->setImage(pixmap);
+                }
+            }
+        }
     });
 }

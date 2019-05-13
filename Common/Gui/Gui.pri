@@ -6,7 +6,9 @@ HEADERS += \
     $$PWD/BCMainWidget.h \
     $$PWD/BCToastTips.h \
     $$PWD/BCInputContentAndFileWidget.h \
-    $$PWD/BCFileWidget.h
+    $$PWD/BCFileWidget.h \
+    $$PWD/BCImageView.h \
+    $$PWD/BCInformationLineEdit.h
 
 SOURCES += \
     $$PWD/BCNavigationBar.cpp \
@@ -16,4 +18,6 @@ SOURCES += \
     $$PWD/BCMainWidget.cpp \
     $$PWD/BCToastTips.cpp \
     $$PWD/BCInputContentAndFileWidget.cpp \
-    $$PWD/BCFileWidget.cpp
+    $$PWD/BCFileWidget.cpp \
+    $$PWD/BCImageView.cpp \
+    $$PWD/BCInformationLineEdit.cpp

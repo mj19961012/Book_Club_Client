@@ -92,9 +92,8 @@ void BCLoginInputWidget::initStyle()
                                 "rgb(247,187,100,255)",
                                 "#656C81",
                                 "rgb(255,255,255)",
-                                mLoginButton->height()/2,
                                 0,
-                                "transparent");
+                                "transparent",mLoginButton->height()/2);
 
     mRegisterButton->setText(QStringLiteral("没有账号？去注册一个"));
     mRegisterButton->setFontStyle(15);
@@ -102,8 +101,7 @@ void BCLoginInputWidget::initStyle()
                                    "transparent",
                                    "transparent",
                                    "transparent",
-                                   "skyblue",
-                                   0,0,"transparent");
+                                   "skyblue",0,"transparent",0);
 }
 
 void BCLoginInputWidget::initConnect()
