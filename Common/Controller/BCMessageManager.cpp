@@ -76,6 +76,153 @@ void BCMessageManager::BCGetMessageListHandle()
 	}
 }
 
+void BCMessageManager::BCGetArticlesListHandle(int pagenum,int pagesize /*= 20*/)
+{
+	QString parametes = QString("page_num=%1&page_size=%2").arg(pagenum).arg(pagesize);
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ARTICLES_LIST), parametes);
+	qDebug() << "BCGetArticlesListHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCGetArticlesListHandle json_str:" << reply_str << "\n";
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+	mBCArticlesListMap.clear();
+	if (pagenum >= 0)
+	{
+		m_articles_page_num = pagenum;
+	}
+	else
+	{
+		pagenum = m_articles_page_num;
+	}
+	if (json_str["code"] == 200)
+	{
+		nlohmann::json json_list = json_str["list"];
+
+		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
+		{
+			auto temp_value = (*iter).get<article_info>();
+			qDebug() << "mBCArticlesListMap-temp_value-article_id:" << temp_value.article_id.c_str() << "\n";
+			mBCArticlesListMap[temp_value.article_id.c_str()] = temp_value;
+		}
+		qDebug() << "Dictionary Data parsing complete" << "\n";
+		qDebug() << "mBCArticlesListMap-size:" << mBCArticlesListMap.count() << "\n";
+	}
+	else
+	{
+		qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
+	}
+}
+
+bool BCMessageManager::BCReleaseArticleHandle(QString title, QString content, int type)
+{
+	QString articleid = QUuid::createUuid().toString();
+	long release_time = QDateTime::currentDateTime().toTime_t();
+	QString parametes = QString("article_id=%1&article_title=%2&article_content=%3&article_type=%4&release_time=%5&author_id=%6").arg(articleid).arg(title).arg(content).arg(type).arg(release_time).arg(this->current_user.user_id.c_str());
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_RELEASE_ARTICLE), parametes);
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+	qDebug() << "BCReleaseArticleHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCReleaseArticleHandle json_str:" << reply_str << "\n";
+	return json_str["code"] == 200;
+}
+
+bool BCMessageManager::BCReleaseActionHandle(QString title, QString content, QString city, QString begintime, QString endtime, QString first, QString second, QString third)
+{
+	QString actionid = QUuid::createUuid().toString();
+	long release_time = QDateTime::currentDateTime().toTime_t();
+	QString parametes = QString("action_id=%1&action_title=%2&action_content=%3&action_city=%4&begin_time=%5&end_time=%6&author_id=%7&first_file=%8&second_file=%9&third_file=%10&release_time=%11").arg(actionid).arg(title).arg(content).arg(city).arg(begintime).arg(endtime).arg(this->current_user.user_id.c_str()).arg(first).arg(second).arg(third).arg(release_time);
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_RELEASE_ACTION), parametes);
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+	qDebug() << "BCReleaseActionHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCReleaseActionHandle json_str:" << reply_str << "\n";
+
+	return json_str["code"] == 200;
+}
+
+bool BCMessageManager::BCGetDetailsOfTheArticle(QString articleid)
+{
+	QString parametes = QString("article_id=%1").arg(articleid);
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_DETAIL_OF_ATRICLE), parametes);
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+	qDebug() << "BCGetDetailsOfTheArticle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCGetDetailsOfTheArticle json_str:" << reply_str << "\n";
+	if (json_str["code"] == 200)
+	{
+		auto article = json_str["article"].get<article_info>();
+		mBCArticlesListMap[article.article_id.c_str()] = article;
+
+		nlohmann::json json_list = json_str["list"];
+
+		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
+		{
+			auto temp_value = (*iter).get<message_info>();
+			qDebug() << "mBCCommentListMap-temp_value-message_id:" << temp_value.message_id.c_str() << "\n";
+			mBCCommentListMap[article.article_id.c_str()][temp_value.message_id.c_str()] = temp_value;
+		}
+		qDebug() << "Dictionary Data parsing complete" << "\n";
+		qDebug() << "mBCCommentListMap-size:" << mBCCommentListMap[article.article_id.c_str()].count() << "\n";
+	}
+	return json_str["code"] == 200;
+}
+
+void BCMessageManager::BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum, int pagesize)
+{
+	QString parametes = QString("page_num=%1&page_size=%2&action_city=%3&begin_time=%4&end_time=%5").arg(pagenum).arg(pagesize).arg(selectcity).arg(begintime).arg(endtime);
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ACTIVITIES_LIST), parametes);
+	qDebug() << "BCGetActivitiesListHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCGetActivitiesListHandle json_str:" << reply_str << "\n";
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+	mBCActivitiesListMap.clear();
+	if (pagenum >= 0)
+	{
+		m_activities_page_num = pagenum;
+	}
+	else
+	{
+		pagenum = m_activities_page_num;
+	}
+	if (json_str["code"] == 200)
+	{
+		nlohmann::json json_list = json_str["list"];
+
+		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
+		{
+			auto temp_value = (*iter).get<action_info>();
+			qDebug() << "mBCActivitiesListMap-temp_value-action_id:" << temp_value.action_id.c_str() << "\n";
+			mBCActivitiesListMap[temp_value.action_id.c_str()] = temp_value;
+		}
+		qDebug() << "Dictionary Data parsing complete" << "\n";
+		qDebug() << "mBCActivitiesListMap-size:" << mBCArticlesListMap.count() << "\n";
+	}
+	else
+	{
+		qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
+	}
+}
+
+bool BCMessageManager::BCGetDetailsOfTheaction(QString actionid)
+{
+	QString parametes = QString("action_id=%1").arg(actionid);
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_DETAIL_OF_ACTION), parametes);
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+	qDebug() << "BCGetDetailsOfTheaction json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCGetDetailsOfTheaction json_str:" << reply_str << "\n";
+	if (json_str["code"] == 200)
+	{
+		auto action = json_str["action"].get<action_info>();
+		mBCActivitiesListMap[action.action_id.c_str()] = action;
+
+		nlohmann::json json_list = json_str["list"];
+
+		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
+		{
+			auto temp_value = (*iter).get<message_info>();
+			qDebug() << "mBCCommentListMap-temp_value-message_id:" << temp_value.message_id.c_str() << "\n";
+			mBCCommentListMap[action.action_id.c_str()][temp_value.message_id.c_str()] = temp_value;
+		}
+		qDebug() << "Dictionary Data parsing complete" << "\n";
+		qDebug() << "mBCCommentListMap-size:" << mBCCommentListMap[action.action_id.c_str()].count() << "\n";
+	}
+	return json_str["code"] == 200;
+}
+
 bool BCMessageManager::BCSendMessageHandle(QString messgae_body, QString sender_id, QString accepter_id, QString session_id, int message_type)
 {
 	QString message_id = QUuid::createUuid().toString();

@@ -37,6 +37,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Common\Gui\BCFileWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Gui\BCInputContentAndFileWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Login\Controller\BCLoginController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,6 +76,18 @@
     <ClCompile Include="Common\Gui\BCPolymorphicLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Posting\View\BCPostingListWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Posting\View\BCPostingWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Posting\View\BCPublishPostWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Login\Widgets\BCRegisterCityButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Login\Widgets\BCRegisterLineEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,6 +114,12 @@
     <ClInclude Include="Common\Data\BCCommonHttpData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="Common\Gui\BCFileWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCInputContentAndFileWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="Login\Controller\BCLoginController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -130,6 +154,21 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Common\Gui\BCPolymorphicLabel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="Posting\Data\BCPostingEnumData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Posting\View\BCPostingListWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="Posting\View\BCPostingWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Posting\View\BCPublishPostWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Login\Widgets\BCRegisterCityButton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Login\Widgets\BCRegisterLineEdit.h">
@@ -173,6 +212,16 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
@@ -186,7 +235,22 @@
     <None Include="res\NavigationBar\activity.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\common\addFile.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\common\back.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Login\down.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="res\common\exit.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\common\file.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\common\main_logo.png">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\NavigationBar\message.png">
@@ -198,13 +262,25 @@
     <None Include="res\common\minisize.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\Login\password.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Login\phone.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="res\NavigationBar\postings.png">
       <Filter>Resource Files</Filter>
     </None>
     <QtRcc Include="recourse.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+    <None Include="res\common\registerClose.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="res\NavigationBar\search.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\common\start_logo.png">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
