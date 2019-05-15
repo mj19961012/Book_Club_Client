@@ -279,3 +279,37 @@ void from_json(const nlohmann::json &j,interest_list & interest)
         interest.date_subscribed = j["date_subscribed"].get<std::string>();
     }
 }
+
+void to_json(nlohmann::json &j, const file_base_info & file)
+{
+	j = nlohmann::json{
+		{ "id",file.id },
+		{ "file_md5",file.file_md5 },
+		{ "file_size",file.file_size },
+		{ "file_type",file.file_type },
+		{ "local_path",file.local_path }
+	};
+}
+void from_json(const nlohmann::json &j, file_base_info & file)
+{
+	if (j.find("id") != j.end())
+	{
+		file.id = j["id"].get<int>();
+	}
+	if (j.find("file_md5") != j.end())
+	{
+		file.file_md5 = j["file_md5"].get<std::string>();
+	}
+	if (j.find("file_size") != j.end())
+	{
+		file.file_size = j["file_size"].get<int>();
+	}
+	if (j.find("file_type") != j.end())
+	{
+		file.file_type = j["file_type"].get<int>();
+	}
+	if (j.find("local_path") != j.end())
+	{
+		file.local_path = j["local_path"].get<std::string>();
+	}
+}

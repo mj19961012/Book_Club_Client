@@ -35,18 +35,45 @@ BCMessageManager * BCMessageManager::getInstance()
     return mMessageManager;
 }
 
-void BCMessageManager::BCLoginHandle(std::string username,std::string password)
+bool BCMessageManager::BCLoginHandle(QString username,QString password)
 {
-	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_LOGIN), "");
+    QString parametes = QString("username=%1&password=%2").arg(username).arg(password);
+    QString reply_str = BCHttpRequestHandle(GET_API(BC_API_LOGIN), parametes);
+    nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+
+    if (json_str["code"] == 200)
+    {
+        auto temp_user = json_str["user"].get<user_info>();
+        current_user.id = temp_user.id;
+        current_user.user_id = temp_user.user_id;
+        current_user.phone_number = temp_user.phone_number;
+        current_user.nick_name = temp_user.nick_name;
+        current_user.pass_word = temp_user.pass_word;
+        current_user.school = temp_user.school;
+        current_user.city = temp_user.city;
+        current_user.head_image = temp_user.head_image;
+        current_user.funs_number = temp_user.funs_number;
+        current_user.article_number = temp_user.article_number;
+        current_user.action_number = temp_user.action_number;
+    }
+    else
+    {
+        qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
+    }
+
+    return json_str["code"] == 200;
 }
 
-void BCMessageManager::BCRegistHandle(QString username, QString password, QString nickname, QString school, QString headimage, QString city)
+bool BCMessageManager::BCRegistHandle(QString username, QString password, QString nickname, QString school, QString headimage, QString city)
 {
 	QString userid = QUuid::createUuid().toString();
 	QString parametes = QString("userid=%1&username=%2&password=%3&nickname=%4&school=%5&city=%6&headimage=%7").arg(userid).arg(username).arg(password).arg(nickname).arg(school).arg(city).arg(BCImageToBase64(headimage).toStdString().c_str());
 	qDebug() << "BCRegistHandle parametes:" << parametes << "\n";
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_REGIST), parametes);
 	qDebug() << "BCRegistHandle json_str:" << reply_str.length() << "\n";
+
+    nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+    return json_str["code"] == 200;
 }
 
 void BCMessageManager::BCGetMessageListHandle()
@@ -76,9 +103,9 @@ void BCMessageManager::BCGetMessageListHandle()
 	}
 }
 
-void BCMessageManager::BCGetArticlesListHandle(int pagenum,int pagesize /*= 20*/)
+void BCMessageManager::BCGetArticlesListHandle(int type, int pagenum /*= -1*/,int pagesize /*= 20*/)
 {
-	QString parametes = QString("page_num=%1&page_size=%2").arg(pagenum).arg(pagesize);
+	QString parametes = QString("page_num=%1&page_size=%2&type=%3").arg(pagenum).arg(pagesize).arg(type);
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ARTICLES_LIST), parametes);
 	qDebug() << "BCGetArticlesListHandle json_str:" << reply_str.length() << "\n";
 	qDebug() << "BCGetArticlesListHandle json_str:" << reply_str << "\n";
@@ -86,11 +113,11 @@ void BCMessageManager::BCGetArticlesListHandle(int pagenum,int pagesize /*= 20*/
 	mBCArticlesListMap.clear();
 	if (pagenum >= 0)
 	{
-		m_articles_page_num = pagenum;
+        mMainArticlesPageNum = pagenum;
 	}
 	else
 	{
-		pagenum = m_articles_page_num;
+        pagenum = mMainArticlesPageNum;
 	}
 	if (json_str["code"] == 200)
 	{
@@ -172,11 +199,11 @@ void BCMessageManager::BCGetActivitiesListHandle(QString begintime, QString endt
 	mBCActivitiesListMap.clear();
 	if (pagenum >= 0)
 	{
-		m_activities_page_num = pagenum;
+        mMainActivitiesPageNum = pagenum;
 	}
 	else
 	{
-		pagenum = m_activities_page_num;
+        pagenum = mMainActivitiesPageNum;
 	}
 	if (json_str["code"] == 200)
 	{
@@ -197,7 +224,7 @@ void BCMessageManager::BCGetActivitiesListHandle(QString begintime, QString endt
 	}
 }
 
-bool BCMessageManager::BCGetDetailsOfTheaction(QString actionid)
+bool BCMessageManager::BCGetDetailsOfTheAction(QString actionid)
 {
 	QString parametes = QString("action_id=%1").arg(actionid);
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_DETAIL_OF_ACTION), parametes);
@@ -216,6 +243,23 @@ bool BCMessageManager::BCGetDetailsOfTheaction(QString actionid)
 			auto temp_value = (*iter).get<message_info>();
 			qDebug() << "mBCCommentListMap-temp_value-message_id:" << temp_value.message_id.c_str() << "\n";
 			mBCCommentListMap[action.action_id.c_str()][temp_value.message_id.c_str()] = temp_value;
+		}
+
+		nlohmann::json json_files = json_str["files"];
+		if (json_files.find("first_file") != json_files.end())
+		{
+			auto first_file = json_files["first_file"].get<file_base_info>();
+			mBCFileListMap[first_file.file_md5.c_str()] = first_file;
+		}
+		if (json_files.find("second_file") != json_files.end())
+		{
+			auto second_file = json_files["second_file"].get<file_base_info>();
+			mBCFileListMap[second_file.file_md5.c_str()] = second_file;
+		}
+		if (json_files.find("third_file") != json_files.end())
+		{
+			auto third_file = json_files["third_file"].get<file_base_info>();
+			mBCFileListMap[third_file.file_md5.c_str()] = third_file;
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
 		qDebug() << "mBCCommentListMap-size:" << mBCCommentListMap[action.action_id.c_str()].count() << "\n";
@@ -272,6 +316,80 @@ void BCMessageManager::BCSystemInit()
     }
 
 
+}
+
+bool BCMessageManager::BCGetSomebodyPostArticlesHandle(QString user_id, int pagenum , int pagesize)
+{
+    QString parametes = QString("userid=%1&page_num=%2&page_size=%3").arg(user_id).arg(pagenum).arg(pagesize);
+    QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ACTIVITIES_LIST), parametes);
+    qDebug() << "BCGetSomebodyPostArticlesHandle json_str:" << reply_str.length() << "\n";
+    qDebug() << "BCGetSomebodyPostArticlesHandle json_str:" << reply_str << "\n";
+    nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+    mCurrentCatchArticlesList.clear();
+    if (pagenum >= 0)
+    {
+        mCatchArticlesPageNum = pagenum;
+    }
+    else
+    {
+        pagenum = mCatchArticlesPageNum;
+    }
+    if (json_str["code"] == 200)
+    {
+        nlohmann::json json_list = json_str["list"];
+
+        for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
+        {
+            auto temp_value = (*iter).get<article_info>();
+            qDebug() << "mCurrentCatchArticlesList-temp_value-action_id:" << temp_value.author_id.c_str() << "\n";
+            mCurrentCatchArticlesList.push_back(temp_value);
+        }
+        qDebug() << "Dictionary Data parsing complete" << "\n";
+        qDebug() << "mCurrentCatchArticlesList-size:" << mCurrentCatchArticlesList.count() << "\n";
+    }
+    else
+    {
+        qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
+    }
+
+    return json_str["code"] == 200;
+}
+
+bool BCMessageManager::BCGetSomebodyPostActivitiesHandle(QString user_id, int pagenum, int pagesize)
+{
+    QString parametes = QString("userid=%1&page_num=%2&page_size=%3").arg(user_id).arg(pagenum).arg(pagesize);
+    QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ACTIVITIES_LIST), parametes);
+    qDebug() << "BCGetSomebodyPostActivitiesHandle json_str:" << reply_str.length() << "\n";
+    qDebug() << "BCGetSomebodyPostActivitiesHandle json_str:" << reply_str << "\n";
+    nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+    mCurrentCatchActivitiesList.clear();
+    if (pagenum >= 0)
+    {
+        mCatchActivitiesPageNum = pagenum;
+    }
+    else
+    {
+        pagenum = mCatchActivitiesPageNum;
+    }
+    if (json_str["code"] == 200)
+    {
+        nlohmann::json json_list = json_str["list"];
+
+        for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
+        {
+            auto temp_value = (*iter).get<action_info>();
+            qDebug() << "mCurrentCatchActivitiesList-temp_value-action_id:" << temp_value.author_id.c_str() << "\n";
+            mCurrentCatchActivitiesList.push_back(temp_value);
+        }
+        qDebug() << "Dictionary Data parsing complete" << "\n";
+        qDebug() << "mCurrentCatchActivitiesList-size:" << mCurrentCatchActivitiesList.count() << "\n";
+    }
+    else
+    {
+        qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
+    }
+
+    return json_str["code"] == 200;
 }
 
 QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter, QString contenttype)

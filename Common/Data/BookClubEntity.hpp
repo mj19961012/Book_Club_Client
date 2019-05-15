@@ -86,4 +86,16 @@ struct interest_list
     friend void to_json(nlohmann::json &j,const interest_list & interest);
     friend void from_json(const nlohmann::json &j,interest_list & interest);
 };
+
+struct file_base_info
+{
+	int id;
+	std::string file_md5;
+	int file_size;
+	int file_type;
+	std::string local_path;
+
+	friend void to_json(nlohmann::json &j, const file_base_info & file);
+	friend void from_json(const nlohmann::json &j, file_base_info & file);
+};
 #endif //BOOKCLUBENTITY_HPP
