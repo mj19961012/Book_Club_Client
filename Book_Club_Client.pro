@@ -43,5 +43,9 @@ INCLUDEPATH += \
 
 FORMS +=
 
+win32 {
+   RC_FILE = res/win/book_club.rc
+}
+
 RESOURCES += \
     recourse.qrc

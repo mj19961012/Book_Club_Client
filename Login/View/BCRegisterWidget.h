@@ -3,8 +3,9 @@
 
 #include <QWidget>
 #include "BCPolymorphicButton.h"
-#include "BCRegisterLineEdit.h"
+#include "BCInformationLineEdit.h"
 #include "BCRegisterCityButton.h"
+#include "BCImageView.h"
 
 class BCRegisterWidget : public QWidget
 {
@@ -30,11 +31,13 @@ private:
 private:
     BCPolymorphicButton* mCloseButton{};
 
-    BCRegisterLineEdit* mNameLineEdit{};
+    BCImageView *mImageView{};
+
+    BCInformationLineEdit* mNameLineEdit{};
     BCRegisterCityButton *mCityButton{};
-    BCRegisterLineEdit* mSchoolLineEdit{};
-    BCRegisterLineEdit* mPhoneLineEdit{};
-    BCRegisterLineEdit* mPasswordLineEdit{};
+    BCInformationLineEdit* mSchoolLineEdit{};
+    BCInformationLineEdit* mPhoneLineEdit{};
+    BCInformationLineEdit* mPasswordLineEdit{};
 
     BCPolymorphicButton* mRegisterButton{};
 };

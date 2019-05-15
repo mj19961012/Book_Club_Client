@@ -59,7 +59,7 @@ BCMainWindow::BCMainWindow(QWidget *parent)
 void BCMainWindow::init()
 {    
     setBaseSize(1920,1040);
-    setWindowIcon(QIcon(":/res/common/logo.png"));
+    setWindowIcon(QIcon(":/res/common/start_logo.png"));
     setWindowTitle(QStringLiteral("知友"));
     setGeometry(QApplication::desktop()->availableGeometry(this));
     setWindowFlags(Qt::FramelessWindowHint);

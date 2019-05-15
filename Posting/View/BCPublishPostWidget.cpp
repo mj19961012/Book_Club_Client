@@ -65,12 +65,12 @@ void BCPublishPostWidget::slotSubjectBtnClicked()
         if(sender() == iter.value())
         {
             iter.value()->setColorStyle("transparent","transparent","transparent","transparent",
-                                        "rgb(247,187,100)",20,1,"rgb(247,187,100)");
+                                        "rgb(247,187,100)",1,"rgb(247,187,100)",20);
         }
         else
         {
             iter.value()->setColorStyle("transparent","transparent","transparent","transparent",
-                                        "rgb(51,51,51)",20,1,"rgb(51,51,51)");
+                                        "rgb(51,51,51)",1,"rgb(51,51,51)",20);
         }
     }
 }
@@ -115,12 +115,12 @@ void BCPublishPostWidget::initStyle()
         if(iter.key() == Subject::All)
         {
             iter.value()->setColorStyle("transparent","transparent","transparent","transparent",
-                                        "rgb(247,187,100)",20,1,"rgb(247,187,100)");
+                                        "rgb(247,187,100)",1,"rgb(247,187,100)",20);
         }
         else
         {
             iter.value()->setColorStyle("transparent","transparent","transparent","transparent",
-                                        "rgb(51,51,51)",20,1,"rgb(51,51,51)");
+                                        "rgb(51,51,51)",1,"rgb(51,51,51)",20);
         }
         iter.value()->setFontStyle(20);
     }
@@ -131,7 +131,7 @@ void BCPublishPostWidget::initStyle()
                                   "rgba(247,187,100,0.8)",
                                   "rgba(247,187,100,1)",
                                   "rgba(247,187,100,1)",
-                                  "white",25,0,"transparent");
+                                  "white",0,"transparent",25);
     mPublishButton->setFontStyle(20);
 }
 

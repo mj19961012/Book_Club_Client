@@ -1,0 +1,5 @@
+﻿#ifndef BCMINEHTTPDATA_H
+#define BCMINEHTTPDATA_H
+
+
+#endif // BCMINEHTTPDATA_H

@@ -4,8 +4,12 @@
 #include <QWidget>
 #include <QStackedWidget>
 #include "BCCommonEnumData.h"
+#include "BCNavigationBar.h"
 #include "BCPostingWidget.h"
 #include "BCPublishPostWidget.h"
+#include "BCActivityWidget.h"
+#include "BCPublishActivityWidget.h"
+#include "BCMineWidget.h"
 
 class BCMainWidget : public QWidget
 {
@@ -28,12 +32,15 @@ private:
 
     void addPage(Page::BCPageEnum pageEnum);
 private:
-    class BCNavigationBar *mNavigationBar{};
+    BCNavigationBar *mNavigationBar{};
     /// \brief 堆叠窗口
-    class QStackedWidget *mStackWidget{};
+    QStackedWidget *mStackWidget{};
 
     BCPostingWidget *mPostingWidget{};
     BCPublishPostWidget *mPublishPostWidget{};
+    BCActivityWidget *mActivityWidget{};
+    BCPublishActivityWidget *mPublishActivityWidget{};
+    BCMineWidget *mMineWidget{};
 };
 
 #endif // BCMAINWIDGET_H

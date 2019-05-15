@@ -1,5 +1,4 @@
 ﻿#include "BCMainWidget.h"
-#include "BCNavigationBar.h"
 #include <QPainter>
 
 BCMainWidget::BCMainWidget(QWidget *parent)
@@ -25,16 +24,19 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mStackWidget->setCurrentWidget(mPublishPostWidget);
         break;
     case Page::Activity:
+        mStackWidget->setCurrentWidget(mActivityWidget);
         break;
     case Page::ActivityDetail:
         break;
     case Page::PublishActivity:
+        mStackWidget->setCurrentWidget(mPublishActivityWidget);
         break;
     case Page::Message:
         break;
     case Page::Chat:
         break;
     case Page::PersonalInformation:
+        mStackWidget->setCurrentWidget(mMineWidget);
         break;
     case Page::MineFocus:
         break;
@@ -142,6 +144,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::Activity:
     {
+        mActivityWidget = new BCActivityWidget(this);
+        mStackWidget->addWidget(mActivityWidget);
         break;
     }
     case Page::ActivityDetail:
@@ -150,6 +154,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::PublishActivity:
     {
+        mPublishActivityWidget = new BCPublishActivityWidget(this);
+        mStackWidget->addWidget(mPublishActivityWidget);
         break;
     }
     case Page::Message:
@@ -162,6 +168,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::PersonalInformation:
     {
+        mMineWidget = new BCMineWidget(this);
+        mStackWidget->addWidget(mMineWidget);
         break;
     }
     case Page::MineFocus:

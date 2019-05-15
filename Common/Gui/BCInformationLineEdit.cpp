@@ -1,12 +1,12 @@
-﻿#include "BCRegisterLineEdit.h"
+﻿#include "BCInformationLineEdit.h"
 
-BCRegisterLineEdit::BCRegisterLineEdit(QWidget* parent)
+BCInformationLineEdit::BCInformationLineEdit(QWidget* parent)
     :QLineEdit(parent)
 {
     init();
 }
 
-void BCRegisterLineEdit::init()
+void BCInformationLineEdit::init()
 {
     setObjectName("BCRegisterLineEdit");
     setStyleSheet("QLineEdit#BCRegisterLineEdit{"

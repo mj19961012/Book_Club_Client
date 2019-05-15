@@ -18,9 +18,39 @@ public:
                        const QString &pressedColor,
                        const QString &enabledColor,
                        const QString &fontColor,
-                       const int& borderRadius,
                        const int& borderWidth,
-                       const QString& borderColor);
+                       const QString& borderColor,
+                       const int& borderRadius);
+
+    /// \brief 通过QColor进行设置多状态背景色和圆角、边框 normal hover pressed enabled,需要背景文字同步传参才可以生效
+    void setColorStyle(const QString &normalColor,
+                       const QString &hoverColor,
+                       const QString &pressedColor,
+                       const QString &enabledColor,
+                       const QString &fontColor,
+                       const int& borderWidth,
+                       const QString& borderColor,
+                       const QStringList& borderRadius);
+
+    /// \brief 通过QColor进行设置多状态背景色和圆角、边框 normal hover pressed enabled,需要背景文字同步传参才可以生效
+    void setColorStyle(const QString &normalColor,
+                       const QString &hoverColor,
+                       const QString &pressedColor,
+                       const QString &enabledColor,
+                       const QString &fontColor,
+                       const QStringList& borderWidth,
+                       const QStringList& borderColor,
+                       const int& borderRadius);
+
+    /// \brief 通过QColor进行设置多状态背景色和圆角、边框 normal hover pressed enabled,需要背景文字同步传参才可以生效
+    void setColorStyle(const QString &normalColor,
+                       const QString &hoverColor,
+                       const QString &pressedColor,
+                       const QString &enabledColor,
+                       const QString &fontColor,
+                       const QStringList& borderWidth,
+                       const QStringList& borderColor,
+                       const QStringList& borderRadius);
 
     void setButtonText(const QString& text);
 
