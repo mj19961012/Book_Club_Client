@@ -23,6 +23,10 @@
 #define BC_API_RELEASE_ACTION "/clint/action/release"
 #define BC_API_GET_DETAIL_OF_ACTION "/clint/action/get_detail"
 
+#define BC_API_FOLLOW_SOMEBODY "/clint/interest/follow"
+#define BC_API_FOLLOW_CANCLE "/clint/interest/cancle"
+#define BC_API_GET_SOMEONE_INTEREST_LIST "/clint/interest/get_list"
+
 #define BC_CONTENTTYPE_HEADER "application/x-www-form-urlencoded"
 
 #define GET_API(X) BC_API_URL X

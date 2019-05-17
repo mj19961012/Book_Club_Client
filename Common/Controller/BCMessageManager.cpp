@@ -392,6 +392,59 @@ bool BCMessageManager::BCGetSomebodyPostActivitiesHandle(QString user_id, int pa
     return json_str["code"] == 200;
 }
 
+bool BCMessageManager::BCFollowSomeBodyHandle(QString user_id, QString follow_id)
+{
+	QString interest_id = QUuid::createUuid().toString();
+	long follow_time = QDateTime::currentDateTime().toTime_t();
+
+	QString parametes = QString("interest_id=%1&user_id=%2&follow_id=%3&date=%4").arg(interest_id).arg(user_id).arg(follow_id).arg(follow_time);
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_FOLLOW_SOMEBODY), parametes);
+	qDebug() << "BCFollowSomeBodyHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCFollowSomeBodyHandle json_str:" << reply_str << "\n";
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+
+	return json_str["code"] == 200;
+}
+
+bool BCMessageManager::BCFollowCancleSomeBodyHandle(QString interest_id)
+{
+	QString parametes = QString("interest_id=%1").arg(interest_id);
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_FOLLOW_CANCLE), parametes);
+	qDebug() << "BCFollowCancleSomeBodyHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCFollowCancleSomeBodyHandle json_str:" << reply_str << "\n";
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+
+	return json_str["code"] == 200;
+}
+
+bool BCMessageManager::BCGetInterestListWithSomeoneHandle(QString interest_id)
+{
+	QString parametes = QString("interest_id=%1").arg(interest_id);
+	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_SOMEONE_INTEREST_LIST), parametes);
+	qDebug() << "BCGetInterestListWithSomeoneHandle json_str:" << reply_str.length() << "\n";
+	qDebug() << "BCGetInterestListWithSomeoneHandle json_str:" << reply_str << "\n";
+	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+
+	if (json_str["code"] == 200)
+	{
+		nlohmann::json json_list = json_str["list"];
+
+		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
+		{
+			auto temp_value = (*iter).get<interest_list>();
+			qDebug() << "mBCMessageListMap-temp_value-message_id:" << temp_value.interest_id.c_str() << "\n";
+			mBCInterestListMap[temp_value.interest_id.c_str()] = temp_value;
+		}
+		qDebug() << "Dictionary Data parsing complete" << "\n";
+		qDebug() << "mBCInterestListMap-size:" << mBCInterestListMap.count() << "\n";
+	}
+	else
+	{
+		qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
+	}
+	return json_str["code"] == 200;
+}
+
 QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter, QString contenttype)
 {
 // 	QString url_str = GET_API(BC_API_INIT_CITY);

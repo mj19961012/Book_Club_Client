@@ -27,7 +27,11 @@ public :
     void BCSystemInit();
     bool BCGetSomebodyPostArticlesHandle(QString user_id, int pagenum = -1, int pagesize = 20);
     bool BCGetSomebodyPostActivitiesHandle(QString user_id, int pagenum = -1, int pagesize = 20);
-    QString BCHttpRequestHandle(QString requrl,QString parameter,QString contenttype = BC_CONTENTTYPE_HEADER);
+	bool BCFollowSomeBodyHandle(QString user_id, QString follow_id);
+	bool BCFollowCancleSomeBodyHandle(QString interest_id);
+	bool BCGetInterestListWithSomeoneHandle(QString interest_id);
+
+	QString BCHttpRequestHandle(QString requrl,QString parameter,QString contenttype = BC_CONTENTTYPE_HEADER);
 	QByteArray BCImageToBase64(QString imgpath);
 	QPixmap BCBase64ToImage(QByteArray data, bool issave, QString savepath = "");
 	QString BCUpLoadSimpleFile(QString filepath);
@@ -41,6 +45,7 @@ public:
 	QMap<QString, action_info> mBCActivitiesListMap;
 	QMap<QString, QMap<QString, message_info>> mBCCommentListMap;
 	QMap<QString, file_base_info> mBCFileListMap;
+	QMap<QString, interest_list> mBCInterestListMap;
 
     QString mCurrentCatchArticlesListAuthor;
     QList<article_info> mCurrentCatchArticlesList;
