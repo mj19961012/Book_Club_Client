@@ -14,12 +14,18 @@
 #define BC_API_SEND_MESSAGE "/clint/message/send_msg"
 
 #define BC_API_GET_ARTICLES_LIST "/clint/article/get_list"
+#define BC_API_GET_ARTICLES_LIST_WITH_SOMEONE "/clint/article/get_list_with_someone"
 #define BC_API_RELEASE_ARTICLE "/clint/article/release"
 #define BC_API_GET_DETAIL_OF_ATRICLE "/clint/article/get_detail"
 
 #define BC_API_GET_ACTIVITIES_LIST "/clint/action/get_list"
+#define BC_API_GET_ACTIVITIES_LIST_WITH_SOMEONE "/clint/action/get_list_with_someone"
 #define BC_API_RELEASE_ACTION "/clint/action/release"
 #define BC_API_GET_DETAIL_OF_ACTION "/clint/action/get_detail"
+
+#define BC_API_FOLLOW_SOMEBODY "/clint/interest/follow"
+#define BC_API_FOLLOW_CANCLE "/clint/interest/cancle"
+#define BC_API_GET_SOMEONE_INTEREST_LIST "/clint/interest/get_list"
 
 #define BC_CONTENTTYPE_HEADER "application/x-www-form-urlencoded"
 

@@ -250,32 +250,71 @@ void from_json(const nlohmann::json &j,message_info & message)
 	}
 }
 
-void to_json(nlohmann::json &j,const interest_list & interest)
+void to_json(nlohmann::json &j, const interest_list & interest)
 {
-    j = nlohmann::json{
-            {"id",interest.id},
-            {"user_id",interest.user_id},
-            {"follower_id",interest.follower_id},
-            {"date_subscribed",interest.date_subscribed}
-    };
+	j = nlohmann::json{
+		{ "id",interest.id },
+		{ "interest_id",interest.interest_id },
+		{ "user_id",interest.user_id },
+		{ "follower_id",interest.follower_id },
+		{ "date_subscribed",interest.date_subscribed }
+	};
 }
 
-void from_json(const nlohmann::json &j,interest_list & interest)
+void from_json(const nlohmann::json &j, interest_list & interest)
 {
-    if(j.find("id") != j.end())
-    {
-        interest.id = j["id"].get<int>();
-    }
-    if(j.find("user_id") != j.end())
-    {
-        interest.user_id = j["user_id"].get<std::string>();
-    }
-    if(j.find("follower_id") != j.end())
-    {
-        interest.follower_id = j["follower_id"].get<std::string>();
-    }
-    if(j.find("date_subscribed") != j.end())
-    {
-        interest.date_subscribed = j["date_subscribed"].get<std::string>();
-    }
+	if (j.find("id") != j.end())
+	{
+		interest.id = j["id"].get<int>();
+	}
+	if (j.find("interest_id") != j.end())
+	{
+		interest.interest_id = j["interest_id"].get<std::string>();
+	}
+	if (j.find("user_id") != j.end())
+	{
+		interest.user_id = j["user_id"].get<std::string>();
+	}
+	if (j.find("follower_id") != j.end())
+	{
+		interest.follower_id = j["follower_id"].get<std::string>();
+	}
+	if (j.find("date_subscribed") != j.end())
+	{
+		interest.date_subscribed = j["date_subscribed"].get<std::string>();
+	}
+}
+
+void to_json(nlohmann::json &j, const file_base_info & file)
+{
+	j = nlohmann::json{
+		{ "id",file.id },
+		{ "file_md5",file.file_md5 },
+		{ "file_size",file.file_size },
+		{ "file_type",file.file_type },
+		{ "local_path",file.local_path }
+	};
+}
+void from_json(const nlohmann::json &j, file_base_info & file)
+{
+	if (j.find("id") != j.end())
+	{
+		file.id = j["id"].get<int>();
+	}
+	if (j.find("file_md5") != j.end())
+	{
+		file.file_md5 = j["file_md5"].get<std::string>();
+	}
+	if (j.find("file_size") != j.end())
+	{
+		file.file_size = j["file_size"].get<int>();
+	}
+	if (j.find("file_type") != j.end())
+	{
+		file.file_type = j["file_type"].get<int>();
+	}
+	if (j.find("local_path") != j.end())
+	{
+		file.local_path = j["local_path"].get<std::string>();
+	}
 }
