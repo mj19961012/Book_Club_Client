@@ -1,20 +1,20 @@
-﻿#include "BCMinePostingItemWidget.h"
+﻿#include "BCMineActivityItemWidget.h"
 #include <QPainter>
 
-BCMinePostingItemWidget::BCMinePostingItemWidget(QWidget *parent)
-    :QWidget(parent)
+BCMineActivityItemWidget::BCMineActivityItemWidget(QWidget *parent)
+    :QWidget (parent)
 {
     init();
 }
 
-void BCMinePostingItemWidget::initData()
+void BCMineActivityItemWidget::initData()
 {
-    setTitle(u8"我的帖子");
+    setTitle(u8"我的活动");
     setDate("2018-05-20");
     setContent(u8"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
 }
 
-void BCMinePostingItemWidget::paintEvent(QPaintEvent *event)
+void BCMineActivityItemWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
 
@@ -27,7 +27,7 @@ void BCMinePostingItemWidget::paintEvent(QPaintEvent *event)
     painter.drawRoundedRect(0,0,this->width(),this->height(),20,20,Qt::AbsoluteSize);
 }
 
-void BCMinePostingItemWidget::resizeEvent(QResizeEvent *event)
+void BCMineActivityItemWidget::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
@@ -40,7 +40,7 @@ void BCMinePostingItemWidget::resizeEvent(QResizeEvent *event)
     initStyle();
 }
 
-void BCMinePostingItemWidget::init()
+void BCMineActivityItemWidget::init()
 {
     mMainVLayout = new QVBoxLayout(this);
 
@@ -53,7 +53,7 @@ void BCMinePostingItemWidget::init()
     this->setLayout(mMainVLayout);
 }
 
-void BCMinePostingItemWidget::createTitleWidget()
+void BCMineActivityItemWidget::createTitleWidget()
 {
     mTitleWidget = new QWidget(this);
     mTitleHLayout = new QHBoxLayout(mTitleWidget);
@@ -68,7 +68,7 @@ void BCMinePostingItemWidget::createTitleWidget()
     mTitleWidget->setLayout(mTitleHLayout);
 }
 
-void BCMinePostingItemWidget::initStyle()
+void BCMineActivityItemWidget::initStyle()
 {
     mTitleLabel->setStyle("transparent","#333333",Qt::AlignLeft | Qt::AlignVCenter);
     mTitleLabel->setFontStyle(25,63);
@@ -81,19 +81,19 @@ void BCMinePostingItemWidget::initStyle()
     mContentLabel->setWordWrap(true);
 }
 
-void BCMinePostingItemWidget::setTitle(const QString &title)
+void BCMineActivityItemWidget::setTitle(const QString &title)
 {
     mTitleLabel->setText(title);
     mTitleLabel->adjustSize();
 }
 
-void BCMinePostingItemWidget::setDate(const QString &date)
+void BCMineActivityItemWidget::setDate(const QString &date)
 {
     mDateLabel->setText(date);
     mDateLabel->adjustSize();
 }
 
-void BCMinePostingItemWidget::setContent(const QString &content)
+void BCMineActivityItemWidget::setContent(const QString &content)
 {
     mContentLabel->setText(content);
 }

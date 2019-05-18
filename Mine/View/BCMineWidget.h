@@ -35,7 +35,9 @@ private:
     BCPolymorphicButton *mInterestListButton{};
     QStackedWidget *mStackedWidget{};
 
-    BCListWidget *mMineListWidget;
+    BCListWidget *mMinePostingListWidget;
+    BCListWidget *mMineActivityListWidget;
+    BCListWidget *mMineInterestListWidget;
 
 private:
     QMap<MinePage::BCMinePageEnum,BCPolymorphicButton*> mButtonMap{};

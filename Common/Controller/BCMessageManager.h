@@ -39,8 +39,8 @@ public :
 	QString BCGetFileInfo(QString filemd5);
 	QByteArray BCDownLoadSimpleFile(QString filemd5);
 public:
-    QMap<QString,QMap<QString,QString>> mBCChildCityInfoMap;
-    QMap<QString,QString> mBCParentCityInfoMap;
+    QMap<QString, QMap<QString, QString>> mBCChildCityInfoMap;
+    QMap<QString, QString> mBCParentCityInfoMap;
 	QMap<QString, message_info> mBCMessageListMap;
 	QMap<QString, article_info> mBCArticlesListMap;
 	QMap<QString, action_info> mBCActivitiesListMap;

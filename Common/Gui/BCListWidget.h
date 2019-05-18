@@ -15,6 +15,8 @@ class BCListWidget : public QListWidget
 public:
     explicit BCListWidget(QWidget *parent = nullptr);
     void addListItem(ListItem::BCListWidgetType type);
+    void setMessageChatListHasBeenRead();
+    void setMessagePostingListHasBeenRead();
 
 signals:
     void sigItemClicked();
@@ -25,12 +27,18 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 
 private:
-    void clearData();
     void addPostingItem(const QString& id, const QString& name, const QString& content);
     void addActivityItem(const QString &id);
     void addMinePostingItem(const QString &id);
     void addMineAvtivityItem(const QString &id);
     void addMineInterestItem(const QString &id);
+    void addMessageChatItem(const QString &id);
+    void addMessagePostingItem(const QString &id);
+
+private:
+    void clearData();
+    void setMessageChatItemIsRead(QListWidgetItem* item);
+    void setMessagePostingItemIsRead(QListWidgetItem* item);
 
 private:
     QMap<QString,QListWidgetItem*> mListMap{};

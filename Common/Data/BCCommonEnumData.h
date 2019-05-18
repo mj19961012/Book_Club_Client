@@ -86,6 +86,8 @@ enum BCListWidgetType
     MinePosting,
     MineAvtivity,
     MineInterest,
+    MessageChat,
+    MessagePosting,
 };
 }
 

@@ -17,5 +17,6 @@
         <file>res/common/addFile.png</file>
         <file>res/common/file.png</file>
         <file>res/common/defaultHeadImage.png</file>
+        <file>res/Mine/enter.png</file>
     </qresource>
 </RCC>
