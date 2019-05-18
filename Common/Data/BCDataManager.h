@@ -10,15 +10,16 @@ public:
     static BCDataManager& instance();
     void release();
 
-    /// \brief 获取用户头像保存路径
-    const QString& getUserHeadImgPath();
+    /// \brief 获取AppData路径
+    const QString& getAppDataPath();
+
 
 private:
-    BCDataManager();
+    explicit BCDataManager(QObject *parent = nullptr);
     static BCDataManager *sDataManager;
 
 private:
-    QString mUserHeadImgPath{""};
+    QString mAppDataPath{""};
 };
 
 #endif // BCDATAMANAGER_H

@@ -1,5 +1,6 @@
 ﻿#include "BCActivityWidget.h"
 #include "BCMainWindow.h"
+#include "BCCommonEnumData.h"
 
 BCActivityWidget::BCActivityWidget(QWidget *parent)
     :QWidget (parent)
@@ -7,6 +8,13 @@ BCActivityWidget::BCActivityWidget(QWidget *parent)
     init();
     initStyle();
     initConnect();
+
+    initData();
+}
+
+void BCActivityWidget::initData()
+{
+    mActivityListWidget->addListItem(ListItem::Activity);
 }
 
 void BCActivityWidget::paintEvent(QPaintEvent *event)
@@ -19,11 +27,14 @@ void BCActivityWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 
     mAddActivityButton->setGeometry(75,20,200,50);
+    mActivityListWidget->setGeometry(75,150,this->width() - 150,this->height() - 150);
 }
 
 void BCActivityWidget::init()
 {
     mAddActivityButton = new BCPolymorphicButton(this);
+
+    mActivityListWidget = new BCListWidget(this);
 }
 
 void BCActivityWidget::initStyle()

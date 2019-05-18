@@ -1,4 +1,5 @@
 ﻿#include "BCMineWidget.h"
+#include "BCCommonEnumData.h"
 
 BCMineWidget::BCMineWidget(QWidget *parent)
     :QWidget (parent)
@@ -16,10 +17,16 @@ void BCMineWidget::showPage(MinePage::BCMinePageEnum page)
     case MinePage::EditMineInformation:
         break;
     case MinePage::MinePosting:
+        mStackedWidget->setCurrentWidget(mMineListWidget);
+        mMineListWidget->addListItem(ListItem::MinePosting);
         break;
     case MinePage::MineActivity:
+        mStackedWidget->setCurrentWidget(mMineListWidget);
+        mMineListWidget->addListItem(ListItem::MineAvtivity);
         break;
     case MinePage::InterestList:
+        mStackedWidget->setCurrentWidget(mMineListWidget);
+        mMineListWidget->addListItem(ListItem::MineInterest);
         break;
     }
 }
@@ -58,6 +65,7 @@ void BCMineWidget::slotMineButtonClicked()
                                         "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
                                         "#333333",QString("2,2,2,0").split(","),
                                         QString("#F7BB64,#F7BB64,#F7BB64,#F7BB64").split(","),0);
+            showPage(iter.key());
         }
         else
         {
@@ -92,9 +100,7 @@ void BCMineWidget::init()
 
     addPage(MinePage::MineInformation);
     addPage(MinePage::EditMineInformation);
-    addPage(MinePage::MinePosting);
-    addPage(MinePage::MineActivity);
-    addPage(MinePage::InterestList);
+    addPage(MinePage::MineList);
 }
 
 void BCMineWidget::initStyle()
@@ -147,22 +153,10 @@ void BCMineWidget::addPage(MinePage::BCMinePageEnum page)
 //        mStackedWidget->addWidget(mMainWidget);
         break;
     }
-    case MinePage::MinePosting:
+    default:
     {
-
-//        mStackedWidget->addWidget(mMainWidget);
-        break;
-    }
-    case MinePage::MineActivity:
-    {
-
-//        mStackedWidget->addWidget(mMainWidget);
-        break;
-    }
-    case MinePage::InterestList:
-    {
-
-//        mStackedWidget->addWidget(mMainWidget);
+        mMineListWidget = new BCListWidget(this);
+        mStackedWidget->addWidget(mMineListWidget);
         break;
     }
     }

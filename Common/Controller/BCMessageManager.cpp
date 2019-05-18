@@ -5,17 +5,20 @@
 #include <QApplication>
 #include <QNetworkReply>
 #include <QDebug>
-#include "nlohmann_json.hpp"
 #include <QUuid>
 #include <QHttpMultiPart>
 #include <QImage>
 #include <QBuffer>
 #include <QFileInfo>
 #include <QDateTime>
+#include <QDir>
+#include "BCDataManager.h"
+#include "nlohmann_json.hpp"
 
 BCMessageManager* BCMessageManager::mMessageManager = nullptr;
 
-BCMessageManager::BCMessageManager()
+BCMessageManager::BCMessageManager(QObject *parent)
+    :QObject (parent)
 {
 
 }
@@ -307,16 +310,23 @@ QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter,
 
 QByteArray BCMessageManager::BCImageToBase64(QString imgpath)
 {
-	QImage image(imgpath);
-	QByteArray ba;
-	QBuffer buf(&ba);
-	image.save(&buf, "PNG", 20);
-	QByteArray hexed = ba.toBase64();
-	buf.close();
-	return hexed;
+    QImage image;
+    if(image.load(imgpath))
+    {
+        QByteArray ba;
+        QBuffer buf(&ba);
+        image.save(&buf, "PNG", 20);
+        QByteArray hexed = ba.toBase64();
+        buf.close();
+        return hexed;
+    }
+    else
+    {
+        return QByteArray("");
+    }
 }
 
-QPixmap BCMessageManager::BCBase64ToImage(QByteArray data, bool issave, QString savepath)
+QPixmap BCMessageManager::BCBase64ToImage(QByteArray data, bool issave)
 {
 	QByteArray Ret_bytearray;
 	Ret_bytearray = QByteArray::fromBase64(data);
@@ -326,11 +336,21 @@ QPixmap BCMessageManager::BCBase64ToImage(QByteArray data, bool issave, QString 
 	QPixmap imageresult;
 	imageresult.loadFromData(Ret_bytearray);
 
-	if (issave && savepath != "")
+    if(issave)
 	{
-		imageresult.save(savepath);
+        //TODO
+        QString appDataPath = BCDataManager::instance().getAppDataPath() + "/imageLog/";
+        QDir dir;
+        dir.setPath(appDataPath);
+        if(!dir.exists(appDataPath))
+        {
+            dir.mkpath(appDataPath);
+        }
+
+        imageresult.save(appDataPath);
 	}
-	return imageresult;
+    buffer.close();
+    return imageresult;
 }
 
 QString BCMessageManager::BCUpLoadSimpleFile(QString filepath)
@@ -379,7 +399,6 @@ QString BCMessageManager::BCUpLoadSimpleFile(QString filepath)
 	{
 		return QString().fromStdString(reply_json["file_md5"].get<std::string>());
 	}
-
 	return QString();
 }
 
@@ -446,5 +465,5 @@ QByteArray BCMessageManager::BCDownLoadSimpleFile(QString filemd5)
 		}
 	}
 	qDebug() << "BCDownLoadSimpleFile after request:" << reply_json["msg"].get<std::string>().c_str() << "\n";
-	return QByteArray();
+    return QByteArray();
 }

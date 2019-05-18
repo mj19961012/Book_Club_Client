@@ -22,18 +22,19 @@ void BCDataManager::release()
     }
 }
 
-const QString &BCDataManager::getUserHeadImgPath()
+const QString &BCDataManager::getAppDataPath()
 {
     QDir tempDir;
-    tempDir.setPath(mUserHeadImgPath);
-    if(!tempDir.exists(mUserHeadImgPath))
+    tempDir.setPath(mAppDataPath);
+    if(!tempDir.exists(mAppDataPath))
     {
-        tempDir.mkpath(mUserHeadImgPath);
+        tempDir.mkpath(mAppDataPath);
     }
-    return mUserHeadImgPath;
+    return mAppDataPath;
 }
 
-BCDataManager::BCDataManager()
+BCDataManager::BCDataManager(QObject *parent)
+    :QObject (parent)
 {
-    mUserHeadImgPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }

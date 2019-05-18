@@ -161,7 +161,7 @@ void BCRegisterWidget::initConnect()
             if(image.load(fileName))
             {
                 pixmap = QPixmap::fromImage(image.scaled(mImageView->size(),Qt::KeepAspectRatio));
-                QString path = BCDataManager::instance().getUserHeadImgPath() + "/HeadImage.png";
+                QString path = BCDataManager::instance().getAppDataPath() + "/HeadImage.png";
                 if(pixmap.save(path))
                 {
                     qDebug() << "头像保存成功，路径为：" << path;

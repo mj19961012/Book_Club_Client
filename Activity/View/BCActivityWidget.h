@@ -3,12 +3,14 @@
 
 #include <QWidget>
 #include "BCPolymorphicButton.h"
+#include "BCListWidget.h"
 
 class BCActivityWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit BCActivityWidget(QWidget *parent = nullptr);
+    void initData();
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -21,6 +23,7 @@ private:
 
 private:
     BCPolymorphicButton *mAddActivityButton{};
+    BCListWidget *mActivityListWidget{};
 };
 
 #endif // BCACTIVITYWIDGET_H

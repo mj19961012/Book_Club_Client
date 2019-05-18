@@ -11,6 +11,7 @@ class BCFileWidget : public QWidget
 public:
     explicit BCFileWidget(QWidget *parent = nullptr);
     void setIcon(const QString& icon);
+    void setIcon(const QPixmap& pixmap);
     void setText(const QString& text);
 
 protected:

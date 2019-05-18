@@ -1,5 +1,6 @@
 ﻿#include "BCPostingWidget.h"
 #include "BCMainWindow.h"
+#include "BCCommonEnumData.h"
 
 BCPostingWidget::BCPostingWidget(QWidget *parent)
     :QWidget(parent)
@@ -8,6 +9,13 @@ BCPostingWidget::BCPostingWidget(QWidget *parent)
     initStyle();
     initConnect();
     setButtonText();
+
+    initData();
+}
+
+void BCPostingWidget::initData()
+{
+    mPostingListWidget->addListItem(ListItem::Posting);
 }
 
 void BCPostingWidget::paintEvent(QPaintEvent *event)
@@ -26,6 +34,8 @@ void BCPostingWidget::resizeEvent(QResizeEvent *event)
         iter.value()->setFixedSize(100,40);
         mSubjectButtonMap.value(iter.key())->move(75 + (iter.key() - 1)*(iter.value()->width() + 5),100);
     }
+
+    mPostingListWidget->setGeometry(75,150,this->width() - 150,this->height() - 150);
 
     initStyle();
 }
@@ -57,6 +67,8 @@ void BCPostingWidget::init()
         connect(button,&BCPolymorphicButton::clicked,this,&BCPostingWidget::slotSubjectBtnClicked);
         mSubjectButtonMap[i] = button;
     }
+
+    mPostingListWidget = new BCListWidget(this);
 }
 
 void BCPostingWidget::initStyle()

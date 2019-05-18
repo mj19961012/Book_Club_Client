@@ -6,6 +6,7 @@
 #include <QStackedWidget>
 #include "BCPolymorphicButton.h"
 #include "BCMineEnumData.h"
+#include "BCListWidget.h"
 
 class BCMineWidget : public QWidget
 {
@@ -33,6 +34,8 @@ private:
     BCPolymorphicButton *mMineActivityButton{};
     BCPolymorphicButton *mInterestListButton{};
     QStackedWidget *mStackedWidget{};
+
+    BCListWidget *mMineListWidget;
 
 private:
     QMap<MinePage::BCMinePageEnum,BCPolymorphicButton*> mButtonMap{};

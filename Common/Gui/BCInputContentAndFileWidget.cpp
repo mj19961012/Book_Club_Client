@@ -1,5 +1,11 @@
 ﻿#include "BCInputContentAndFileWidget.h"
 #include <QPainter>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <QDir>
+#include <QFileIconProvider>
+#include "BCDataManager.h"
+#include "BCToastTips.h"
 
 BCInputContentAndFileWidget::BCInputContentAndFileWidget(QWidget *parent)
     :QWidget(parent)
@@ -34,6 +40,65 @@ void BCInputContentAndFileWidget::resizeEvent(QResizeEvent *event)
     mAddFileButton->setFixedSize(73,64);
 
     initStyle();
+}
+
+void BCInputContentAndFileWidget::slotAddFileButtonClicked()
+{
+    QFileDialog fileDialog(this);//定义文件对话框类
+    fileDialog.setWindowTitle((QStringLiteral("选择帖子附件")));//定义文件对话框标题
+    fileDialog.setDirectory(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation));//设置默认文件路径
+    fileDialog.setNameFilter(tr("File(*.*)"));//设置文件过滤器
+    fileDialog.setFileMode(QFileDialog::ExistingFiles);//设置可以选择多个文件,默认为只能选择一个文件QFileDialog::ExistingFiles
+    fileDialog.setViewMode(QFileDialog::List);//设置视图模式
+    //打印所有选择的文件的路径
+    if(fileDialog.exec())
+    {
+        QString fileName = fileDialog.selectedFiles()[0];
+        QFile file(fileName);
+        QFileInfo info(fileName);
+
+        QString appDataPath = BCDataManager::instance().getAppDataPath() + "/posting/";
+        QDir dir;
+        dir.setPath(appDataPath);
+        dir.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot); //设置过滤
+        if(!dir.exists(appDataPath))
+        {
+            dir.mkpath(appDataPath);
+        }
+        QFileInfoList fileList = dir.entryInfoList(); // 获取所有的文件信息
+        int i = 1;
+        QString newFileName;
+        foreach (QFileInfo file, fileList) //遍历文件信息
+        {
+            if(file.isFile() && file.completeBaseName() == info.completeBaseName())
+            {
+                newFileName = appDataPath + "/" + info.baseName() + "(" + QString::number(i) + ")." + info.suffix();
+            }
+            else
+            {
+                newFileName = appDataPath + "/" + info.completeBaseName();
+            }
+        }
+
+        if(file.copy(newFileName))
+        {
+            int insertKey = mFilePathMap.size() + 1;
+            mFilePathMap[insertKey] = newFileName;
+            if(mFilePathMap.size() == 3)
+            {
+                mAddFileButton->setVisible(false);
+            }
+            for(auto iter = mFileWidgetMap.begin(); iter != mFileWidgetMap.end(); iter++)
+            {
+                if(iter.key() == insertKey)
+                {
+                    iter.value()->setVisible(true);
+                    iter.value()->setIcon(":/res/common/file.png");
+                    iter.value()->setText(info.baseName());
+                }
+            }
+        }
+    }
 }
 
 void BCInputContentAndFileWidget::init()
@@ -72,7 +137,7 @@ void BCInputContentAndFileWidget::initStyle()
 
 void BCInputContentAndFileWidget::initConnect()
 {
-
+    connect(mAddFileButton,&BCPolymorphicButton::clicked,this,&BCInputContentAndFileWidget::slotAddFileButtonClicked);
 }
 
 void BCInputContentAndFileWidget::createFileWidget()
@@ -86,16 +151,6 @@ void BCInputContentAndFileWidget::createFileWidget()
     mSecondFileWidget = new BCFileWidget(mFileWidget);
     mThirdFileWidget = new BCFileWidget(mFileWidget);
     mAddFileButton = new BCPolymorphicButton(mFileWidget);
-
-    mFirstFileWidget->setIcon(":/res/common/file.png");
-    mFirstFileWidget->setText(QStringLiteral("第一个"));
-
-    mSecondFileWidget->setIcon(":/res/common/file.png");
-    mSecondFileWidget->setText(QStringLiteral("第二个"));
-
-    mThirdFileWidget->setIcon(":/res/common/file.png");
-    mThirdFileWidget->setText(QStringLiteral("第三个"));
-
     mAddFileButton->setImageStyle(":/res/common/addFile.png");
 
     mFileHLayout->addWidget(mFirstFileWidget);
@@ -105,4 +160,12 @@ void BCInputContentAndFileWidget::createFileWidget()
     mFileHLayout->addWidget(mAddFileButton);
 
     mFileWidget->setLayout(mFileHLayout);
+
+    mFirstFileWidget->setVisible(false);
+    mSecondFileWidget->setVisible(false);
+    mThirdFileWidget->setVisible(false);
+
+    mFileWidgetMap[1] = mFirstFileWidget;
+    mFileWidgetMap[2] = mSecondFileWidget;
+    mFileWidgetMap[3] = mThirdFileWidget;
 }

@@ -1,17 +1,18 @@
 ﻿#ifndef BCMESSAGEMANAHER_H
 #define BCMESSAGEMANAHER_H
-#include"BookClubEntity.hpp"
-#include"BCCommonApiDef.hpp"
-#include<QMap>
-#include<QString>
+
+#include <QObject>
+#include <QMap>
+#include <QString>
 #include <QPixmap>
 #include <QByteArray>
+#include "BookClubEntity.hpp"
+#include "BCCommonApiDef.hpp"
 
-
-class BCMessageManager
+class BCMessageManager : public QObject
 {
+    Q_OBJECT
 public :
-    BCMessageManager();
     ~BCMessageManager();
     static BCMessageManager * getInstance();
     void BCLoginHandle(std::string username,std::string password);
@@ -27,23 +28,24 @@ public :
     void BCSystemInit();
     QString BCHttpRequestHandle(QString requrl,QString parameter,QString contenttype = BC_CONTENTTYPE_HEADER);
 	QByteArray BCImageToBase64(QString imgpath);
-	QPixmap BCBase64ToImage(QByteArray data, bool issave, QString savepath = "");
+    QPixmap BCBase64ToImage(QByteArray data, bool issave);
 	QString BCUpLoadSimpleFile(QString filepath);
 	QString BCGetFileInfo(QString filemd5);
 	QByteArray BCDownLoadSimpleFile(QString filemd5);
 public:
-    QMap<QString,QMap<QString,QString>> mBCChildCityInfoMap;
-    QMap<QString,QString> mBCParentCityInfoMap;
-	QMap<QString, message_info> mBCMessageListMap;
-	QMap<QString, article_info> mBCArticlesListMap;
-	QMap<QString, action_info> mBCActivitiesListMap;
-	QMap<QString, QMap<QString, message_info>> mBCCommentListMap;
+    QMap<QString, QMap<QString,QString>> mBCChildCityInfoMap{};
+    QMap<QString, QString> mBCParentCityInfoMap{};
+    QMap<QString, message_info> mBCMessageListMap{};
+    QMap<QString, article_info> mBCArticlesListMap{};
+    QMap<QString, action_info> mBCActivitiesListMap{};
+    QMap<QString, QMap<QString, message_info>> mBCCommentListMap{};
 private:
+    explicit BCMessageManager(QObject *parent = nullptr);
     static BCMessageManager* mMessageManager;
 
-    user_info current_user;
-	int m_activities_page_num;
-	int m_articles_page_num;
+    user_info current_user{};
+    int m_activities_page_num{0};
+    int m_articles_page_num{0};
 };
 
 #endif // BCMESSAGEMANAHER_H

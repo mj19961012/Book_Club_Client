@@ -17,6 +17,9 @@ protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
 
+private slots:
+    void slotAddFileButtonClicked();
+
 private:
     void init();
     void initStyle();
@@ -34,6 +37,9 @@ private:
 
     QVBoxLayout *mMainVLayout{};
     QHBoxLayout *mFileHLayout{};
+private:
+    QMap<int,BCFileWidget*> mFileWidgetMap{};
+    QMap<int,QString> mFilePathMap{};
 };
 
 #endif // BCINPUTCONTENTANDFILEWIDGET_H

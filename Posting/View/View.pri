@@ -1,9 +1,11 @@
 HEADERS += \
-    $$PWD/BCPostingListWidget.h \
     $$PWD/BCPostingWidget.h \
-    $$PWD/BCPublishPostWidget.h
+    $$PWD/BCPublishPostWidget.h \
+    $$PWD/BCPostingListItemWidget.h \
+    $$PWD/BCPostingDetailWidget.h
 
 SOURCES += \
-    $$PWD/BCPostingListWidget.cpp \
     $$PWD/BCPostingWidget.cpp \
-    $$PWD/BCPublishPostWidget.cpp
+    $$PWD/BCPublishPostWidget.cpp \
+    $$PWD/BCPostingListItemWidget.cpp \
+    $$PWD/BCPostingDetailWidget.cpp

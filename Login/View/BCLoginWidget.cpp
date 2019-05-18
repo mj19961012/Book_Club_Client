@@ -49,22 +49,22 @@ void BCLoginWidget::initConnect()
     connect(mLoginInputWidget,&BCLoginInputWidget::sigLoginButtonClicked,this,[this](){
 //        if(mLoginInputWidget->getUserPhoneLineEdit()->isEmpty())
 //        {
-//            BCToastTips::Instance().initData(QStringLiteral("请输入手机号~"));
+//            BCToastTips::Instance().setToastTip(QStringLiteral("请输入手机号~"));
 //        }
 //        else if(mLoginInputWidget->getPasswordLineEdit()->isEmpty())
 //        {
-//            BCToastTips::Instance().initData(QStringLiteral("请输入密码~"));
+//            BCToastTips::Instance().setToastTip(QStringLiteral("请输入密码~"));
 //        }
 //        else if(!mLoginInputWidget->getPasswordLineEdit()->isEmpty()
 //                && !mLoginInputWidget->getUserPhoneLineEdit()->isEmpty())
 //        {
 //            if(mLoginInputWidget->getUserPhoneLineEdit()->isMaxInputLength())
 //            {
-//                BCToastTips::Instance().initData(QStringLiteral("请输入正确的手机号！"));
+//                BCToastTips::Instance().setToastTip(QStringLiteral("请输入正确的手机号！"));
 //            }
 //            else if (mLoginInputWidget->getPasswordLineEdit()->isMaxInputLength())
 //            {
-//                BCToastTips::Instance().initData(QStringLiteral("请输入6~12位字符，支持数字、字母、数字和字母组合。"));
+//                BCToastTips::Instance().setToastTip(QStringLiteral("请输入6~12位字符，支持数字、字母、数字和字母组合。"));
 //            }
 //            else
 //            {

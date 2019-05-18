@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Jey on 2019/2/26.
 //
 
@@ -41,6 +41,7 @@ struct article_info
     friend void to_json(nlohmann::json &j,const article_info & article);
     friend void from_json(const nlohmann::json &j,article_info & article);
 };
+
 struct action_info
 {
     int id;

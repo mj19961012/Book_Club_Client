@@ -5,12 +5,14 @@
 #include <QWidget>
 #include "BCCommonEnumData.h"
 #include "BCPolymorphicButton.h"
+#include "BCListWidget.h"
 
 class BCPostingWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit BCPostingWidget(QWidget *parent = nullptr);
+    void initData();
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -27,6 +29,7 @@ private:
 
 private:
     BCPolymorphicButton *mAddPostingsButton{};
+    BCListWidget *mPostingListWidget{};
 private:
     QMap<int,BCPolymorphicButton*> mSubjectButtonMap{};
 };

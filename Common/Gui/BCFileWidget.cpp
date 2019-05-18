@@ -17,6 +17,12 @@ void BCFileWidget::setIcon(const QString &icon)
     }
 }
 
+void BCFileWidget::setIcon(const QPixmap &pixmap)
+{
+    mIconLabel->setScaledContents(true);
+    mIconLabel->setPixmap(pixmap);
+}
+
 void BCFileWidget::setText(const QString &text)
 {
     mNameLabel->setText(text);

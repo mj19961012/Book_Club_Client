@@ -16,7 +16,7 @@ BCToastTips &BCToastTips::Instance()
     return *sMessageTips;
 }
 
-void BCToastTips::initData(QString strMessage, QColor backgroundColor, double opacity, int durationSeconds)
+void BCToastTips::setToastTip(QString strMessage, QColor backgroundColor, double opacity, int durationSeconds)
 {
     setVisible(false);
     mMessageText = strMessage;

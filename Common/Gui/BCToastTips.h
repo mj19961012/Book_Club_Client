@@ -13,7 +13,7 @@ class BCToastTips : public QWidget
 public:
     static BCToastTips &Instance();
 
-    void initData(QString strMessage, QColor backgroundColor = QColor(0,0,0), double opacity = 0.7, int durationSeconds = 3000);
+    void setToastTip(QString strMessage, QColor backgroundColor = QColor(0,0,0), double opacity = 0.7, int durationSeconds = 3000);
 
 protected:
     void paintEvent(QPaintEvent *event);
