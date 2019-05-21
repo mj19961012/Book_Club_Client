@@ -14,6 +14,7 @@
 #include <QDir>
 #include "BCDataManager.h"
 #include "nlohmann_json.hpp"
+#include "BCDataManager.h"
 
 BCMessageManager* BCMessageManager::mMessageManager = nullptr;
 
@@ -36,6 +37,51 @@ BCMessageManager * BCMessageManager::getInstance()
         return mMessageManager;
     }
     return mMessageManager;
+}
+
+void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
+{
+    bool is_success;
+    switch(pageEnum)
+    {
+    case Page::Postings:
+        {
+            auto parametes = BCDataManager::instance().getUpLoadPostings();
+            is_success = BCGetArticlesListHandle(parametes.type,parametes.pagenum,parametes.pagesize);
+            if(is_success)
+            {
+                BCDataManager::instance().setBCArticlesListMap(mBCArticlesListMap);
+                // TODO emit(is_success,pageEnum);
+            }
+            break;
+        }
+    case Page::PostDetail:
+        {
+//            auto parametes = BCDataManager::instance().setUpLoadPostDetail();
+//            is_success = BCGetArticlesListHandle(parametes.type,parametes.pagenum,parametes.pagesize);
+//            break;
+        }
+    case Page::PostMaster:
+        break;
+    case Page::PublishPost:
+        break;
+    case Page::Activity:
+        break;
+    case Page::ActivityDetail:
+        break;
+    case Page::PublishActivity:
+        break;
+    case Page::Message:
+        break;
+    case Page::Chat:
+        break;
+    case Page::PersonalInformation:
+        break;
+    case Page::MineFocus:
+        break;
+    case Page::Search:
+        break;
+    }
 }
 
 bool BCMessageManager::BCLoginHandle(QString username,QString password)
@@ -79,14 +125,14 @@ bool BCMessageManager::BCRegistHandle(QString username, QString password, QStrin
     return json_str["code"] == 200;
 }
 
-void BCMessageManager::BCGetMessageListHandle()
+bool BCMessageManager::BCGetMessageListHandle()
 {
 	QString parametes = QString("userid=%1").arg(current_user.user_id.c_str());
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_MESSAGE_LIST), parametes);
 	qDebug() << "BCGetMessageListHandle json_str:" << reply_str.length() << "\n";
 	qDebug() << "BCGetMessageListHandle json_str:" << reply_str << "\n";
 	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
-
+    mBCMessageListMap.clear();
 	if (json_str["code"] == 200)
 	{
 		nlohmann::json json_list = json_str["list"];
@@ -104,9 +150,10 @@ void BCMessageManager::BCGetMessageListHandle()
 	{
 		qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
 	}
+    return mBCMessageListMap.size() > 0;
 }
 
-void BCMessageManager::BCGetArticlesListHandle(int type, int pagenum /*= -1*/,int pagesize /*= 20*/)
+bool BCMessageManager::BCGetArticlesListHandle(int type, int pagenum /*= -1*/,int pagesize /*= 20*/)
 {
 	QString parametes = QString("page_num=%1&page_size=%2&type=%3").arg(pagenum).arg(pagesize).arg(type);
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ARTICLES_LIST), parametes);
@@ -139,12 +186,13 @@ void BCMessageManager::BCGetArticlesListHandle(int type, int pagenum /*= -1*/,in
 	{
 		qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
 	}
+    return mBCArticlesListMap.size() > 0;
 }
 
 bool BCMessageManager::BCReleaseArticleHandle(QString title, QString content, int type)
 {
 	QString articleid = QUuid::createUuid().toString();
-	long release_time = QDateTime::currentDateTime().toTime_t();
+    auto release_time = QDateTime::currentDateTime().toTime_t();
 	QString parametes = QString("article_id=%1&article_title=%2&article_content=%3&article_type=%4&release_time=%5&author_id=%6").arg(articleid).arg(title).arg(content).arg(type).arg(release_time).arg(this->current_user.user_id.c_str());
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_RELEASE_ARTICLE), parametes);
 	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
@@ -156,7 +204,7 @@ bool BCMessageManager::BCReleaseArticleHandle(QString title, QString content, in
 bool BCMessageManager::BCReleaseActionHandle(QString title, QString content, QString city, QString begintime, QString endtime, QString first, QString second, QString third)
 {
 	QString actionid = QUuid::createUuid().toString();
-	long release_time = QDateTime::currentDateTime().toTime_t();
+    auto release_time = QDateTime::currentDateTime().toTime_t();
 	QString parametes = QString("action_id=%1&action_title=%2&action_content=%3&action_city=%4&begin_time=%5&end_time=%6&author_id=%7&first_file=%8&second_file=%9&third_file=%10&release_time=%11").arg(actionid).arg(title).arg(content).arg(city).arg(begintime).arg(endtime).arg(this->current_user.user_id.c_str()).arg(first).arg(second).arg(third).arg(release_time);
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_RELEASE_ACTION), parametes);
 	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
@@ -192,7 +240,7 @@ bool BCMessageManager::BCGetDetailsOfTheArticle(QString articleid)
 	return json_str["code"] == 200;
 }
 
-void BCMessageManager::BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum, int pagesize)
+bool BCMessageManager::BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum, int pagesize)
 {
 	QString parametes = QString("page_num=%1&page_size=%2&action_city=%3&begin_time=%4&end_time=%5").arg(pagenum).arg(pagesize).arg(selectcity).arg(begintime).arg(endtime);
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ACTIVITIES_LIST), parametes);
@@ -225,6 +273,8 @@ void BCMessageManager::BCGetActivitiesListHandle(QString begintime, QString endt
 	{
 		qDebug() << QString::fromStdString(json_str["msg"].get<std::string>()) << "\n";
 	}
+
+    return mBCActivitiesListMap.size() > 0;
 }
 
 bool BCMessageManager::BCGetDetailsOfTheAction(QString actionid)
@@ -273,7 +323,7 @@ bool BCMessageManager::BCGetDetailsOfTheAction(QString actionid)
 bool BCMessageManager::BCSendMessageHandle(QString messgae_body, QString sender_id, QString accepter_id, QString session_id, int message_type)
 {
 	QString message_id = QUuid::createUuid().toString();
-	long send_time = QDateTime::currentDateTime().toTime_t();
+    auto send_time = QDateTime::currentDateTime().toTime_t();
 	QString parametes = QString("message_id=%1&messgae_body=%2&sender_id=%3&accepter_id=%4&session_id=%5&send_time=%6&message_type=%7").arg(message_id).arg(messgae_body).arg(sender_id).arg(accepter_id).arg(session_id).arg(send_time).arg(message_type);
 	qDebug() << "BCSendMessageHandle parametes:" << parametes << "\n";
 
@@ -283,18 +333,17 @@ bool BCMessageManager::BCSendMessageHandle(QString messgae_body, QString sender_
 	qDebug() << "BCSendMessageHandle json_str:" << reply_str.length() << "\n";
 	qDebug() << "BCSendMessageHandle json_str[\"msg\"]:" << json_str["msg"].get<std::string>().c_str() << "\n";
 
-
 	return json_str["code"] == 200;
 }
 
-void BCMessageManager::BCSystemInit()
+bool BCMessageManager::BCSystemInit()
 {
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_INIT_CITY),"");
 
     qDebug() << "BCSystemInit json_str:" << reply_str.length() << "\n";
 
     nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
-
+    mBCParentCityInfoMap.clear();
     if(json_str["code"] == 200)
     {
         nlohmann::json json_city = json_str["city"];
@@ -318,7 +367,7 @@ void BCMessageManager::BCSystemInit()
         qDebug() << "Dictionary Data parsing exception" << "\n";
     }
 
-
+    return mBCParentCityInfoMap.size() > 0;
 }
 
 bool BCMessageManager::BCGetSomebodyPostArticlesHandle(QString user_id, int pagenum , int pagesize)
@@ -398,8 +447,7 @@ bool BCMessageManager::BCGetSomebodyPostActivitiesHandle(QString user_id, int pa
 bool BCMessageManager::BCFollowSomeBodyHandle(QString user_id, QString follow_id)
 {
 	QString interest_id = QUuid::createUuid().toString();
-	long follow_time = QDateTime::currentDateTime().toTime_t();
-
+    auto follow_time = QDateTime::currentDateTime().toTime_t();
 	QString parametes = QString("interest_id=%1&user_id=%2&follow_id=%3&date=%4").arg(interest_id).arg(user_id).arg(follow_id).arg(follow_time);
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_FOLLOW_SOMEBODY), parametes);
 	qDebug() << "BCFollowSomeBodyHandle json_str:" << reply_str.length() << "\n";
@@ -420,9 +468,9 @@ bool BCMessageManager::BCFollowCancleSomeBodyHandle(QString interest_id)
 	return json_str["code"] == 200;
 }
 
-bool BCMessageManager::BCGetInterestListWithSomeoneHandle(QString interest_id)
+bool BCMessageManager::BCGetInterestListWithSomeoneHandle(QString user_id)
 {
-	QString parametes = QString("interest_id=%1").arg(interest_id);
+    QString parametes = QString("user_id=%1").arg(user_id);
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_SOMEONE_INTEREST_LIST), parametes);
 	qDebug() << "BCGetInterestListWithSomeoneHandle json_str:" << reply_str.length() << "\n";
 	qDebug() << "BCGetInterestListWithSomeoneHandle json_str:" << reply_str << "\n";

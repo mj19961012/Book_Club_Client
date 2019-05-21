@@ -7,6 +7,7 @@
 
 #include "nlohmann_json.hpp"
 #include <string>
+#include <QString>
 
 
 struct user_info
@@ -99,5 +100,84 @@ struct file_base_info
 
 	friend void to_json(nlohmann::json &j, const file_base_info & file);
 	friend void from_json(const nlohmann::json &j, file_base_info & file);
+};
+
+struct UpLoadPostings
+{
+    int type;
+    int pagenum;
+    int pagesize;
+};
+
+struct UpLoadPostDetail
+{
+    QString articleid;
+};
+
+struct UpLoadPostMaster
+{
+    QString userid;
+};
+
+struct UpLoadPublishPost
+{
+    QString title;
+    QString content;
+    int type;
+};
+
+struct UpLoadActivity
+{
+    QString begintime;
+    QString endtime;
+    QString selectcity;
+    int pagenum;
+    int pagesize;
+};
+
+struct UpLoadActivityDetail
+{
+    QString actionid;
+};
+
+struct UpLoadPublishActivity
+{
+    QString title;
+    QString content;
+    QString city;
+    QString begintime;
+    QString endtime;
+    QString first;
+    QString second;
+    QString third;
+};
+
+struct UpLoadMessage
+{
+
+};
+
+struct UpLoadChat
+{
+    QString messgaebody;
+    QString senderid;
+    QString accepterid;
+    QString sessionid;
+    int messagetype;
+};
+
+struct UpLoadPersonalInformation
+{
+    QString username;
+    QString password;
+};
+
+struct UpLoadMineFocus
+{
+    QString userid;
+};
+struct UpLoadSearch
+{
+
 };
 #endif //BOOKCLUBENTITY_HPP

@@ -37,7 +37,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Activity\View\BCActivityWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Data\BCDataManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Common\Gui\BCFileWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Gui\BCImageView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Gui\BCInformationLineEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Common\Gui\BCInputContentAndFileWidget.cpp">
@@ -64,6 +76,9 @@
     <ClCompile Include="Common\Controller\BCMessageManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Mine\View\BCMineWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Common\Gui\BCNavigationBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -82,13 +97,13 @@
     <ClCompile Include="Posting\View\BCPostingWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Activity\View\BCPublishActivityWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Posting\View\BCPublishPostWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Login\Widgets\BCRegisterCityButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Login\Widgets\BCRegisterLineEdit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Login\View\BCRegisterWidget.cpp">
@@ -105,6 +120,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="Activity\View\BCActivityWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="Common\Api\BCCommonApiDef.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -114,7 +132,16 @@
     <ClInclude Include="Common\Data\BCCommonHttpData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <QtMoc Include="Common\Data\BCDataManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="Common\Gui\BCFileWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCImageView.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCInformationLineEdit.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Common\Gui\BCInputContentAndFileWidget.h">
@@ -144,6 +171,15 @@
     <ClInclude Include="Common\Controller\BCMessageManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Mine\Data\BCMineEnumData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mine\Data\BCMineHttpData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="Mine\View\BCMineWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="Common\Gui\BCNavigationBar.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -165,13 +201,13 @@
     <QtMoc Include="Posting\View\BCPostingWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Activity\View\BCPublishActivityWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="Posting\View\BCPublishPostWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Login\Widgets\BCRegisterCityButton.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Login\Widgets\BCRegisterLineEdit.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Login\View\BCRegisterWidget.h">
@@ -188,6 +224,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -241,6 +287,9 @@
     <None Include="res\common\back.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\common\defaultHeadImage.png">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="res\Login\down.png">
       <Filter>Resource Files</Filter>
     </None>
@@ -283,5 +332,8 @@
     <None Include="res\common\start_logo.png">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\win\book_club.rc" />
   </ItemGroup>
 </Project>
