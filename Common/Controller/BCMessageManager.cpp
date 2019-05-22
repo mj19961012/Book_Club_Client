@@ -57,9 +57,18 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
         }
     case Page::PostDetail:
         {
-//            auto parametes = BCDataManager::instance().setUpLoadPostDetail();
-//            is_success = BCGetArticlesListHandle(parametes.type,parametes.pagenum,parametes.pagesize);
-//            break;
+            auto parametes = BCDataManager::instance().getUpLoadPostDetail();
+            is_success = BCGetDetailsOfTheArticle(parametes.articleid);
+            if(is_success)
+            {
+                BCDataManager::instance().setBCMessageListMap(mBCMessageListMap);
+            }
+            else
+            {
+                //TODO emit(is_success,pageEnum);
+            }
+
+            break;
         }
     case Page::PostMaster:
         break;
