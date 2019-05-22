@@ -1,5 +1,7 @@
 ﻿#include "BCMainWidget.h"
 #include <QPainter>
+#include "BCMessageEnumData.h"
+#include "BCMineEnumData.h"
 
 BCMainWidget::BCMainWidget(QWidget *parent)
     :QWidget(parent)
@@ -32,11 +34,14 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mStackWidget->setCurrentWidget(mPublishActivityWidget);
         break;
     case Page::Message:
+        mStackWidget->setCurrentWidget(mMessageWidget);
+        mMessageWidget->showPage(MessagePage::ChatList);
         break;
     case Page::Chat:
         break;
     case Page::PersonalInformation:
         mStackWidget->setCurrentWidget(mMineWidget);
+        mMineWidget->showPage(MinePage::MineInformation);
         break;
     case Page::MineFocus:
         break;
@@ -160,6 +165,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::Message:
     {
+        mMessageWidget = new BCMessageWidget(this);
+        mStackWidget->addWidget(mMessageWidget);
         break;
     }
     case Page::Chat:

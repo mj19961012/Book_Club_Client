@@ -10,6 +10,7 @@
 #include "BCActivityWidget.h"
 #include "BCPublishActivityWidget.h"
 #include "BCMineWidget.h"
+#include "BCMessageWidget.h"
 
 class BCMainWidget : public QWidget
 {
@@ -41,6 +42,7 @@ private:
     BCActivityWidget *mActivityWidget{};
     BCPublishActivityWidget *mPublishActivityWidget{};
     BCMineWidget *mMineWidget{};
+    BCMessageWidget *mMessageWidget{};
 };
 
 #endif // BCMAINWIDGET_H

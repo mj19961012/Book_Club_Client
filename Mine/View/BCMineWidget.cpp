@@ -1,5 +1,6 @@
 ﻿#include "BCMineWidget.h"
 #include "BCCommonEnumData.h"
+#include <QPainter>
 
 BCMineWidget::BCMineWidget(QWidget *parent)
     :QWidget (parent)
@@ -17,16 +18,16 @@ void BCMineWidget::showPage(MinePage::BCMinePageEnum page)
     case MinePage::EditMineInformation:
         break;
     case MinePage::MinePosting:
-        mStackedWidget->setCurrentWidget(mMineListWidget);
-        mMineListWidget->addListItem(ListItem::MinePosting);
+        mStackedWidget->setCurrentWidget(mMinePostingListWidget);
+        mMinePostingListWidget->addListItem(ListItem::MinePosting);
         break;
     case MinePage::MineActivity:
-        mStackedWidget->setCurrentWidget(mMineListWidget);
-        mMineListWidget->addListItem(ListItem::MineAvtivity);
+        mStackedWidget->setCurrentWidget(mMineActivityListWidget);
+        mMineActivityListWidget->addListItem(ListItem::MineAvtivity);
         break;
     case MinePage::InterestList:
-        mStackedWidget->setCurrentWidget(mMineListWidget);
-        mMineListWidget->addListItem(ListItem::MineInterest);
+        mStackedWidget->setCurrentWidget(mMineInterestListWidget);
+        mMineInterestListWidget->addListItem(ListItem::MineInterest);
         break;
     }
 }
@@ -34,21 +35,30 @@ void BCMineWidget::showPage(MinePage::BCMinePageEnum page)
 void BCMineWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
+
+    QPainter painter(this);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    painter.setPen(Qt::NoPen);
+
+    painter.setBrush(QColor(247,187,100));
+    painter.drawRect(0,108,this->width(),2);
 }
 
 void BCMineWidget::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
-    mMineInfoButton->setGeometry(0,50,this->width()/4,60);
-    mMinePostingButton->setGeometry(mMineInfoButton->pos().x() + mMineInfoButton->width(),50,
-                                       this->width()/4,60);
-    mMineActivityButton->setGeometry(mMinePostingButton->pos().x() + mMinePostingButton->width(),50,
-                                       this->width()/4,60);
-    mInterestListButton->setGeometry(mMineActivityButton->pos().x() + mMineActivityButton->width(),50,
-                                     this->width()/4,60);
+    int buttonWidth = (this->width() - 150)/4;
 
-    mStackedWidget->setGeometry(0,110,this->width(),this->height() - 110);
+    mMineInfoButton->setGeometry(75,50,buttonWidth,60);
+    mMinePostingButton->setGeometry(mMineInfoButton->pos().x() + mMineInfoButton->width(),50,
+                                       buttonWidth,60);
+    mMineActivityButton->setGeometry(mMinePostingButton->pos().x() + mMinePostingButton->width(),50,
+                                       buttonWidth,60);
+    mInterestListButton->setGeometry(mMineActivityButton->pos().x() + mMineActivityButton->width(),50,
+                                     buttonWidth,60);
+
+    mStackedWidget->setGeometry(75,110,this->width() - 150,this->height() - 110);
 
     initStyle();
 }
@@ -76,6 +86,7 @@ void BCMineWidget::slotMineButtonClicked()
                                         "#333333",QString("0,0,0,2").split(","),
                                         QString("transparent,transparent,transparent,#F7BB64").split(","),0);
         }
+        iter.value()->setFontStyle(25);
     }
 }
 
@@ -100,7 +111,9 @@ void BCMineWidget::init()
 
     addPage(MinePage::MineInformation);
     addPage(MinePage::EditMineInformation);
-    addPage(MinePage::MineList);
+    addPage(MinePage::MinePosting);
+    addPage(MinePage::MineActivity);
+    addPage(MinePage::InterestList);
 }
 
 void BCMineWidget::initStyle()
@@ -153,10 +166,22 @@ void BCMineWidget::addPage(MinePage::BCMinePageEnum page)
 //        mStackedWidget->addWidget(mMainWidget);
         break;
     }
-    default:
+    case MinePage::MinePosting:
     {
-        mMineListWidget = new BCListWidget(this);
-        mStackedWidget->addWidget(mMineListWidget);
+        mMinePostingListWidget = new BCListWidget(this);
+        mStackedWidget->addWidget(mMinePostingListWidget);
+        break;
+    }
+    case MinePage::MineActivity:
+    {
+        mMineActivityListWidget = new BCListWidget(this);
+        mStackedWidget->addWidget(mMineActivityListWidget);
+        break;
+    }
+    case MinePage::InterestList:
+    {
+        mMineInterestListWidget = new BCListWidget(this);
+        mStackedWidget->addWidget(mMineInterestListWidget);
         break;
     }
     }

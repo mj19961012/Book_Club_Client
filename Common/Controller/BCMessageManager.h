@@ -22,7 +22,18 @@ public slots:
     void getPageVlaues(Page::BCPageEnum pageEnum);
 private:
 
+<<<<<<< HEAD
     QMap<QString, QMap<QString,QString>> mBCChildCityInfoMap;
+=======
+	QString BCHttpRequestHandle(QString requrl,QString parameter,QString contenttype = BC_CONTENTTYPE_HEADER);
+	QByteArray BCImageToBase64(QString imgpath);
+    QPixmap BCBase64ToImage(QByteArray data, bool issave);
+	QString BCUpLoadSimpleFile(QString filepath);
+	QString BCGetFileInfo(QString filemd5);
+	QByteArray BCDownLoadSimpleFile(QString filemd5);
+public:
+    QMap<QString, QMap<QString, QString>> mBCChildCityInfoMap;
+>>>>>>> bda03bf3c304fee0325c2f3451f1a7c606bf1442
     QMap<QString, QString> mBCParentCityInfoMap;
 	QMap<QString, message_info> mBCMessageListMap;
 	QMap<QString, article_info> mBCArticlesListMap;

@@ -1,20 +1,27 @@
-﻿#include "BCMinePostingItemWidget.h"
+﻿#include "BCMessagePostingItemWidget.h"
 #include <QPainter>
 
-BCMinePostingItemWidget::BCMinePostingItemWidget(QWidget *parent)
+BCMessagePostingItemWidget::BCMessagePostingItemWidget(QWidget *parent)
     :QWidget(parent)
 {
     init();
 }
 
-void BCMinePostingItemWidget::initData()
+void BCMessagePostingItemWidget::initData()
 {
     setTitle(u8"我的帖子");
     setDate("2018-05-20");
     setContent(u8"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
+    setIsRead(false);
 }
 
-void BCMinePostingItemWidget::paintEvent(QPaintEvent *event)
+void BCMessagePostingItemWidget::setIsRead(const bool &isRead)
+{
+    mIsRead = isRead;
+    update();
+}
+
+void BCMessagePostingItemWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
 
@@ -25,13 +32,24 @@ void BCMinePostingItemWidget::paintEvent(QPaintEvent *event)
     painter.setBrush(QColor(247,187,100));
     painter.setOpacity(0.1);
     painter.drawRoundedRect(0,0,this->width(),this->height(),20,20,Qt::AbsoluteSize);
+
+    if(mIsRead)
+    {
+        painter.setBrush(QColor(Qt::transparent));
+    }
+    else
+    {
+        painter.setBrush(QColor(232,0,12));
+        painter.setOpacity(1);
+    }
+    painter.drawRoundedRect(15,15,16,16,8,8,Qt::AbsoluteSize);
 }
 
-void BCMinePostingItemWidget::resizeEvent(QResizeEvent *event)
+void BCMessagePostingItemWidget::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
 
-    mMainVLayout->setContentsMargins(30,20,30,20);
+    mMainVLayout->setContentsMargins(40,20,40,20);
     mMainVLayout->setSpacing(20);
 
     mTitleHLayout->setMargin(0);
@@ -40,7 +58,7 @@ void BCMinePostingItemWidget::resizeEvent(QResizeEvent *event)
     initStyle();
 }
 
-void BCMinePostingItemWidget::init()
+void BCMessagePostingItemWidget::init()
 {
     mMainVLayout = new QVBoxLayout(this);
 
@@ -53,7 +71,7 @@ void BCMinePostingItemWidget::init()
     this->setLayout(mMainVLayout);
 }
 
-void BCMinePostingItemWidget::createTitleWidget()
+void BCMessagePostingItemWidget::createTitleWidget()
 {
     mTitleWidget = new QWidget(this);
     mTitleHLayout = new QHBoxLayout(mTitleWidget);
@@ -68,7 +86,7 @@ void BCMinePostingItemWidget::createTitleWidget()
     mTitleWidget->setLayout(mTitleHLayout);
 }
 
-void BCMinePostingItemWidget::initStyle()
+void BCMessagePostingItemWidget::initStyle()
 {
     mTitleLabel->setStyle("transparent","#333333",Qt::AlignLeft | Qt::AlignVCenter);
     mTitleLabel->setFontStyle(25,63);
@@ -81,19 +99,19 @@ void BCMinePostingItemWidget::initStyle()
     mContentLabel->setWordWrap(true);
 }
 
-void BCMinePostingItemWidget::setTitle(const QString &title)
+void BCMessagePostingItemWidget::setTitle(const QString &title)
 {
     mTitleLabel->setText(title);
     mTitleLabel->adjustSize();
 }
 
-void BCMinePostingItemWidget::setDate(const QString &date)
+void BCMessagePostingItemWidget::setDate(const QString &date)
 {
     mDateLabel->setText(date);
     mDateLabel->adjustSize();
 }
 
-void BCMinePostingItemWidget::setContent(const QString &content)
+void BCMessagePostingItemWidget::setContent(const QString &content)
 {
     mContentLabel->setText(content);
 }

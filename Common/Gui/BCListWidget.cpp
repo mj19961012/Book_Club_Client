@@ -2,6 +2,10 @@
 #include "BCPostingListItemWidget.h"
 #include "BCActivityListItemWidget.h"
 #include "BCMinePostingItemWidget.h"
+#include "BCMineActivityItemWidget.h"
+#include "BCMineInterestItemWidget.h"
+#include "BCMessageChatItemWidget.h"
+#include "BCMessagePostingItemWidget.h"
 
 BCListWidget::BCListWidget(QWidget *parent)
     :QListWidget (parent)
@@ -13,7 +17,7 @@ BCListWidget::BCListWidget(QWidget *parent)
     this->setViewMode(QListView::ListMode);
     this->setResizeMode(QListView::Adjust);
     this->setMovement(QListView::Static);
-    this->setSpacing(5);
+    this->setSpacing(10);
     this->setStyleSheet("QListWidget{"
                         "background-color: transparent;"
                         "padding:0px;"
@@ -100,86 +104,45 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
         }
         break;
     }
-    }
-}
-
-void BCListWidget::addPostingItem(const QString &id, const QString &name, const QString &content)
-{
-    if(mListSet.find(id) != mListSet.end())
+    case ListItem::MessageChat:
     {
-        return;
+        for(int i = 0; i < 20; i++)
+        {
+            addMessageChatItem(QString::number(i));
+        }
+        break;
     }
-    mListSet.insert(id);
-
-    BCPostingListItemWidget *itemWidget = new BCPostingListItemWidget(this);
-
-    itemWidget->initData(name,content);
-    itemWidget->adjustSize();
-
-    QListWidgetItem *listItem = new QListWidgetItem();
-
-    listItem->setSizeHint(QSize(this->width(),150));
-    this->insertItem(this->count(),listItem);
-    this->setItemWidget(listItem, itemWidget);
-    mListMap.insert(id,listItem);
-
-    update();
-}
-
-void BCListWidget::addActivityItem(const QString &id)
-{
-    if(mListSet.find(id) != mListSet.end())
+    case ListItem::MessagePosting:
     {
-        return;
+        for(int i = 0; i < 20; i++)
+        {
+            addMessagePostingItem(QString::number(i));
+        }
+        break;
     }
-    mListSet.insert(id);
-
-    BCActivityListItemWidget *itemWidget = new BCActivityListItemWidget(this);
-
-    itemWidget->initData();
-    itemWidget->adjustSize();
-
-    QListWidgetItem *listItem = new QListWidgetItem();
-
-    listItem->setSizeHint(QSize(this->width(),200));
-    this->insertItem(this->count(),listItem);
-    this->setItemWidget(listItem, itemWidget);
-    mListMap.insert(id,listItem);
-
-    update();
+    }
 }
 
-void BCListWidget::addMinePostingItem(const QString &id)
+void BCListWidget::setMessageChatListHasBeenRead()
 {
-    if(mListSet.find(id) != mListSet.end())
+    if(ListItem::MessageChat == mCurrentItemType)
     {
-        return;
+        for(auto &iter : mListMap)
+        {
+            static_cast<BCMessageChatItemWidget*>(this->itemWidget(iter))->setIsRead(true);
+        }
     }
-    mListSet.insert(id);
-
-    BCMinePostingItemWidget *itemWidget = new BCMinePostingItemWidget(this);
-
-    itemWidget->initData();
-    itemWidget->adjustSize();
-
-    QListWidgetItem *listItem = new QListWidgetItem();
-
-    listItem->setSizeHint(QSize(this->width(),150));
-    this->insertItem(this->count(),listItem);
-    this->setItemWidget(listItem, itemWidget);
-    mListMap.insert(id,listItem);
-
-    update();
 }
 
-void BCListWidget::addMineAvtivityItem(const QString &id)
+void BCListWidget::setMessagePostingListHasBeenRead()
 {
-
-}
-
-void BCListWidget::addMineInterestItem(const QString &id)
-{
-
+    if(ListItem::MessagePosting == mCurrentItemType)
+    {
+        for(auto &iter : mListMap)
+        {
+            static_cast<BCMessagePostingItemWidget*>(this->itemWidget(iter))->setIsRead(true);
+        }
+    }
 }
 
 void BCListWidget::enterEvent(QEvent *event)
@@ -245,7 +208,177 @@ void BCListWidget::mousePressEvent(QMouseEvent *event)
     if(event->button() == Qt::LeftButton && mCurrentItem != nullptr && mListSet.find(mListMap.key(mCurrentItem)) != mListSet.end())//如果点击的左键并且是点击的是主题
     {
         emit sigItemClicked();
+
+        if(ListItem::MessageChat == mCurrentItemType)
+        {
+            setMessageChatItemIsRead(mCurrentItem);
+        }
+        else if(ListItem::MessagePosting == mCurrentItemType)
+        {
+            setMessagePostingItemIsRead(mCurrentItem);
+        }
     }
+}
+
+void BCListWidget::addPostingItem(const QString &id, const QString &name, const QString &content)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCPostingListItemWidget *itemWidget = new BCPostingListItemWidget(this);
+
+    itemWidget->initData(name,content);
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,150));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addActivityItem(const QString &id)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCActivityListItemWidget *itemWidget = new BCActivityListItemWidget(this);
+
+    itemWidget->initData();
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,200));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addMinePostingItem(const QString &id)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCMinePostingItemWidget *itemWidget = new BCMinePostingItemWidget(this);
+
+    itemWidget->initData();
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,150));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addMineAvtivityItem(const QString &id)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCMineActivityItemWidget *itemWidget = new BCMineActivityItemWidget(this);
+
+    itemWidget->initData();
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,150));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addMineInterestItem(const QString &id)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCMineInterestItemWidget *itemWidget = new BCMineInterestItemWidget(this);
+
+    itemWidget->initData();
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,150));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addMessageChatItem(const QString &id)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCMessageChatItemWidget *itemWidget = new BCMessageChatItemWidget(this);
+
+    itemWidget->initData();
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,150));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addMessagePostingItem(const QString &id)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCMessagePostingItemWidget *itemWidget = new BCMessagePostingItemWidget(this);
+
+    itemWidget->initData();
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,150));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
 }
 
 void BCListWidget::clearData()
@@ -254,4 +387,14 @@ void BCListWidget::clearData()
     mListMap.clear();
     mListSet.clear();
     mCurrentItem = nullptr;
+}
+
+void BCListWidget::setMessageChatItemIsRead(QListWidgetItem *item)
+{
+    static_cast<BCMessageChatItemWidget*>(this->itemWidget(item))->setIsRead(true);
+}
+
+void BCListWidget::setMessagePostingItemIsRead(QListWidgetItem *item)
+{
+    static_cast<BCMessagePostingItemWidget*>(this->itemWidget(item))->setIsRead(true);
 }

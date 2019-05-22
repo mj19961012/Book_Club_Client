@@ -7,7 +7,6 @@ namespace MinePage
     {
         MineInformation,
         EditMineInformation,
-        MineList,
         MinePosting,
         MineActivity,
         InterestList,

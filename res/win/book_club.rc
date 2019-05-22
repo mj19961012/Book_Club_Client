@@ -1,4 +1,4 @@
-#include <winver.h>
+﻿#include <winver.h>
 /* Application Icon */
 IDI_ICON1               ICON    DISCARDABLE     "logo.ico"
 IDI_ICON2               ICON    DISCARDABLE     "logo.ico"
@@ -21,12 +21,12 @@ VS_VERSION_INFO VERSIONINFO
             BLOCK "080404b0"
             BEGIN
                 VALUE "CompanyName", "Hangzhou StayAtHome co. LTD"
-                VALUE "FileDescription", "Designed by Vita, Coding by Jey&JWL"
+                VALUE "FileDescription", "BookClub"
                 VALUE "FileVersion", "1.0.0"
                 VALUE "InternalName", "Book_Club_Client.exe"
-                VALUE "LegalCopyright", "Hangzhou StayAtHome, All rights reserved"
+                VALUE "LegalCopyright", "Hangzhou StayAtHome, Copyright (C)2019"
                 VALUE "OriginalFilename", "Book_Club_Client.exe"
-                VALUE "ProductName", "BookClub"
+                VALUE "ProductName", "BookClub, Designed by Vita"
                 VALUE "ProductVersion", "1.0.0"
             END
         END
