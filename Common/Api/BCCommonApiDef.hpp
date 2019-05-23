@@ -3,8 +3,9 @@
 
 #define BC_API_URL "http://192.168.1.3:8123"
 #define BC_API_INIT_CITY "/init/city_dictionary"
-#define BC_API_REGIST "/client/user/regist"
+#define BC_API_REGIST "/client/user/regiest"
 #define BC_API_LOGIN "/client/user/login"
+#define BC_API_PERSONALINFORMATION "/client/user/get_info"
 
 #define BC_API_UPLOAD_SIMPLE_FILE "/clint/file/upload"
 #define BC_API_GET_FILE_INFO "/clint/file/getinfo"

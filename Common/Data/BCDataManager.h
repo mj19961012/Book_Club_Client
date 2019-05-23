@@ -5,6 +5,7 @@
 #include <QList>
 #include <QMap>
 #include "BookClubEntity.hpp"
+#include "BCCommonHttpData.h"
 
 class BCDataManager : public QObject
 {
@@ -27,6 +28,10 @@ public:
     UpLoadPostDetail getUpLoadPostDetail() const;
     /// \brief 设置获取帖子详情作者信息入参
     void setUpLoadPostMaster(QString userid);
+    /// \brief 设置获取帖子详情作者信息入参
+    void setUpLoadPostMaster(QString userid,int pagenum);
+    /// \brief 设置获取帖子详情作者信息入参
+    void setUpLoadPostMaster(QString userid,int pagenum,int pagesize);
     UpLoadPostMaster getUpLoadPostMaster() const;
     /// \brief 设置发布帖子入参
     void setUpLoadPublishPost(QString title,QString content,int type);
@@ -45,7 +50,7 @@ public:
     void setUpLoadPublishActivity(QString title,QString content,QString city,QString begintime,QString endtime,QString first,QString second,QString third);
     UpLoadPublishActivity getUpLoadPublishActivity() const;
     /// \brief 设置获取未读消息列表信息入参
-    void setUpLoadMessage();
+    void setUpLoadMessage(QString accepterId,int messageType);
     UpLoadMessage getUpLoadMessage() const;
     /// \brief 设置发送私信入参
     void setUpLoadChat(QString messgaebody, QString senderid, QString accepterid, QString sessionid, int messagetype);
@@ -97,6 +102,13 @@ public:
     QList<action_info> getCurrentCatchActivitiesList() const;
     void setCurrentCatchActivitiesList(const QList<action_info> &currentCatchActivitiesList);
 
+    bool checkUserInformaitonCatched(QString userId);
+    user_info getPersonalInformationWithId(QString userId);
+    void addPersonalInformationToList(user_info user);
+
+    user_info getCurrentLoginUserInfo() const;
+    void setCurrentLoginUserInfo(const user_info &currentLoginUserInfo);
+
 private:
     explicit BCDataManager(QObject *parent = nullptr);
     static BCDataManager *sDataManager;
@@ -126,11 +138,15 @@ private:
     QMap<QString, file_base_info> mBCFileListMap;
     QMap<QString, interest_list> mBCInterestListMap;
 
+    QMap<QString, user_info> mBCCatchUserInfoListMap;
+
     QString mCurrentCatchArticlesListAuthor;
     QList<article_info> mCurrentCatchArticlesList;
 
     QString mCurrentCatchActivitiesLisAuthor;
     QList<action_info> mCurrentCatchActivitiesList;
+
+    user_info mCurrentLoginUserInfo;
 };
 
 #endif // BCDATAMANAGER_H

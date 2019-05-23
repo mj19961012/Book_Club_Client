@@ -17,8 +17,11 @@ class BCMessageManager : public QObject
 public :
     ~BCMessageManager();
     static BCMessageManager * getInstance();
+signals:
+    void catchPersonalInformationSignals(std::string userId);
 public slots:
     void getPageVlaues(Page::BCPageEnum pageEnum);
+    void catchPersonalInformationSlot(std::string userId);
 private:
 
     QMap<QString, QMap<QString, QString>> mBCChildCityInfoMap;
@@ -40,7 +43,7 @@ private:
 
     bool BCLoginHandle(QString username,QString password);
     bool BCRegistHandle(QString username, QString password, QString nickname, QString school, QString headimage, QString city);
-    bool BCGetMessageListHandle();
+    bool BCGetMessageListHandle(QString accepterId);
     bool BCGetArticlesListHandle(int type, int pagenum = -1,int pagesize = 20);
     bool BCReleaseArticleHandle(QString title,QString content,int type);
     bool BCReleaseActionHandle(QString title,QString content,QString city,QString begintime,QString endtime,QString first,QString second,QString third);
@@ -54,6 +57,7 @@ private:
     bool BCFollowSomeBodyHandle(QString user_id, QString follow_id);
     bool BCFollowCancleSomeBodyHandle(QString interest_id);
     bool BCGetInterestListWithSomeoneHandle(QString user_id);
+    bool BCGetPersonalInformationHandle(QString user_id);
 
     QString BCHttpRequestHandle(QString requrl,QString parameter,QString contenttype = BC_CONTENTTYPE_HEADER);
     QByteArray BCImageToBase64(QString imgpath);
@@ -65,8 +69,10 @@ private:
 private:
     explicit BCMessageManager(QObject *parent = nullptr);
     static BCMessageManager* mMessageManager;
+    QString mErrorMsg;
 
-    user_info current_user;
+    user_info mCurrentUser;
+
     int mMainActivitiesPageNum;
     int mMainArticlesPageNum;
 

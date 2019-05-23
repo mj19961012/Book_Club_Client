@@ -62,6 +62,22 @@ void BCDataManager::setUpLoadPostDetail(QString postid)
 void BCDataManager::setUpLoadPostMaster(QString userid)
 {
     mUpLoadPostMaster.userid = userid;
+    mUpLoadPostMaster.pagenum = -1;
+    mUpLoadPostMaster.pagesize = 20;
+}
+
+void BCDataManager::setUpLoadPostMaster(QString userid, int pagenum)
+{
+    mUpLoadPostMaster.userid = userid;
+    mUpLoadPostMaster.pagenum = pagenum;
+    mUpLoadPostMaster.pagesize = 20;
+}
+
+void BCDataManager::setUpLoadPostMaster(QString userid, int pagenum, int pagesize)
+{
+    mUpLoadPostMaster.userid = userid;
+    mUpLoadPostMaster.pagenum = pagenum;
+    mUpLoadPostMaster.pagesize = pagesize;
 }
 
 void BCDataManager::setUpLoadPublishPost(QString title, QString content, int type)
@@ -88,9 +104,10 @@ void BCDataManager::setUpLoadPublishActivity(QString title, QString content, QSt
     mUpLoadPublishActivity.third = third;
 }
 
-void BCDataManager::setUpLoadMessage()
+void BCDataManager::setUpLoadMessage(QString accepterId, int messageType)
 {
-
+    mUpLoadMessage.accepterid = accepterId;
+    mUpLoadMessage.messagetype = messageType;
 }
 
 void BCDataManager::setUpLoadChat(QString messgaebody, QString senderid, QString accepterid, QString sessionid, int messagetype)
@@ -184,6 +201,16 @@ BCDataManager::BCDataManager(QObject *parent)
     mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }
 
+void BCDataManager::setCurrentLoginUserInfo(const user_info &currentLoginUserInfo)
+{
+    mCurrentLoginUserInfo = currentLoginUserInfo;
+}
+
+user_info BCDataManager::getCurrentLoginUserInfo() const
+{
+    return mCurrentLoginUserInfo;
+}
+
 QList<action_info> BCDataManager::getCurrentCatchActivitiesList() const
 {
     return mCurrentCatchActivitiesList;
@@ -192,6 +219,21 @@ QList<action_info> BCDataManager::getCurrentCatchActivitiesList() const
 void BCDataManager::setCurrentCatchActivitiesList(const QList<action_info> &currentCatchActivitiesList)
 {
     mCurrentCatchActivitiesList = currentCatchActivitiesList;
+}
+
+bool BCDataManager::checkUserInformaitonCatched(QString userId)
+{
+    return (mBCCatchUserInfoListMap.find(userId) != mBCCatchUserInfoListMap.end());
+}
+
+user_info BCDataManager::getPersonalInformationWithId(QString userId)
+{
+    return mBCCatchUserInfoListMap.value(userId);
+}
+
+void BCDataManager::addPersonalInformationToList(user_info user)
+{
+    mBCCatchUserInfoListMap[user.user_id.c_str()] = user;
 }
 
 QString BCDataManager::getCurrentCatchActivitiesLisAuthor() const
