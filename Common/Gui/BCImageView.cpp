@@ -13,6 +13,7 @@ BCImageView::BCImageView(QWidget *parent, bool isPressed)
 
 void BCImageView::setDefaultImage(QString strPath)
 {
+//    strPath = "http://192.168.1.3:8123/./static/1558862588.jpg";
     m_b_default_image_set = m_default_image.load(strPath);
     realReloadImage();
 }

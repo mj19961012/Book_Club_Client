@@ -53,6 +53,7 @@ public:
     void setUpLoadMessage(QString accepterId,int messageType);
     UpLoadMessage getUpLoadMessage() const;
     /// \brief 设置发送私信入参
+    void setUpLoadChat(QString senderid, QString accepterid);
     void setUpLoadChat(QString messgaebody, QString senderid, QString accepterid, QString sessionid, int messagetype);
     UpLoadChat getUpLoadChat() const;
     /// \brief 设置获取个人信息入参
@@ -65,6 +66,10 @@ public:
     void setUpLoadSearch();
     UpLoadSearch getUpLoadSearch() const;
 
+    /// \brief 设置注册用户入参
+    void setUpLoadRegiest(QString username,QString password,QString nickname,QString school,QString headimage,QString city);
+    UpLoadRegiest getUpLoadRegiest() const;
+
     /// \brief 获取二级城市列表
     QMap<QString, QMap<QString, QString> > getBCChildCityInfoMap() const;
     void setBCChildCityInfoMap(const QMap<QString, QMap<QString, QString> > &bCChildCityInfoMap);
@@ -72,7 +77,7 @@ public:
     QMap<QString, QString> getBCParentCityInfoMap() const;
     void setBCParentCityInfoMap(const QMap<QString, QString> &bCParentCityInfoMap);
     /// \brief 私信消息列表
-    QMap<QString, message_info> getBCMessageListMap() const;
+    QMap<QString, message_info> getBCMessageListMap(QString sessionId) const;
     void setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap);
     /// \brief 帖子主页帖子列表信息
     QMap<QString, article_info> getBCPostingListMap() const;
@@ -109,6 +114,9 @@ public:
     user_info getCurrentLoginUserInfo() const;
     void setCurrentLoginUserInfo(const user_info &currentLoginUserInfo);
 
+    QString getErrorMsg() const;
+    void setErrorMsg(const QString &errorMsg);
+
 private:
     explicit BCDataManager(QObject *parent = nullptr);
     static BCDataManager *sDataManager;
@@ -128,10 +136,11 @@ private:
     UpLoadPersonalInformation mUpLoadPersonalInformation;
     UpLoadMineFocus mUpLoadMineFocus;
     UpLoadSearch mUpLoadSearch;
+    UpLoadRegiest mUpLoadRegiest;
 
     QMap<QString, QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;
-    QMap<QString, message_info> mBCMessageListMap;
+    QMap<QString, QMap<QString, message_info>> mBCMessageListMap;
     QMap<QString, article_info> mBCArticlesListMap;
     QMap<QString, action_info> mBCActivitiesListMap;
     QMap<QString, QMap<QString, message_info>> mBCCommentListMap;
@@ -147,6 +156,8 @@ private:
     QList<action_info> mCurrentCatchActivitiesList;
 
     user_info mCurrentLoginUserInfo;
+
+    QString mErrorMsg;
 };
 
 #endif // BCDATAMANAGER_H

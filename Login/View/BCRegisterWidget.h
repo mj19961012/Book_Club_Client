@@ -6,13 +6,16 @@
 #include "BCInformationLineEdit.h"
 #include "BCRegisterCityButton.h"
 #include "BCImageView.h"
+#include "BCCommonEnumData.h"
 
 class BCRegisterWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit BCRegisterWidget(QWidget *parent = nullptr);
-
+public slots:
+    void receiveOperationResult(bool isSuccess,Page::BCPageEnum pageEnum);
+    void onRegisterButtonClicked();
 protected:
     void paintEvent(QPaintEvent *event);
 
@@ -20,7 +23,7 @@ protected:
 
 signals:
     void sigRegisterCloseButtonClicked();
-
+    void doRegiestSignal(Page::BCPageEnum pageNum);
 private:
     void init();
 
@@ -40,6 +43,7 @@ private:
     BCInformationLineEdit* mPasswordLineEdit{};
 
     BCPolymorphicButton* mRegisterButton{};
+    QString mImgPath;
 };
 
 #endif // BCREGISTERWIDGET_H

@@ -51,6 +51,10 @@ void from_json(const nlohmann::json &j,user_info & user)
     {
         user.city = j["city"].get<std::string>();
     }
+    if(j.find("head_image") != j.end())
+    {
+        user.head_image = j["head_image"].get<std::string>();
+    }
     if(j.find("funs_number") != j.end())
     {
         user.funs_number = j["funs_number"].get<int>();

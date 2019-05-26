@@ -196,6 +196,19 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
         }
     case Page::PersonalInformation:
         {
+            auto parametes = BCDataManager::instance().getUpLoadPersonalInformation();
+            is_success = BCLoginHandle(parametes.username,parametes.password);
+            if(!is_success)
+            {
+                emit sendOperationResultSignal(false,pageEnum);
+                return;
+            }
+            qDebug() << "head_img:" << mCurrentUser.head_image.c_str() << "\n";
+            QString head_image = QString("%1/%2").arg(BC_API_URL).arg(mCurrentUser.head_image.c_str());
+            mCurrentUser.head_image = head_image.toStdString();
+            qDebug() << "head_img" << head_image << "\n";
+            BCDataManager::instance().setCurrentLoginUserInfo(mCurrentUser);
+            emit sendOperationResultSignal(true,pageEnum);
             break;
         }
     case Page::MineFocus:
@@ -216,6 +229,82 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
         }
     case Page::Search:
         {
+            break;
+        }
+    case Page::Init:
+        {
+            is_success = BCSystemInit();
+            if(is_success)
+            {
+                qDebug() << "Init Success" << "\n";
+            }
+            else
+            {
+                qDebug() << "Init Success" << "\n";
+            }
+
+            //TODO emit xxx(true,pageEnum);
+
+            break;
+        }
+    case Page::Regiest:
+        {
+            auto parametes = BCDataManager::instance().getUpLoadRegiest();
+
+            QString fileMd5 = BCUpLoadSimpleFile(parametes.headimage);
+
+            if(fileMd5.size() <= 0)
+            {
+                BCDataManager::instance().setErrorMsg(QStringLiteral("头像上传失败，请检查网络后重试！"));
+                emit sendOperationResultSignal(false,pageEnum);
+                return;
+            }
+
+            qDebug() << "fileMd5:" << fileMd5 << "\n";
+
+            QString filePath = BCGetFileInfo(fileMd5);
+
+            if(filePath.size() <= 0)
+            {
+                BCDataManager::instance().setErrorMsg(QStringLiteral("头像信息获取失败，请稍后重试！"));
+                emit sendOperationResultSignal(false,pageEnum);
+                return;
+            }
+
+            is_success = BCRegistHandle(parametes.username,parametes.password,parametes.nickname,parametes.school,filePath,parametes.city);
+
+            if(!is_success)
+            {
+                //TODO emit xxx(false,pageEnum);
+                return;
+            }
+            emit sendOperationResultSignal(true,pageEnum);
+            break;
+        }
+    case Page::ChangeMessageStatus:
+        {
+            auto parametes = BCDataManager::instance().getUpLoadChat();
+            is_success = BCGetMessageListHandle(parametes.accepterid);
+            if(is_success)
+            {
+                BCDataManager::instance().setBCMessageListMap(mBCMessageListMap);
+            }
+            else
+            {
+                //TODO emit xxx(false,pageEnum);
+                return;
+            }
+            is_success = BCChangeMessageStatusHandle(parametes.senderid,parametes.accepterid);
+            if(is_success)
+            {
+                qDebug() << "ChangeMessageStatus Success" << "\n";
+            }
+            else
+            {
+                qDebug() << "ChangeMessageStatus Success" << "\n";
+            }
+
+            //TODO emit xxx(true,pageEnum);
             break;
         }
     default:
@@ -249,6 +338,7 @@ bool BCMessageManager::BCLoginHandle(QString username,QString password)
     if (json_str["code"] == 200)
     {
         auto temp_user = json_str["user"].get<user_info>();
+
         mCurrentUser.id = temp_user.id;
         mCurrentUser.user_id = temp_user.user_id;
         mCurrentUser.phone_number = temp_user.phone_number;
@@ -260,8 +350,6 @@ bool BCMessageManager::BCLoginHandle(QString username,QString password)
         mCurrentUser.funs_number = temp_user.funs_number;
         mCurrentUser.article_number = temp_user.article_number;
         mCurrentUser.action_number = temp_user.action_number;
-
-        BCDataManager::instance().setCurrentLoginUserInfo(mCurrentUser);
     }
     else
     {
@@ -274,8 +362,9 @@ bool BCMessageManager::BCLoginHandle(QString username,QString password)
 bool BCMessageManager::BCRegistHandle(QString username, QString password, QString nickname, QString school, QString headimage, QString city)
 {
 	QString userid = QUuid::createUuid().toString();
-	QString parametes = QString("userid=%1&username=%2&password=%3&nickname=%4&school=%5&city=%6&headimage=%7").arg(userid).arg(username).arg(password).arg(nickname).arg(school).arg(city).arg(BCImageToBase64(headimage).toStdString().c_str());
+    QString parametes = QString("userid=%1&username=%2&password=%3&nickname=%4&school=%5&city=%6&headimage=%7").arg(userid).arg(username).arg(password).arg(nickname).arg(school).arg(city).arg(headimage);
 	qDebug() << "BCRegistHandle parametes:" << parametes << "\n";
+    qDebug() << "BCRegistHandle headimage:" << headimage << "\n";
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_REGIST), parametes);
 	qDebug() << "BCRegistHandle json_str:" << reply_str.length() << "\n";
 
@@ -497,7 +586,21 @@ bool BCMessageManager::BCSendMessageHandle(QString messgae_body, QString sender_
 	qDebug() << "BCSendMessageHandle json_str:" << reply_str.length() << "\n";
 	qDebug() << "BCSendMessageHandle json_str[\"msg\"]:" << json_str["msg"].get<std::string>().c_str() << "\n";
 
-	return json_str["code"] == 200;
+    return json_str["code"] == 200;
+}
+
+bool BCMessageManager::BCChangeMessageStatusHandle(QString sendId, QString accepterId)
+{
+    QString parametes = QString("sender_id=%1&accepter_id=%2").arg(sendId).arg(accepterId);
+    QString reply_str = BCHttpRequestHandle(GET_API(BC_API_CHANGE_MESSAGE_STATUS), parametes);
+    qDebug() << "BCChangeMessageStatusHandle parametes:" << parametes << "\n";
+
+    nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+
+    qDebug() << "BCChangeMessageStatusHandle json_str:" << reply_str.length() << "\n";
+    qDebug() << "BCChangeMessageStatusHandle json_str[\"msg\"]:" << json_str["msg"].get<std::string>().c_str() << "\n";
+
+    return json_str["code"] == 200;
 }
 
 bool BCMessageManager::BCSystemInit()

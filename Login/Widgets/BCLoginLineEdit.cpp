@@ -47,6 +47,11 @@ void BCLoginLineEdit::setTips(QString tips)
     mLineEdit->setPlaceholderText(tips);
 }
 
+QString BCLoginLineEdit::getInputText()
+{
+    return mLineEdit->text();
+}
+
 void BCLoginLineEdit::setImage(QString imgPath)
 {
     mLabel->setPixmap(QPixmap(imgPath).scaled(32,32,Qt::IgnoreAspectRatio,Qt::SmoothTransformation));

@@ -81,9 +81,25 @@ struct UpLoadMineFocus
 {
     QString userid;
 };
+
 struct UpLoadSearch
 {
 
+};
+
+struct UpLoadRegiest
+{
+    QString username;
+    QString password;
+    QString nickname;
+    QString school;
+    QString headimage;
+    QString city;
+};
+
+struct UpLoadChangeMessageStatus
+{
+    QString messageId;
 };
 
 #endif // BKCOMMONHTTPDATA_H

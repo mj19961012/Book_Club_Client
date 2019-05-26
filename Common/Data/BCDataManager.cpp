@@ -110,6 +110,15 @@ void BCDataManager::setUpLoadMessage(QString accepterId, int messageType)
     mUpLoadMessage.messagetype = messageType;
 }
 
+void BCDataManager::setUpLoadChat(QString senderid, QString accepterid)
+{
+    mUpLoadChat.messgaebody = "";
+    mUpLoadChat.senderid = senderid;
+    mUpLoadChat.accepterid = accepterid;
+    mUpLoadChat.sessionid = "";
+    mUpLoadChat.messagetype = -1;
+}
+
 void BCDataManager::setUpLoadChat(QString messgaebody, QString senderid, QString accepterid, QString sessionid, int messagetype)
 {
     mUpLoadChat.messgaebody = messgaebody;
@@ -133,6 +142,21 @@ void BCDataManager::setUpLoadMineFocus(QString userid)
 void BCDataManager::setUpLoadSearch()
 {
 
+}
+
+UpLoadRegiest BCDataManager::getUpLoadRegiest() const
+{
+    return mUpLoadRegiest;
+}
+
+void BCDataManager::setUpLoadRegiest(QString username, QString password, QString nickname, QString school, QString headimage, QString city)
+{
+    mUpLoadRegiest.username = username;
+    mUpLoadRegiest.password = password;
+    mUpLoadRegiest.nickname = nickname;
+    mUpLoadRegiest.school = school;
+    mUpLoadRegiest.headimage = headimage;
+    mUpLoadRegiest.city = city;
 }
 
 UpLoadPostings BCDataManager::getUpLoadPostings() const
@@ -199,6 +223,16 @@ BCDataManager::BCDataManager(QObject *parent)
     :QObject (parent)
 {
     mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
+
+QString BCDataManager::getErrorMsg() const
+{
+    return mErrorMsg;
+}
+
+void BCDataManager::setErrorMsg(const QString &errorMsg)
+{
+    mErrorMsg = errorMsg;
 }
 
 void BCDataManager::setCurrentLoginUserInfo(const user_info &currentLoginUserInfo)
@@ -311,14 +345,17 @@ void BCDataManager::setBCArticlesListMap(const QMap<QString, article_info> &bCAr
     mBCArticlesListMap = bCArticlesListMap;
 }
 
-QMap<QString, message_info> BCDataManager::getBCMessageListMap() const
+QMap<QString, message_info> BCDataManager::getBCMessageListMap(QString sessionId) const
 {
-    return mBCMessageListMap;
+    return mBCMessageListMap[sessionId];
 }
 
 void BCDataManager::setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap)
 {
-    mBCMessageListMap = bCMessageListMap;
+    for(auto &message : bCMessageListMap)
+    {
+        mBCMessageListMap[QString().fromStdString(message.getsessionId())][QString().fromStdString(message.getmessageId())] = message;
+    }
 }
 
 QMap<QString, QString> BCDataManager::getBCParentCityInfoMap() const

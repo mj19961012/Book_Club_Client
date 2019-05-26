@@ -13,6 +13,7 @@
 
 #define BC_API_GET_MESSAGE_LIST "/clint/message/get_list"
 #define BC_API_SEND_MESSAGE "/clint/message/send_msg"
+#define BC_API_CHANGE_MESSAGE_STATUS "/clint/message/change_status"
 
 #define BC_API_GET_ARTICLES_LIST "/clint/article/get_list"
 #define BC_API_GET_ARTICLES_LIST_WITH_SOMEONE "/clint/article/get_list_with_someone"
