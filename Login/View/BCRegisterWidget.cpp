@@ -5,12 +5,56 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include "BCDataManager.h"
+#include "BCMessageManager.h"
+#include "BCToastTips.h"
 
 BCRegisterWidget::BCRegisterWidget(QWidget *parent)
     :QWidget (parent)
 {
     init();
     initConnect();
+}
+
+void BCRegisterWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    switch (pageEnum)
+    {
+        case Page::Regiest:
+            {
+                if(isSuccess)
+                {
+                    qDebug() << "Regiest Success" << "\n";
+                    BCToastTips::Instance().setToastTip(QStringLiteral("尊敬的用户，恭喜您注册成功，正在为您跳转到登录界面！！！"));
+                    emit sigRegisterCloseButtonClicked();
+                }
+                else
+                {
+                    QString errorMsg = BCDataManager::instance().getErrorMsg();
+                    BCToastTips::Instance().setToastTip(errorMsg);
+                }
+                break;
+            }
+        default:
+        {
+            return;
+        }
+    }
+}
+
+void BCRegisterWidget::onRegisterButtonClicked()
+{
+    auto nickname = mNameLineEdit->text();
+    auto city = mCityButton->text();
+    auto school = mSchoolLineEdit->text();
+    auto username = mPhoneLineEdit->text();
+    auto password = mPasswordLineEdit->text();
+    qDebug() << "nickname" << nickname << "\n";
+    qDebug() << "city" << city << "\n";
+    qDebug() << "school" << school << "\n";
+    qDebug() << "username" << username << "\n";
+    qDebug() << "password" << password << "\n";
+    BCDataManager::instance().setUpLoadRegiest(username,password,nickname,school,mImgPath,city);
+//    emit doRegiestSignal(Page::BCPageEnum::Regiest);
 }
 
 void BCRegisterWidget::paintEvent(QPaintEvent *event)
@@ -101,6 +145,7 @@ void BCRegisterWidget::init()
     mCloseButton = new BCPolymorphicButton(this);
 
     mImageView = new BCImageView(this,true);
+    mImageView->setImage("http://192.168.1.3:8123/./static/1558862588.jpg");
 
     mNameLineEdit = new BCInformationLineEdit(this);
     mNameLineEdit->setMaxLength(12);
@@ -167,7 +212,25 @@ void BCRegisterWidget::initConnect()
                     qDebug() << "头像保存成功，路径为：" << path;
                     mImageView->setImage(pixmap);
                 }
+                mImgPath = fileName;
             }
         }
+    });
+    connect(this,SIGNAL(doRegiestSignal(Page::BCPageEnum)),BCMessageManager::getInstance(),SLOT(getPageVlaues(Page::BCPageEnum)));
+    connect(BCMessageManager::getInstance(),SIGNAL(sendOperationResultSignal(bool,Page::BCPageEnum)),this,SLOT(receiveOperationResult(bool,Page::BCPageEnum)));
+    connect(mRegisterButton,&BCPolymorphicButton::clicked,this,[this](){
+        auto nickname = mNameLineEdit->text();
+        auto city = mCityButton->text();
+        auto school = mSchoolLineEdit->text();
+        auto username = mPhoneLineEdit->text();
+        auto password = mPasswordLineEdit->text();
+        qDebug() << "nickname:" << nickname << "\n";
+        qDebug() << "city:" << city << "\n";
+        qDebug() << "school:" << school << "\n";
+        qDebug() << "username:" << username << "\n";
+        qDebug() << "password:" << password << "\n";
+        qDebug() << "mImgPath:" << mImgPath << "\n";
+        BCDataManager::instance().setUpLoadRegiest(username,password,nickname,school,mImgPath,city);
+        emit doRegiestSignal(Page::BCPageEnum::Regiest);
     });
 }

@@ -27,6 +27,8 @@ public:
 
     void setTips(QString tips);
 
+    QString getInputText();
+
 protected:
     void paintEvent(QPaintEvent *event);
 

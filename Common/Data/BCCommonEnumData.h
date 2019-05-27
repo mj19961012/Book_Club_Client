@@ -24,9 +24,12 @@ enum BCPageEnum
     PublishActivity,              //发布活动
     Message,                      //消息主页
     Chat,                         //私信聊天
-    PersonalInformation,          //个人信息
+    PersonalInformation,          //个人信息（登陆）
     MineFocus,                    //我关注帖主的信息
     Search,                       //搜索
+    Init,                         //初始化
+    Regiest,                      //注册
+    ChangeMessageStatus           //变更消息状态
 };
 }
 

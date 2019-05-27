@@ -3,8 +3,9 @@
 
 #define BC_API_URL "http://192.168.1.3:8123"
 #define BC_API_INIT_CITY "/init/city_dictionary"
-#define BC_API_REGIST "/client/user/regist"
+#define BC_API_REGIST "/client/user/regiest"
 #define BC_API_LOGIN "/client/user/login"
+#define BC_API_PERSONALINFORMATION "/client/user/get_info"
 
 #define BC_API_UPLOAD_SIMPLE_FILE "/clint/file/upload"
 #define BC_API_GET_FILE_INFO "/clint/file/getinfo"
@@ -12,6 +13,7 @@
 
 #define BC_API_GET_MESSAGE_LIST "/clint/message/get_list"
 #define BC_API_SEND_MESSAGE "/clint/message/send_msg"
+#define BC_API_CHANGE_MESSAGE_STATUS "/clint/message/change_status"
 
 #define BC_API_GET_ARTICLES_LIST "/clint/article/get_list"
 #define BC_API_GET_ARTICLES_LIST_WITH_SOMEONE "/clint/article/get_list_with_someone"

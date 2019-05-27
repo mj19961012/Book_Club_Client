@@ -2,6 +2,8 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+#include "BCMessageManager.h"
+
 BCMainWindow* BCMainWindow::m_BCMainWindow = nullptr;
 
 BCMainWindow* BCMainWindow::instance()
@@ -54,6 +56,10 @@ BCMainWindow::BCMainWindow(QWidget *parent)
     init();
     initToolButton();
     initConnect();
+
+    connect(this,SIGNAL(getPageSignal(Page::BCPageEnum)),BCMessageManager::getInstance(),SLOT(getPageVlaues(Page::BCPageEnum)));
+
+    emit getPageSignal(Page::BCPageEnum::Init);
 }
 
 void BCMainWindow::init()

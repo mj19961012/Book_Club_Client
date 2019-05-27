@@ -35,6 +35,8 @@ private:
     void initConnect();
 
     void addBasePage(BasePage::BCBasePageEnum pageEnum);
+signals:
+    void getPageSignal(Page::BCPageEnum pageEnum);
 private:
     int mHFactor;
     int mWFactor;

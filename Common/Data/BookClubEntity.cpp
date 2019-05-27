@@ -51,6 +51,10 @@ void from_json(const nlohmann::json &j,user_info & user)
     {
         user.city = j["city"].get<std::string>();
     }
+    if(j.find("head_image") != j.end())
+    {
+        user.head_image = j["head_image"].get<std::string>();
+    }
     if(j.find("funs_number") != j.end())
     {
         user.funs_number = j["funs_number"].get<int>();
@@ -317,4 +321,473 @@ void from_json(const nlohmann::json &j, file_base_info & file)
 	{
 		file.local_path = j["local_path"].get<std::string>();
 	}
+}
+std::string user_info::getphoneNumber() const
+{
+    return phone_number;
+}
+
+void user_info::setphoneNumber(const std::string &value)
+{
+    phone_number = value;
+}
+
+std::string user_info::getnickName() const
+{
+    return nick_name;
+}
+
+void user_info::setnickName(const std::string &value)
+{
+    nick_name = value;
+}
+
+std::string user_info::getpassWord() const
+{
+    return pass_word;
+}
+
+void user_info::setpassWord(const std::string &value)
+{
+    pass_word = value;
+}
+
+std::string user_info::getSchool() const
+{
+    return school;
+}
+
+void user_info::setSchool(const std::string &value)
+{
+    school = value;
+}
+
+std::string user_info::getCity() const
+{
+    return city;
+}
+
+void user_info::setCity(const std::string &value)
+{
+    city = value;
+}
+
+std::string user_info::getheadImage() const
+{
+    return head_image;
+}
+
+void user_info::setheadImage(const std::string &value)
+{
+    head_image = value;
+}
+
+int user_info::getfunsNumber() const
+{
+    return funs_number;
+}
+
+void user_info::setfunsNumber(int value)
+{
+    funs_number = value;
+}
+
+int user_info::getarticleNumber() const
+{
+    return article_number;
+}
+
+void user_info::setarticleNumber(int value)
+{
+    article_number = value;
+}
+
+int user_info::getactionNumber() const
+{
+    return action_number;
+}
+
+void user_info::setactionNumber(int value)
+{
+    action_number = value;
+}
+
+std::string user_info::getuserId() const
+{
+    return user_id;
+}
+
+void user_info::setuserId(const std::string &value)
+{
+    user_id = value;
+}
+
+std::string article_info::getarticleTitle() const
+{
+    return article_title;
+}
+
+void article_info::setarticleTitle(const std::string &value)
+{
+    article_title = value;
+}
+
+std::string article_info::getarticleContent() const
+{
+    return article_content;
+}
+
+void article_info::setarticleContent(const std::string &value)
+{
+    article_content = value;
+}
+
+std::string article_info::getauthorId() const
+{
+    return author_id;
+}
+
+void article_info::setauthorId(const std::string &value)
+{
+    author_id = value;
+}
+
+int article_info::getarticleType() const
+{
+    return article_type;
+}
+
+void article_info::setarticleType(int value)
+{
+    article_type = value;
+}
+
+std::string article_info::getreleaseTime() const
+{
+    return release_time;
+}
+
+void article_info::setreleaseTime(const std::string &value)
+{
+    release_time = value;
+}
+
+int article_info::getsupportingNumber() const
+{
+    return supporting_number;
+}
+
+void article_info::setsupportingNumber(int value)
+{
+    supporting_number = value;
+}
+
+int article_info::getpageView() const
+{
+    return page_view;
+}
+
+void article_info::setpageView(int value)
+{
+    page_view = value;
+}
+
+int article_info::getcommentNumber() const
+{
+    return comment_number;
+}
+
+void article_info::setcommentNumber(int value)
+{
+    comment_number = value;
+}
+
+std::string article_info::getarticleId() const
+{
+    return article_id;
+}
+
+void article_info::setarticleId(const std::string &value)
+{
+    article_id = value;
+}
+
+std::string action_info::getactionTitle() const
+{
+    return action_title;
+}
+
+void action_info::setactionTitle(const std::string &value)
+{
+    action_title = value;
+}
+
+std::string action_info::getactionContent() const
+{
+    return action_content;
+}
+
+void action_info::setactionContent(const std::string &value)
+{
+    action_content = value;
+}
+
+std::string action_info::getactionCity() const
+{
+    return action_city;
+}
+
+void action_info::setactionCity(const std::string &value)
+{
+    action_city = value;
+}
+
+std::string action_info::getbeginTime() const
+{
+    return begin_time;
+}
+
+void action_info::setbeginTime(const std::string &value)
+{
+    begin_time = value;
+}
+
+std::string action_info::getendTime() const
+{
+    return end_time;
+}
+
+void action_info::setendTime(const std::string &value)
+{
+    end_time = value;
+}
+
+std::string action_info::getauthorId() const
+{
+    return author_id;
+}
+
+void action_info::setauthorId(const std::string &value)
+{
+    author_id = value;
+}
+
+std::string action_info::getfirstFile() const
+{
+    return first_file;
+}
+
+void action_info::setfirstFile(const std::string &value)
+{
+    first_file = value;
+}
+
+std::string action_info::getsecondFile() const
+{
+    return second_file;
+}
+
+void action_info::setsecondFile(const std::string &value)
+{
+    second_file = value;
+}
+
+std::string action_info::getthirdFile() const
+{
+    return third_file;
+}
+
+void action_info::setthirdFile(const std::string &value)
+{
+    third_file = value;
+}
+
+std::string action_info::getreleaseTime() const
+{
+    return release_time;
+}
+
+void action_info::setreleaseTime(const std::string &value)
+{
+    release_time = value;
+}
+
+int action_info::getpageView() const
+{
+    return page_view;
+}
+
+void action_info::setpageView(int value)
+{
+    page_view = value;
+}
+
+std::string action_info::getactionId() const
+{
+    return action_id;
+}
+
+void action_info::setactionId(const std::string &value)
+{
+    action_id = value;
+}
+
+std::string message_info::getmessgaeBody() const
+{
+    return messgae_body;
+}
+
+void message_info::setmessgaeBody(const std::string &value)
+{
+    messgae_body = value;
+}
+
+std::string message_info::getsenderId() const
+{
+    return sender_id;
+}
+
+void message_info::setsenderId(const std::string &value)
+{
+    sender_id = value;
+}
+
+std::string message_info::getaccepterId() const
+{
+    return accepter_id;
+}
+
+void message_info::setaccepterId(const std::string &value)
+{
+    accepter_id = value;
+}
+
+std::string message_info::getsessionId() const
+{
+    return session_id;
+}
+
+void message_info::setsessionId(const std::string &value)
+{
+    session_id = value;
+}
+
+std::string message_info::getsendTime() const
+{
+    return send_time;
+}
+
+void message_info::setsendTime(const std::string &value)
+{
+    send_time = value;
+}
+
+int message_info::getmessageState() const
+{
+    return message_state;
+}
+
+void message_info::setmessageState(int value)
+{
+    message_state = value;
+}
+
+int message_info::getmessageType() const
+{
+    return message_type;
+}
+
+void message_info::setmessageType(int value)
+{
+    message_type = value;
+}
+
+std::string message_info::getmessageId() const
+{
+    return message_id;
+}
+
+void message_info::setmessageId(const std::string &value)
+{
+    message_id = value;
+}
+
+std::string interest_list::getuserId() const
+{
+    return user_id;
+}
+
+void interest_list::setuserId(const std::string &value)
+{
+    user_id = value;
+}
+
+std::string interest_list::getfollowerId() const
+{
+    return follower_id;
+}
+
+void interest_list::setfollowerId(const std::string &value)
+{
+    follower_id = value;
+}
+
+std::string interest_list::getdateSubscribed() const
+{
+    return date_subscribed;
+}
+
+void interest_list::setdateSubscribed(const std::string &value)
+{
+    date_subscribed = value;
+}
+
+std::string interest_list::getinterestId() const
+{
+    return interest_id;
+}
+
+void interest_list::setinterestId(const std::string &value)
+{
+    interest_id = value;
+}
+
+int file_base_info::getfileSize() const
+{
+    return file_size;
+}
+
+void file_base_info::setfileSize(int value)
+{
+    file_size = value;
+}
+
+int file_base_info::getfileType() const
+{
+    return file_type;
+}
+
+void file_base_info::setfileType(int value)
+{
+    file_type = value;
+}
+
+std::string file_base_info::getlocalPath() const
+{
+    return local_path;
+}
+
+void file_base_info::setlocalPath(const std::string &value)
+{
+    local_path = value;
+}
+
+std::string file_base_info::getfileMd5() const
+{
+    return file_md5;
+}
+
+void file_base_info::setfileMd5(const std::string &value)
+{
+    file_md5 = value;
 }
