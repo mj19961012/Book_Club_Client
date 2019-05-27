@@ -33,7 +33,7 @@ void BCInputWidget::resizeEvent(QResizeEvent *event)
 void BCInputWidget::init()
 {
     mMainVLayout = new QVBoxLayout(this);
-    mMainVLayout->setContentsMargins(4,4,4,4);
+    mMainVLayout->setContentsMargins(5,5,5,5);
     mMainVLayout->setSpacing(0);
 
     mContentTextEdit = new QTextEdit(this);
