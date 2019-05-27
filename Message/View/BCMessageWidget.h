@@ -31,7 +31,6 @@ private:
 private:
     BCPolymorphicButton *mChatListButton{};
     BCPolymorphicButton *mPostingListButton{};
-
     BCPolymorphicButton *mHasBeenReadButton{};
 
     QStackedWidget *mStackedWidget{};

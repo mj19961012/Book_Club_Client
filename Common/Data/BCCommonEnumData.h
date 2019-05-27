@@ -82,6 +82,7 @@ namespace ListItem
 enum BCListWidgetType
 {
     Posting,              //帖子列表item
+    PostingDetail,
     Activity,             //活动列表item
     MinePosting,
     MineAvtivity,

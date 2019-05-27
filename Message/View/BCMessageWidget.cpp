@@ -152,7 +152,6 @@ void BCMessageWidget::initConnect()
 {
     connect(mChatListButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotMessageButtonClicked);
     connect(mPostingListButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotMessageButtonClicked);
-
     connect(mHasBeenReadButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotHasBeenReadButtonClicked);
 }
 

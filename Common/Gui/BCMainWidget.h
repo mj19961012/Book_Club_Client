@@ -6,6 +6,7 @@
 #include "BCCommonEnumData.h"
 #include "BCNavigationBar.h"
 #include "BCPostingWidget.h"
+#include "BCPostingDetailWidget.h"
 #include "BCPublishPostWidget.h"
 #include "BCActivityWidget.h"
 #include "BCPublishActivityWidget.h"
@@ -38,6 +39,7 @@ private:
     QStackedWidget *mStackWidget{};
 
     BCPostingWidget *mPostingWidget{};
+    BCPostingDetailWidget *mPostingDetailWidget{};
     BCPublishPostWidget *mPublishPostWidget{};
     BCActivityWidget *mActivityWidget{};
     BCPublishActivityWidget *mPublishActivityWidget{};

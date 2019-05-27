@@ -22,7 +22,7 @@ public :
 	bool BCReleaseArticleHandle(QString title,QString content,int type);
 	bool BCReleaseActionHandle(QString title,QString content,QString city,QString begintime,QString endtime,QString first,QString second,QString third);
 	bool BCGetDetailsOfTheArticle(QString articleid);
-	void BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum = -1, int pagesize = 20);
+    void BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum = -1, int pagesize = 20);
 	bool BCGetDetailsOfTheAction(QString actionid);
 	bool BCSendMessageHandle(QString messgae_body, QString sender_id, QString accepter_id, QString session_id, int message_type);
     void BCSystemInit();
@@ -37,7 +37,7 @@ public :
     QPixmap BCBase64ToImage(QByteArray data, bool issave);
 	QString BCUpLoadSimpleFile(QString filepath);
 	QString BCGetFileInfo(QString filemd5);
-	QByteArray BCDownLoadSimpleFile(QString filemd5);
+    QByteArray BCDownLoadSimpleFile(QString filemd5);
 public:
     QMap<QString, QMap<QString, QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;

@@ -19,6 +19,8 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mStackWidget->setCurrentWidget(mPostingWidget);
         break;
     case Page::PostDetail:
+        mStackWidget->setCurrentWidget(mPostingDetailWidget);
+        mPostingDetailWidget->initData();
         break;
     case Page::PostMaster:
         break;
@@ -135,6 +137,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::PostDetail:
     {
+        mPostingDetailWidget = new BCPostingDetailWidget(this);
+        mStackWidget->addWidget(mPostingDetailWidget);
         break;
     }
     case Page::PostMaster:

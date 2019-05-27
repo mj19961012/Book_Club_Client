@@ -1,4 +1,4 @@
-﻿#include <winver.h>
+#include <winver.h>
 /* Application Icon */
 IDI_ICON1               ICON    DISCARDABLE     "logo.ico"
 IDI_ICON2               ICON    DISCARDABLE     "logo.ico"
@@ -35,4 +35,3 @@ VS_VERSION_INFO VERSIONINFO
             VALUE "Translation", 0x804, 1200
         END
     END
-

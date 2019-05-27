@@ -1,5 +1,8 @@
 ﻿#include "BCListWidget.h"
+#include "BCMainWindow.h"
 #include "BCPostingListItemWidget.h"
+#include "BCPostingDetailItemWidget.h"
+#include "BCPostingCommentItemWidget.h"
 #include "BCActivityListItemWidget.h"
 #include "BCMinePostingItemWidget.h"
 #include "BCMineActivityItemWidget.h"
@@ -17,7 +20,7 @@ BCListWidget::BCListWidget(QWidget *parent)
     this->setViewMode(QListView::ListMode);
     this->setResizeMode(QListView::Adjust);
     this->setMovement(QListView::Static);
-    this->setSpacing(10);
+    this->setSpacing(5);
     this->setStyleSheet("QListWidget{"
                         "background-color: transparent;"
                         "padding:0px;"
@@ -37,19 +40,19 @@ BCListWidget::BCListWidget(QWidget *parent)
                                              "padding-bottom:0px;"
                                              "}"
                                              "QScrollBar::handle:vertical{"
-                                                 "width:8px;"
-                                                 "background:rgba(0,0,0,0%);"
-                                                 "border-radius:4px;"
-                                                 "min-height:20;"
+                                             "width:8px;"
+                                             "background:rgba(0,0,0,0%);"
+                                             "border-radius:4px;"
+                                             "min-height:20;"
                                              "}"
                                              "QScrollBar::add-line:vertical{"
-                                                                         "height:0px;width:0px;"
-                                                                         "subcontrol-position:bottom;"
-                                                                         "}"
+                                             "height:0px;width:0px;"
+                                             "subcontrol-position:bottom;"
+                                             "}"
                                              "QScrollBar::sub-line:vertical{"
-                                                                         "height:0px;width:0px;"
-                                                                         "subcontrol-position:top;"
-                                                                         "}"
+                                             "height:0px;width:0px;"
+                                             "subcontrol-position:top;"
+                                             "}"
                                              );
 
     this->verticalScrollBar()->setRange(0,100);
@@ -70,6 +73,11 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
         {
             addPostingItem(QString::number(i),QStringLiteral("帖子帖子帖子") + QString::number(i),QString::number(i) + QStringLiteral("、帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子"));
         }
+        break;
+    }
+    case ListItem::PostingDetail:
+    {
+        addPostingDetailItem("-1");
         break;
     }
     case ListItem::Activity:
@@ -156,20 +164,19 @@ void BCListWidget::enterEvent(QEvent *event)
                                              "padding-bottom:0px;"
                                              "}"
                                              "QScrollBar::handle:vertical{"
-                                                 "width:8px;"
-                                                 "background:rgba(0,0,0,50%);"
-                                                 "border-radius:4px;"
-                                                 "min-height:20;"
+                                             "width:8px;"
+                                             "background:rgba(0,0,0,50%);"
+                                             "border-radius:4px;"
+                                             "min-height:20;"
                                              "}"
                                              "QScrollBar::add-line:vertical{"
-                                                                         "height:0px;width:0px;"
-                                                                         "subcontrol-position:bottom;"
-                                                                         "}"
+                                             "height:0px;width:0px;"
+                                             "subcontrol-position:bottom;"
+                                             "}"
                                              "QScrollBar::sub-line:vertical{"
-                                                                         "height:0px;width:0px;"
-                                                                         "subcontrol-position:top;"
-                                                                         "}"
-                                             );
+                                             "height:0px;width:0px;"
+                                             "subcontrol-position:top;"
+                                             "}");
 }
 
 void BCListWidget::leaveEvent(QEvent *event)
@@ -183,20 +190,19 @@ void BCListWidget::leaveEvent(QEvent *event)
                                              "padding-bottom:0px;"
                                              "}"
                                              "QScrollBar::handle:vertical{"
-                                                 "width:8px;"
-                                                 "background:rgba(0,0,0,0%);"
-                                                 "border-radius:4px;"
-                                                 "min-height:20;"
+                                             "width:8px;"
+                                             "background:rgba(0,0,0,0%);"
+                                             "border-radius:4px;"
+                                             "min-height:20;"
                                              "}"
                                              "QScrollBar::add-line:vertical{"
-                                                                         "height:0px;width:0px;"
-                                                                         "subcontrol-position:bottom;"
-                                                                         "}"
+                                             "height:0px;width:0px;"
+                                             "subcontrol-position:bottom;"
+                                             "}"
                                              "QScrollBar::sub-line:vertical{"
-                                                                         "height:0px;width:0px;"
-                                                                         "subcontrol-position:top;"
-                                                                         "}"
-                                             );
+                                             "height:0px;width:0px;"
+                                             "subcontrol-position:top;"
+                                             "}");
 }
 
 void BCListWidget::mousePressEvent(QMouseEvent *event)
@@ -216,6 +222,10 @@ void BCListWidget::mousePressEvent(QMouseEvent *event)
         else if(ListItem::MessagePosting == mCurrentItemType)
         {
             setMessagePostingItemIsRead(mCurrentItem);
+        }
+        else if(ListItem::Posting == mCurrentItemType)
+        {
+            BCMainWindow::instance()->showPage(Page::PostDetail);
         }
     }
 }
@@ -239,6 +249,60 @@ void BCListWidget::addPostingItem(const QString &id, const QString &name, const 
     this->insertItem(this->count(),listItem);
     this->setItemWidget(listItem, itemWidget);
     mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addPostingDetailItem(const QString &id)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    //详情item
+    BCPostingDetailItemWidget *itemWidget = new BCPostingDetailItemWidget(this);
+    int a = itemWidget->height();
+    itemWidget->initData(QStringLiteral("Qt内存管理机制：Qt Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
+                                        "Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
+                                        "Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
+                                        "在内部能够维护对象的层次结构。对于可视元素，这种层次结构就是子组件与父组件的关系；对于非可视元素，则是一个对象与另一个对象的从属关系。在 Qt 中，在 Qt 中，删除父对象会将其子对象一起删除。"
+                                        "C++中delete 和 new 必须配对使用(一 一对应)：delete少了，则内存泄露，多了麻烦更大。Qt中使用了new却很少delete，因为QObject的类及其继承的类，设置了parent（也可在构造时使用setParent函"
+                                        "数或parent的addChild）故parent被delete时，这个parent的相关所有child都会自动delete，不用用户手动处理。但parent是不区分它的child是new出来的还是在栈上分配的。这体现delete的强大，可以"
+                                        "释放掉任何的对象，而delete栈上对象就会导致内存出错，这需要了解Qt的半自动的内存管理。另一个问题：child不知道它自己是否被delete掉了，故可能会出现野指针。那就要了解Qt的智能指针QPointer。"));
+    itemWidget->setMaximumWidth(1400);
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+    itemWidget->setListWidgetItem(listItem);
+    listItem->setSizeHint(QSize(1400,itemWidget->height()));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    //评论item
+    for(int i = 0; i < 10; i++)
+    {
+        QString commentId = QString::number(i);
+
+        if(mListSet.find(commentId) != mListSet.end())
+        {
+            return;
+        }
+        mListSet.insert(commentId);
+
+        BCPostingCommentItemWidget *commentItemWidget = new BCPostingCommentItemWidget(this);
+        commentItemWidget->initData();
+        commentItemWidget->setMaximumWidth(1400);
+        commentItemWidget->adjustSize();
+
+        QListWidgetItem *commentListItem = new QListWidgetItem();
+        commentListItem->setSizeHint(QSize(1400,commentItemWidget->height()));
+        this->insertItem(this->count(),commentListItem);
+        this->setItemWidget(commentListItem, commentItemWidget);
+        mListMap.insert(commentId,commentListItem);
+    }
 
     update();
 }

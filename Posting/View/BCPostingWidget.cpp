@@ -61,7 +61,7 @@ void BCPostingWidget::init()
 {
     mAddPostingsButton = new BCPolymorphicButton(this);
 
-    for(int i = 1; i <=14; i++)
+    for(int i = 1; i <= 14; i++)
     {
         BCPolymorphicButton *button = new BCPolymorphicButton(this);
         connect(button,&BCPolymorphicButton::clicked,this,&BCPostingWidget::slotSubjectBtnClicked);

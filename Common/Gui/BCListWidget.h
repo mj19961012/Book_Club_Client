@@ -28,6 +28,7 @@ protected:
 
 private:
     void addPostingItem(const QString& id, const QString& name, const QString& content);
+    void addPostingDetailItem(const QString &id);
     void addActivityItem(const QString &id);
     void addMinePostingItem(const QString &id);
     void addMineAvtivityItem(const QString &id);
