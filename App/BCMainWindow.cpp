@@ -57,8 +57,6 @@ BCMainWindow::BCMainWindow(QWidget *parent)
     initToolButton();
     initConnect();
 
-    connect(this,SIGNAL(getPageSignal(Page::BCPageEnum)),BCMessageManager::getInstance(),SLOT(getPageVlaues(Page::BCPageEnum)));
-
     emit getPageSignal(Page::BCPageEnum::Init);
 }
 
@@ -100,6 +98,8 @@ void BCMainWindow::initConnect()
     connect(mExitButton,&BCPolymorphicButton::clicked,this,[](){
         qApp->exit(0);
     });
+
+    connect(this,SIGNAL(getPageSignal(Page::BCPageEnum)),BCMessageManager::getInstance(),SLOT(getPageVlaues(Page::BCPageEnum)));
 }
 
 void BCMainWindow::addBasePage(BasePage::BCBasePageEnum pageEnum)

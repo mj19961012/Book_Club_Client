@@ -31,6 +31,7 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mStackWidget->setCurrentWidget(mActivityWidget);
         break;
     case Page::ActivityDetail:
+        mStackWidget->setCurrentWidget(mActivityDetailWidget);
         break;
     case Page::PublishActivity:
         mStackWidget->setCurrentWidget(mPublishActivityWidget);
@@ -48,6 +49,8 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
     case Page::MineFocus:
         break;
     case Page::Search:
+        break;
+    default:
         break;
     }
 }
@@ -159,6 +162,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::ActivityDetail:
     {
+        mActivityDetailWidget = new BCActivityDetailWidget(this);
+        mStackWidget->addWidget(mActivityDetailWidget);
         break;
     }
     case Page::PublishActivity:
@@ -191,5 +196,7 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     {
         break;
     }
+    default:
+        break;
     }
 }

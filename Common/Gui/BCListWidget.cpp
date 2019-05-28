@@ -227,6 +227,10 @@ void BCListWidget::mousePressEvent(QMouseEvent *event)
         {
             BCMainWindow::instance()->showPage(Page::PostDetail);
         }
+        else if(ListItem::Activity == mCurrentItemType)
+        {
+            BCMainWindow::instance()->showPage(Page::ActivityDetail);
+        }
     }
 }
 
