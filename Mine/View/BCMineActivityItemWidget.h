@@ -10,7 +10,7 @@ class BCMineActivityItemWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCMineActivityItemWidget(QWidget *parent = nullptr);
-    void initData();
+    void initData(const QString& title,const QString& content,const QString& date);
 
 protected:
     void paintEvent(QPaintEvent *event);

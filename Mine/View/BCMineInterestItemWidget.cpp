@@ -6,10 +6,10 @@ BCMineInterestItemWidget::BCMineInterestItemWidget(QWidget *parent)
     init();
 }
 
-void BCMineInterestItemWidget::initData()
+void BCMineInterestItemWidget::initData(const QString& image,const QString& name)
 {
-    setHeadImage(":/res/common/defaultHeadImage.png");
-    setName(u8"我的关注");
+    setHeadImage(image);
+    setName(name);
 }
 
 void BCMineInterestItemWidget::paintEvent(QPaintEvent *event)

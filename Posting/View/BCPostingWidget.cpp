@@ -1,6 +1,12 @@
 ﻿#include "BCPostingWidget.h"
+
+#include <QDebug>
+
 #include "BCMainWindow.h"
 #include "BCCommonEnumData.h"
+#include "../Common/Gui/BCToastTips.h"
+#include "BCDataManager.h"
+
 
 BCPostingWidget::BCPostingWidget(QWidget *parent)
     :QWidget(parent)

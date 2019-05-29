@@ -10,7 +10,7 @@ class BCMineInterestItemWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCMineInterestItemWidget(QWidget *parent = nullptr);
-    void initData();
+    void initData(const QString& image,const QString& name);
 
 protected:
     void paintEvent(QPaintEvent *event);

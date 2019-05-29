@@ -7,11 +7,11 @@ BCMineActivityItemWidget::BCMineActivityItemWidget(QWidget *parent)
     init();
 }
 
-void BCMineActivityItemWidget::initData()
+void BCMineActivityItemWidget::initData(const QString& title,const QString& content,const QString& date)
 {
-    setTitle(u8"我的活动");
-    setDate("2018-05-20");
-    setContent(u8"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
+    setTitle(title);
+    setDate(content);
+    setContent(date);
 }
 
 void BCMineActivityItemWidget::paintEvent(QPaintEvent *event)

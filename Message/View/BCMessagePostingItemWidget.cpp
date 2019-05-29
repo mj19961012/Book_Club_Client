@@ -7,11 +7,11 @@ BCMessagePostingItemWidget::BCMessagePostingItemWidget(QWidget *parent)
     init();
 }
 
-void BCMessagePostingItemWidget::initData()
+void BCMessagePostingItemWidget::initData(const QString& title,const QString& date,const QString& content)
 {
-    setTitle(u8"我的帖子");
-    setDate("2018-05-20");
-    setContent(u8"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
+    setTitle(title);
+    setDate(date);
+    setContent(content);
     setIsRead(false);
 }
 

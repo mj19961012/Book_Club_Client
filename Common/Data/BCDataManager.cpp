@@ -350,6 +350,19 @@ QMap<QString, message_info> BCDataManager::getBCMessageListMap(QString sessionId
     return mBCMessageListMap[sessionId];
 }
 
+QMap<QString, message_info> BCDataManager::getBCMessageListMap() const
+{
+    QMap<QString, message_info> temp_list;
+    for(auto &messages : mBCMessageListMap)
+    {
+        for(auto &message : messages)
+        {
+            temp_list[message.getmessageId().c_str()] = message;
+        }
+    }
+    return temp_list;
+}
+
 void BCDataManager::setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap)
 {
     for(auto &message : bCMessageListMap)

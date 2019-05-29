@@ -78,6 +78,7 @@ public:
     void setBCParentCityInfoMap(const QMap<QString, QString> &bCParentCityInfoMap);
     /// \brief 私信消息列表
     QMap<QString, message_info> getBCMessageListMap(QString sessionId) const;
+    QMap<QString, message_info> getBCMessageListMap() const;
     void setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap);
     /// \brief 帖子主页帖子列表信息
     QMap<QString, article_info> getBCPostingListMap() const;

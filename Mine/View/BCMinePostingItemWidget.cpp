@@ -7,11 +7,11 @@ BCMinePostingItemWidget::BCMinePostingItemWidget(QWidget *parent)
     init();
 }
 
-void BCMinePostingItemWidget::initData()
+void BCMinePostingItemWidget::initData(const QString& title,const QString& content,const QString& date)
 {
-    setTitle(u8"我的帖子");
-    setDate("2018-05-20");
-    setContent(u8"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
+    setTitle(title);
+    setDate(date);
+    setContent(content);
 }
 
 void BCMinePostingItemWidget::paintEvent(QPaintEvent *event)
