@@ -10,7 +10,7 @@ class BCMessageChatItemWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCMessageChatItemWidget(QWidget *parent = nullptr);
-    void initData();
+    void initData(const QString& image,const QString& name,const QString& date,const QString& content);
     void setIsRead(const bool& isRead);
 
 protected:

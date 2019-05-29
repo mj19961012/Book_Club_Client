@@ -10,7 +10,7 @@ class BCActivityListItemWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCActivityListItemWidget(QWidget *parent = nullptr);
-    void initData();
+    void initData(const QString& name,const QString& content,const QString& date,const QString& num);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

@@ -2,6 +2,7 @@
 #include <QPainter>
 #include "BCMessageEnumData.h"
 #include "BCMineEnumData.h"
+#include "BCMessageManager.h"
 
 BCMainWidget::BCMainWidget(QWidget *parent)
     :QWidget(parent)
@@ -16,6 +17,7 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
     switch(pageEnum)
     {
     case Page::Postings:
+        emit getPageValuesSignal(pageEnum);
         mStackWidget->setCurrentWidget(mPostingWidget);
         mNavigationBar->setSelectItem(NavigationBar::Postings);
         break;
@@ -54,7 +56,7 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         break;
     case Page::MineFocus:
         break;
-    case Page::Search:
+    case Page::ChangeMessageStatus:
         break;
     default:
         break;
@@ -132,6 +134,7 @@ void BCMainWidget::initStyle()
 void BCMainWidget::initConnect()
 {
     connect(mNavigationBar,&BCNavigationBar::sigNavigationBarClicked,this,&BCMainWidget::slotNavigationBarSelected);
+    connect(this,SIGNAL(getPageValuesSignal(Page::BCPageEnum)),BCMessageManager::getInstance(),SLOT(getPageVlaues(Page::BCPageEnum)));
 }
 
 void BCMainWidget::addPage(Page::BCPageEnum pageEnum)

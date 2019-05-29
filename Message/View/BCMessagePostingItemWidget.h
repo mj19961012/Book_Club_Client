@@ -10,7 +10,7 @@ class BCMessagePostingItemWidget  : public QWidget
     Q_OBJECT
 public:
     explicit BCMessagePostingItemWidget(QWidget *parent = nullptr);
-    void initData();
+    void initData(const QString& title,const QString& date,const QString& content);
     void setIsRead(const bool& isRead);
 
 protected:

@@ -22,6 +22,8 @@ public:
     explicit BCMainWidget(QWidget *parent = nullptr);
 
     void showPage(Page::BCPageEnum pageEnum);
+signals:
+    void getPageValuesSignal(Page::BCPageEnum);
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);

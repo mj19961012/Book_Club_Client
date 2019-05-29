@@ -7,12 +7,12 @@ BCMessageChatItemWidget::BCMessageChatItemWidget(QWidget *parent)
     init();
 }
 
-void BCMessageChatItemWidget::initData()
+void BCMessageChatItemWidget::initData(const QString& image,const QString& name,const QString& date,const QString& content)
 {
-    setHeadImage(":/res/common/defaultHeadImage.png");
-    setName(u8"私信消息");
-    setDate(u8"2019-05-20");
-    setContent(u8"私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息私信消息");
+    setHeadImage(image);
+    setName(name);
+    setDate(date);
+    setContent(content);
     setIsRead(false);
 }
 

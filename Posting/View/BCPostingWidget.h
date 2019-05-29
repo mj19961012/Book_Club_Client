@@ -13,7 +13,6 @@ class BCPostingWidget : public QWidget
 public:
     explicit BCPostingWidget(QWidget *parent = nullptr);
     void initData();
-
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);

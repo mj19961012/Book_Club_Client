@@ -10,6 +10,8 @@
 #include "BCMessageChatItemWidget.h"
 #include "BCMessagePostingItemWidget.h"
 #include "BCChatBubbleItemWidget.h"
+#include "BCDataManager.h"
+#include <QDateTime>
 
 BCListWidget::BCListWidget(QWidget *parent)
     :QListWidget(parent)
@@ -70,9 +72,11 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
     {
     case ListItem::Posting:
     {
-        for(int i = 0; i < 20; i++)
+        auto values = BCDataManager::instance().getBCPostingListMap();
+        for(auto &value:values)
         {
-            addPostingItem(QString::number(i),QStringLiteral("帖子帖子帖子") + QString::number(i),QString::number(i) + QStringLiteral("、帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子"));
+//            addPostingItem(QString::number(i),QStringLiteral("帖子帖子帖子") + QString::number(i),QString::number(i) + QStringLiteral("、帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子帖子"));
+            addPostingItem(QString().fromStdString(value.getarticleId()),QString().fromStdString(value.getarticleTitle()),QString().fromStdString(value.getarticleContent()));
         }
         break;
     }
@@ -83,49 +87,68 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
     }
     case ListItem::Activity:
     {
-        for(int i = 0; i < 20; i++)
+        auto values = BCDataManager::instance().getBCActivitiesListMap();
+        for(auto &value:values)
         {
-            addActivityItem(QString::number(i));
+            auto time = QDateTime::fromString(QString().fromStdString(value.getreleaseTime()),"yyyy-MM-dd").toString();
+            addActivityItem(QString().fromStdString(value.getactionId()),QString().fromStdString(value.getactionTitle()),QString().fromStdString(value.getactionContent()),time,QString::number(value.getpageView()));
         }
         break;
     }
     case ListItem::MinePosting:
     {
-        for(int i = 0; i < 20; i++)
+        auto values = BCDataManager::instance().getCurrentCatchPostingList();
+        for(auto &value:values)
         {
-            addMinePostingItem(QString::number(i));
+            auto time = QDateTime::fromString(QString().fromStdString(value.getreleaseTime()),"yyyy-MM-dd").toString();
+            addMinePostingItem(QString().fromStdString(value.getarticleId()),QString().fromStdString(value.getarticleTitle()),QString().fromStdString(value.getarticleContent()),time);
         }
         break;
     }
     case ListItem::MineAvtivity:
     {
-        for(int i = 0; i < 20; i++)
+        auto values = BCDataManager::instance().getCurrentCatchActivitiesList();
+        for(auto &value:values)
         {
-            addMineAvtivityItem(QString::number(i));
+            auto time = QDateTime::fromString(QString().fromStdString(value.getreleaseTime()),"yyyy-MM-dd").toString();
+            addMineAvtivityItem(QString().fromStdString(value.getactionId()),QString().fromStdString(value.getactionTitle()),QString().fromStdString(value.getactionContent()),time);
         }
         break;
     }
     case ListItem::MineInterest:
     {
-        for(int i = 0; i < 20; i++)
+        auto values = BCDataManager::instance().getBCMineFocusListMap();
+
+        for(auto &value:values)
         {
-            addMineInterestItem(QString::number(i));
+            auto user = BCDataManager::instance().getPersonalInformationWithId(value.getfollowerId().c_str());
+            addMineInterestItem(QString().fromStdString(value.getinterestId()),QString().fromStdString(user.getheadImage()),QString().fromStdString(user.getnickName()));
         }
         break;
     }
     case ListItem::MessageChat:
     {
-        for(int i = 0; i < 20; i++)
+        auto values = BCDataManager::instance().getBCMessageListMap();
+        for(auto &value:values)
         {
-            addMessageChatItem(QString::number(i));
+            if(value.getmessageType() == 1)
+            {
+                auto user = BCDataManager::instance().getPersonalInformationWithId(value.getsenderId().c_str());
+                addMessageChatItem(QString().fromStdString(value.getmessageId()),QString().fromStdString(user.getheadImage()),QString().fromStdString(user.getnickName()),QDateTime::fromString(value.getsendTime().c_str()).toString(),QString().fromStdString(value.getmessgaeBody()));
+            }
         }
         break;
     }
     case ListItem::MessagePosting:
     {
-        for(int i = 0; i < 20; i++)
+        auto values = BCDataManager::instance().getBCMessageListMap();
+        for(auto &value:values)
         {
-            addMessagePostingItem(QString::number(i));
+            if(value.getmessageType() != 1)
+            {
+                auto user = BCDataManager::instance().getPersonalInformationWithId(value.getsenderId().c_str());
+                addMessagePostingItem(QString().fromStdString(value.getmessageId()),QString().fromStdString(user.getnickName()),QDateTime::fromString(value.getsendTime().c_str()).toString(),QString().fromStdString(value.getmessgaeBody()));
+            }
         }
         break;
     }
@@ -294,7 +317,6 @@ void BCListWidget::addPostingDetailItem(const QString &id)
 
     //详情item
     BCPostingDetailItemWidget *itemWidget = new BCPostingDetailItemWidget(this);
-    int a = itemWidget->height();
     itemWidget->initData(QStringLiteral("Qt内存管理机制：Qt Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
                                         "Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
                                         "Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
@@ -338,7 +360,7 @@ void BCListWidget::addPostingDetailItem(const QString &id)
     update();
 }
 
-void BCListWidget::addActivityItem(const QString &id)
+void BCListWidget::addActivityItem(const QString &id, const QString& name, const QString& content,const QString& date,const QString& num)
 {
     if(mListSet.find(id) != mListSet.end())
     {
@@ -348,7 +370,7 @@ void BCListWidget::addActivityItem(const QString &id)
 
     BCActivityListItemWidget *itemWidget = new BCActivityListItemWidget(this);
 
-    itemWidget->initData();
+    itemWidget->initData(name,content,date,num);
     itemWidget->adjustSize();
 
     QListWidgetItem *listItem = new QListWidgetItem();
@@ -361,7 +383,7 @@ void BCListWidget::addActivityItem(const QString &id)
     update();
 }
 
-void BCListWidget::addMinePostingItem(const QString &id)
+void BCListWidget::addMinePostingItem(const QString &id,const QString& title,const QString& content,const QString& date)
 {
     if(mListSet.find(id) != mListSet.end())
     {
@@ -371,7 +393,7 @@ void BCListWidget::addMinePostingItem(const QString &id)
 
     BCMinePostingItemWidget *itemWidget = new BCMinePostingItemWidget(this);
 
-    itemWidget->initData();
+    itemWidget->initData(title,content,date);
     itemWidget->adjustSize();
 
     QListWidgetItem *listItem = new QListWidgetItem();
@@ -384,7 +406,7 @@ void BCListWidget::addMinePostingItem(const QString &id)
     update();
 }
 
-void BCListWidget::addMineAvtivityItem(const QString &id)
+void BCListWidget::addMineAvtivityItem(const QString &id,const QString& title,const QString& content,const QString& date)
 {
     if(mListSet.find(id) != mListSet.end())
     {
@@ -394,7 +416,7 @@ void BCListWidget::addMineAvtivityItem(const QString &id)
 
     BCMineActivityItemWidget *itemWidget = new BCMineActivityItemWidget(this);
 
-    itemWidget->initData();
+    itemWidget->initData(title,content,date);
     itemWidget->adjustSize();
 
     QListWidgetItem *listItem = new QListWidgetItem();
@@ -407,7 +429,7 @@ void BCListWidget::addMineAvtivityItem(const QString &id)
     update();
 }
 
-void BCListWidget::addMineInterestItem(const QString &id)
+void BCListWidget::addMineInterestItem(const QString &id,const QString& image,const QString& name)
 {
     if(mListSet.find(id) != mListSet.end())
     {
@@ -417,7 +439,7 @@ void BCListWidget::addMineInterestItem(const QString &id)
 
     BCMineInterestItemWidget *itemWidget = new BCMineInterestItemWidget(this);
 
-    itemWidget->initData();
+    itemWidget->initData(image,name);
     itemWidget->adjustSize();
 
     QListWidgetItem *listItem = new QListWidgetItem();
@@ -430,7 +452,7 @@ void BCListWidget::addMineInterestItem(const QString &id)
     update();
 }
 
-void BCListWidget::addMessageChatItem(const QString &id)
+void BCListWidget::addMessageChatItem(const QString &id,const QString& image,const QString& name,const QString& date,const QString& content)
 {
     if(mListSet.find(id) != mListSet.end())
     {
@@ -440,7 +462,7 @@ void BCListWidget::addMessageChatItem(const QString &id)
 
     BCMessageChatItemWidget *itemWidget = new BCMessageChatItemWidget(this);
 
-    itemWidget->initData();
+    itemWidget->initData(image,name,date,content);
     itemWidget->adjustSize();
 
     QListWidgetItem *listItem = new QListWidgetItem();
@@ -453,7 +475,7 @@ void BCListWidget::addMessageChatItem(const QString &id)
     update();
 }
 
-void BCListWidget::addMessagePostingItem(const QString &id)
+void BCListWidget::addMessagePostingItem(const QString &id,const QString& title,const QString& date,const QString& content)
 {
     if(mListSet.find(id) != mListSet.end())
     {
@@ -463,7 +485,7 @@ void BCListWidget::addMessagePostingItem(const QString &id)
 
     BCMessagePostingItemWidget *itemWidget = new BCMessagePostingItemWidget(this);
 
-    itemWidget->initData();
+    itemWidget->initData(title,date,content);
     itemWidget->adjustSize();
 
     QListWidgetItem *listItem = new QListWidgetItem();

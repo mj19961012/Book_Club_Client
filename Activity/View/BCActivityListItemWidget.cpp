@@ -7,12 +7,12 @@ BCActivityListItemWidget::BCActivityListItemWidget(QWidget *parent)
     init();
 }
 
-void BCActivityListItemWidget::initData()
+void BCActivityListItemWidget::initData(const QString& name,const QString& content,const QString& date,const QString& num)
 {
-    setName(u8"人在塔在");
-    setContent(u8"啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦");
-    setDate("2018-05-20");
-    setWatchNum("66666");
+    setName(name);
+    setContent(content);
+    setDate(date);
+    setWatchNum(num);
 }
 
 void BCActivityListItemWidget::paintEvent(QPaintEvent *event)
