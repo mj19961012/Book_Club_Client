@@ -21,6 +21,8 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mStackWidget->setCurrentWidget(mPostingWidget);
         break;
     case Page::PostDetail:
+        mStackWidget->setCurrentWidget(mPostingDetailWidget);
+        mPostingDetailWidget->initData();
         break;
     case Page::PostMaster:
         break;
@@ -31,6 +33,7 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mStackWidget->setCurrentWidget(mActivityWidget);
         break;
     case Page::ActivityDetail:
+        mStackWidget->setCurrentWidget(mActivityDetailWidget);
         break;
     case Page::PublishActivity:
         mStackWidget->setCurrentWidget(mPublishActivityWidget);
@@ -48,6 +51,8 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
     case Page::MineFocus:
         break;
     case Page::ChangeMessageStatus:
+        break;
+    default:
         break;
     }
 }
@@ -138,6 +143,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::PostDetail:
     {
+        mPostingDetailWidget = new BCPostingDetailWidget(this);
+        mStackWidget->addWidget(mPostingDetailWidget);
         break;
     }
     case Page::PostMaster:
@@ -158,6 +165,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::ActivityDetail:
     {
+        mActivityDetailWidget = new BCActivityDetailWidget(this);
+        mStackWidget->addWidget(mActivityDetailWidget);
         break;
     }
     case Page::PublishActivity:
@@ -190,5 +199,7 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     {
         break;
     }
+    default:
+        break;
     }
 }

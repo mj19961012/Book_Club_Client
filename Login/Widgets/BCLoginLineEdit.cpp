@@ -30,9 +30,13 @@ void BCLoginLineEdit::setType(BCLoginLineEditEnum type)
     {
     case Login_LineEdit_Phone:
         mLineEdit->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$")));//只能输入数字
+        mLineEdit->setEchoMode(QLineEdit::Normal);
+        mLineEdit->setText(QStringLiteral("19904764991"));
         break;
     case Login_LineEdit_Password:
         mLineEdit->setValidator(new QRegExpValidator(QRegExp("^[A-Za-z0-9]+$"))); //只能输入数字和字母
+        mLineEdit->setEchoMode(QLineEdit::Password);
+        mLineEdit->setText(QStringLiteral("123456"));
         break;
     }
 }

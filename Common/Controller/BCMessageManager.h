@@ -17,6 +17,7 @@ class BCMessageManager : public QObject
 public :
     ~BCMessageManager();
     static BCMessageManager * getInstance();
+
 signals:
     void catchPersonalInformationSignals(std::string userId);
     void sendOperationResultSignal(bool,Page::BCPageEnum);
@@ -24,7 +25,6 @@ public slots:
     void getPageVlaues(Page::BCPageEnum pageEnum);
     void catchPersonalInformationSlot(std::string userId);
 private:
-
     QMap<QString, QMap<QString, QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;
 	QMap<QString, message_info> mBCMessageListMap;

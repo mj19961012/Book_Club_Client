@@ -57,8 +57,6 @@ BCMainWindow::BCMainWindow(QWidget *parent)
     initToolButton();
     initConnect();
 
-
-
     emit getPageSignal(Page::BCPageEnum::Init);
 }
 

@@ -28,12 +28,22 @@ protected:
 
 private:
     void addPostingItem(const QString& id, const QString& name, const QString& content);
+<<<<<<< HEAD
     void addActivityItem(const QString &id, const QString& name, const QString& content,const QString& date,const QString& num);
     void addMinePostingItem(const QString &id,const QString& title,const QString& content,const QString& date);
     void addMineAvtivityItem(const QString &id,const QString& title,const QString& content,const QString& date);
     void addMineInterestItem(const QString &id,const QString& image,const QString& name);
     void addMessageChatItem(const QString &id,const QString& image,const QString& name,const QString& date,const QString& content);
     void addMessagePostingItem(const QString &id,const QString& title,const QString& date,const QString& content);
+=======
+    void addPostingDetailItem(const QString &id);
+    void addActivityItem(const QString &id);
+    void addMinePostingItem(const QString &id);
+    void addMineAvtivityItem(const QString &id);
+    void addMineInterestItem(const QString &id);
+    void addMessageChatItem(const QString &id);
+    void addMessagePostingItem(const QString &id);
+>>>>>>> 1a8bd4ce904370faa27e6d7b25ba0cd9a3d3947c
 
 private:
     void clearData();

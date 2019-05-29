@@ -4,6 +4,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QFileIconProvider>
+#include <QScrollBar>
 #include "BCDataManager.h"
 #include "BCToastTips.h"
 
@@ -128,6 +129,27 @@ void BCInputContentAndFileWidget::initStyle()
                                     "background-color:rgba(247,187,100,10);"
                                     "border:0px;"
                                     "}");
+    mContentTextEdit->verticalScrollBar()->setStyleSheet("QScrollBar:vertical{"
+                                                         "width:8px;"
+                                                         "background:rgba(0,0,0,0%);"
+                                                         "margin:0px,0px,0px,0px;"
+                                                         "padding-top:0px;"
+                                                         "padding-bottom:0px;"
+                                                         "}"
+                                                         "QScrollBar::handle:vertical{"
+                                                         "width:8px;"
+                                                         "background:rgba(0,0,0,50%);"
+                                                         "border-radius:4px;"
+                                                         "min-height:20;"
+                                                         "}"
+                                                         "QScrollBar::add-line:vertical{"
+                                                         "height:0px;width:0px;"
+                                                         "subcontrol-position:bottom;"
+                                                         "}"
+                                                         "QScrollBar::sub-line:vertical{"
+                                                         "height:0px;width:0px;"
+                                                         "subcontrol-position:top;"
+                                                         "}");
 
     mFileWidget->setObjectName("mFileWidget");
     mFileWidget->setStyleSheet("QWidget#mFileWidget{"
