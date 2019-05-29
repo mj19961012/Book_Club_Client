@@ -15,10 +15,12 @@ void BCMessageWidget::showPage(MessagePage::BCMessagePageEnum page)
     {
     case MessagePage::ChatList:
         mStackedWidget->setCurrentWidget(mChatListWidget);
+        switchButtonClicked(page);
         mChatListWidget->addListItem(ListItem::MessageChat);
         break;
     case MessagePage::PostingList:
         mStackedWidget->setCurrentWidget(mPostingListWidget);
+        switchButtonClicked(page);
         mPostingListWidget->addListItem(ListItem::MessagePosting);
         break;
     case MessagePage::Chat:
@@ -60,38 +62,10 @@ void BCMessageWidget::slotMessageButtonClicked()
 {
     if(sender() == mChatListButton)
     {
-        mChatListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                       "#333333",QString("2,2,2,0").split(","),
-                                       QString("#F7BB64,#F7BB64,#F7BB64,#F7BB64").split(","),0);
-        mPostingListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                          "#333333",QString("0,0,0,2").split(","),
-                                          QString("transparent,transparent,transparent,#F7BB64").split(","),0);
-        mChatListButton->setFontStyle(25);
-        mPostingListButton->setFontStyle(25);
         showPage(MessagePage::ChatList);
     }
     else if(sender() == mPostingListButton)
     {
-        mPostingListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                          "#333333",QString("2,2,2,0").split(","),
-                                          QString("#F7BB64,#F7BB64,#F7BB64,#F7BB64").split(","),0);
-        mChatListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                       "#333333",QString("0,0,0,2").split(","),
-                                       QString("transparent,transparent,transparent,#F7BB64").split(","),0);
-        mChatListButton->setFontStyle(25);
-        mPostingListButton->setFontStyle(25);
         showPage(MessagePage::PostingList);
     }
 }
@@ -126,21 +100,6 @@ void BCMessageWidget::init()
 
 void BCMessageWidget::initStyle()
 {
-    mChatListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                   "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                   "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                   "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                   "#333333",QString("2,2,2,0").split(","),
-                                   QString("#F7BB64,#F7BB64,#F7BB64,#F7BB64").split(","),0);
-    mPostingListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                      "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                      "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                      "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                      "#333333",QString("0,0,0,2").split(","),
-                                      QString("transparent,transparent,transparent,#F7BB64").split(","),0);
-    mChatListButton->setFontStyle(25);
-    mPostingListButton->setFontStyle(25);
-
     mHasBeenReadButton->setColorStyle("transparent","transparent","transparent","transparent",
                                       "#333333",2,"rgb(247,187,100,)",
                                       QString("%1,%1,%1,%1").arg(mHasBeenReadButton->height()/2).split(","));
@@ -169,6 +128,54 @@ void BCMessageWidget::addPage(MessagePage::BCMessagePageEnum page)
     {
         mPostingListWidget = new BCListWidget(this);
         mStackedWidget->addWidget(mPostingListWidget);
+        break;
+    }
+    case MessagePage::Chat:
+    {
+
+        break;
+    }
+    }
+}
+
+void BCMessageWidget::switchButtonClicked(MessagePage::BCMessagePageEnum page)
+{
+    switch(page)
+    {
+    case MessagePage::ChatList:
+    {
+        mChatListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                       "#333333",QString("2,2,2,0").split(","),
+                                       QString("#F7BB64,#F7BB64,#F7BB64,#F7BB64").split(","),0);
+        mPostingListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                          "#333333",QString("0,0,0,2").split(","),
+                                          QString("transparent,transparent,transparent,#F7BB64").split(","),0);
+        mChatListButton->setFontStyle(25);
+        mPostingListButton->setFontStyle(25);
+        break;
+    }
+    case MessagePage::PostingList:
+    {
+        mPostingListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                          "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                          "#333333",QString("2,2,2,0").split(","),
+                                          QString("#F7BB64,#F7BB64,#F7BB64,#F7BB64").split(","),0);
+        mChatListButton->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                       "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                       "#333333",QString("0,0,0,2").split(","),
+                                       QString("transparent,transparent,transparent,#F7BB64").split(","),0);
+        mChatListButton->setFontStyle(25);
+        mPostingListButton->setFontStyle(25);
         break;
     }
     case MessagePage::Chat:

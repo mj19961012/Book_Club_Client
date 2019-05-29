@@ -17,6 +17,7 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
     {
     case Page::Postings:
         mStackWidget->setCurrentWidget(mPostingWidget);
+        mNavigationBar->setSelectItem(NavigationBar::Postings);
         break;
     case Page::PostDetail:
         mStackWidget->setCurrentWidget(mPostingDetailWidget);
@@ -29,6 +30,7 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         break;
     case Page::Activity:
         mStackWidget->setCurrentWidget(mActivityWidget);
+        mNavigationBar->setSelectItem(NavigationBar::Activity);
         break;
     case Page::ActivityDetail:
         mStackWidget->setCurrentWidget(mActivityDetailWidget);
@@ -38,12 +40,16 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         break;
     case Page::Message:
         mStackWidget->setCurrentWidget(mMessageWidget);
+        mNavigationBar->setSelectItem(NavigationBar::Message);
         mMessageWidget->showPage(MessagePage::ChatList);
         break;
     case Page::Chat:
+        mStackWidget->setCurrentWidget(mMessageChatWidget);
+        mMessageChatWidget->initData();
         break;
     case Page::PersonalInformation:
         mStackWidget->setCurrentWidget(mMineWidget);
+        mNavigationBar->setSelectItem(NavigationBar::PersonalInformation);
         mMineWidget->showPage(MinePage::MineInformation);
         break;
     case Page::MineFocus:
@@ -92,7 +98,7 @@ void BCMainWidget::slotNavigationBarSelected(NavigationBar::BCNavigationBarEnum 
     case NavigationBar::Search:
         showPage(Page::Search);
         break;
-    case NavigationBar::MineInfo:
+    case NavigationBar::PersonalInformation:
         showPage(Page::PersonalInformation);
         break;
     }
@@ -180,6 +186,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::Chat:
     {
+        mMessageChatWidget = new BCMessageChatWidget(this);
+        mStackWidget->addWidget(mMessageChatWidget);
         break;
     }
     case Page::PersonalInformation:

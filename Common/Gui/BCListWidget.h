@@ -7,6 +7,7 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QResizeEvent>
+#include "BCMessageEnumData.h"
 #include "BCCommonEnumData.h"
 
 class BCListWidget : public QListWidget
@@ -35,6 +36,7 @@ private:
     void addMineInterestItem(const QString &id);
     void addMessageChatItem(const QString &id);
     void addMessagePostingItem(const QString &id);
+    void addMessageChatBubbleItem(const QString &id, const MessagePage::BCMessageBubbleEnum& isMe);
 
 private:
     void clearData();

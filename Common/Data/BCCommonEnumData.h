@@ -41,7 +41,7 @@ enum BCNavigationBarEnum
     Activity,                //活动主页
     Message,                 //消息主页
     Search,                  //搜索
-    MineInfo,                //个人信息主页
+    PersonalInformation,     //个人信息主页
 };
 }
 
@@ -92,6 +92,7 @@ enum BCListWidgetType
     MineInterest,
     MessageChat,
     MessagePosting,
+    MessageChatBubble,
 };
 }
 

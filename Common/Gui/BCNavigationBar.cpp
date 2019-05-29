@@ -44,7 +44,7 @@ void BCNavigationBar::setSelectItem(NavigationBar::BCNavigationBarEnum barEnum)
         mSearchItem->setIsSelected(true);
         mMineInfoItem->setIsSelected(false);
         break;
-    case NavigationBar::MineInfo:
+    case NavigationBar::PersonalInformation:
         mPostingsItem->setIsSelected(false);
         mActivityItem->setIsSelected(false);
         mMessageItem->setIsSelected(false);
@@ -100,7 +100,7 @@ void BCNavigationBar::init()
     mSearchItem->setType(NavigationBar::Search);
 
     mMineInfoItem = new BCNavigationBarItem(this);
-    mMineInfoItem->setType(NavigationBar::MineInfo);
+    mMineInfoItem->setType(NavigationBar::PersonalInformation);
 
     setSelectItem(NavigationBar::Postings);
 }
@@ -135,7 +135,7 @@ void BCNavigationBar::initConnect()
     });
 
     connect(mMineInfoItem,&BCNavigationBarItem::clicked,this,[this](){
-        setSelectItem(NavigationBar::MineInfo);
-        emit sigNavigationBarClicked(NavigationBar::MineInfo);
+        setSelectItem(NavigationBar::PersonalInformation);
+        emit sigNavigationBarClicked(NavigationBar::PersonalInformation);
     });
 }

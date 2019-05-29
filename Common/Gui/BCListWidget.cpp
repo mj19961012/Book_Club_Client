@@ -9,9 +9,10 @@
 #include "BCMineInterestItemWidget.h"
 #include "BCMessageChatItemWidget.h"
 #include "BCMessagePostingItemWidget.h"
+#include "BCChatBubbleItemWidget.h"
 
 BCListWidget::BCListWidget(QWidget *parent)
-    :QListWidget (parent)
+    :QListWidget(parent)
 {
     this->setFocusPolicy(Qt::NoFocus);       // 去除item选中时的虚线边框
     this->setFrameShape(QListWidget::NoFrame);
@@ -128,6 +129,14 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
         }
         break;
     }
+    case ListItem::MessageChatBubble:
+    {
+        for(int i = 0; i < 20; i++)
+        {
+            addMessageChatBubbleItem(QString::number(i),MessagePage::Friend);
+        }
+        break;
+    }
     }
 }
 
@@ -218,16 +227,34 @@ void BCListWidget::mousePressEvent(QMouseEvent *event)
         if(ListItem::MessageChat == mCurrentItemType)
         {
             setMessageChatItemIsRead(mCurrentItem);
+            BCMainWindow::instance()->showPage(Page::Chat);
         }
         else if(ListItem::MessagePosting == mCurrentItemType)
         {
             setMessagePostingItemIsRead(mCurrentItem);
+            BCMainWindow::instance()->showPage(Page::PostDetail);
         }
         else if(ListItem::Posting == mCurrentItemType)
         {
             BCMainWindow::instance()->showPage(Page::PostDetail);
         }
         else if(ListItem::Activity == mCurrentItemType)
+        {
+            BCMainWindow::instance()->showPage(Page::ActivityDetail);
+        }
+        else if(ListItem::MessageChatBubble == mCurrentItemType)
+        {
+            clearData();
+            for(int i = 0; i < 20; i++)
+            {
+                addMessageChatBubbleItem(QString::number(i),MessagePage::Mine);
+            }
+        }
+        else if(ListItem::MinePosting == mCurrentItemType)
+        {
+            BCMainWindow::instance()->showPage(Page::PostDetail);
+        }
+        else if(ListItem::MineAvtivity == mCurrentItemType)
         {
             BCMainWindow::instance()->showPage(Page::ActivityDetail);
         }
@@ -442,6 +469,29 @@ void BCListWidget::addMessagePostingItem(const QString &id)
     QListWidgetItem *listItem = new QListWidgetItem();
 
     listItem->setSizeHint(QSize(this->width() - 20,150));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addMessageChatBubbleItem(const QString &id, const MessagePage::BCMessageBubbleEnum &isMe)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCChatBubbleItemWidget *itemWidget = new BCChatBubbleItemWidget(this);
+
+    itemWidget->initData(isMe);
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,itemWidget->height()));
     this->insertItem(this->count(),listItem);
     this->setItemWidget(listItem, itemWidget);
     mListMap.insert(id,listItem);
