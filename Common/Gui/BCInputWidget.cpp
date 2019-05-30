@@ -3,6 +3,7 @@
 #include <QScrollBar>
 
 BCInputWidget::BCInputWidget(QWidget *parent)
+    :QWidget (parent)
 {
     init();
     initConnect();
@@ -85,7 +86,7 @@ void BCInputWidget::initStyle()
                                  "rgba(247,187,100,1)",
                                  "white",0,"transparent",15);
     mSubmitButton->setFontStyle(20);
-    mSubmitButton->setText(QStringLiteral("发表"));
+    mSubmitButton->setText(QStringLiteral("发送"));
 }
 
 void BCInputWidget::initConnect()

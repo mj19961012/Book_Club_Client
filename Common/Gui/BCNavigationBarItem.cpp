@@ -33,7 +33,7 @@ void BCNavigationBarItem::setType(NavigationBar::BCNavigationBarEnum itemEnum)
         setIconSize(QSize(55,55));
         setText(QStringLiteral("搜索"));
         break;
-    case NavigationBar::MineInfo:
+    case NavigationBar::PersonalInformation:
         setIcon(QIcon(":/res/NavigationBar/mine.png"));
         setIconSize(QSize(55,55));
         setText(QStringLiteral("我的"));

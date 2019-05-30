@@ -27,6 +27,7 @@ private:
     void initStyle();
     void initConnect();
     void addPage(MessagePage::BCMessagePageEnum page);
+    void switchButtonClicked(MessagePage::BCMessagePageEnum page);
 
 private:
     BCPolymorphicButton *mChatListButton{};
