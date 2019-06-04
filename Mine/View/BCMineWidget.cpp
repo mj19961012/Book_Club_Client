@@ -14,6 +14,8 @@ void BCMineWidget::showPage(MinePage::BCMinePageEnum page)
     switch(page)
     {
     case MinePage::MineInformation:
+        mStackedWidget->setCurrentWidget(mMineInfoWidget);
+        mMineInfoWidget->initData();
         break;
     case MinePage::EditMineInformation:
         break;
@@ -156,8 +158,8 @@ void BCMineWidget::addPage(MinePage::BCMinePageEnum page)
     {
     case MinePage::MineInformation:
     {
-
-//        mStackedWidget->addWidget(mLoginWidget);
+        mMineInfoWidget = new BCMineInfoWidget(this);
+        mStackedWidget->addWidget(mMineInfoWidget);
         break;
     }
     case MinePage::EditMineInformation:
