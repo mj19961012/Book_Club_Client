@@ -2,6 +2,7 @@
 #include <QPainter>
 
 BCMineInterestItemWidget::BCMineInterestItemWidget(QWidget *parent)
+    :QWidget (parent)
 {
     init();
 }

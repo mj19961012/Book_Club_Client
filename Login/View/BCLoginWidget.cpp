@@ -98,15 +98,16 @@ void BCLoginWidget::initConnect()
             }
             else
             {
-//                BCMainWindow::instance()->showBasePage(BasePage::MainWindow);
                 QString username = mLoginInputWidget->getUserPhoneLineEdit()->getInputText();
                 QString password = mLoginInputWidget->getPasswordLineEdit()->getInputText();
                 qDebug() << "username:" << username << "\n";
                 qDebug() << "password:" << password << "\n";
                 BCDataManager::instance().setUpLoadPersonalInformation(username,password);
                 emit doLoginSignal(Page::BCPageEnum::PersonalInformation);
+                BCMainWindow::instance()->showPage(Page::Postings);
             }
         }
+//        BCMainWindow::instance()->showBasePage(BasePage::MainWindow);
     });
     connect(BCMessageManager::getInstance(),SIGNAL(sendOperationResultSignal(bool,Page::BCPageEnum)),this,SLOT(receiveOperationResult(bool,Page::BCPageEnum)));
 
