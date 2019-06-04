@@ -1,6 +1,10 @@
 ﻿#include "BCPublishActivityWidget.h"
 #include <QPainter>
+#include <QDateTime>
 #include "BCMainWindow.h"
+#include "BCMessageManager.h"
+#include "BCToastTips.h"
+#include "BCDataManager.h"
 
 BCPublishActivityWidget::BCPublishActivityWidget(QWidget *parent)
     :QWidget(parent)
@@ -63,7 +67,76 @@ void BCPublishActivityWidget::resizeEvent(QResizeEvent *event)
 
 void BCPublishActivityWidget::slotPublishActivityBtnClicked()
 {
+    QString tital = mTitleLineEdit->text();
+    QString content = mInputContentWidget->getContentText();
+    QString begintime = QString::number(QDateTime::currentDateTime().toTime_t() - 24 * 3600 *7);
+    QString endtime = QString::number(QDateTime::currentDateTime().toTime_t() + 24 * 3600 *7);
+    QString city = "110000";
+    QString first;
+    QString second;
+    QString third;
+    switch (mBCUploadFilesList.size())
+    {
+        case 3:
+        {
+            third = mBCUploadFilesList[2];
+        }
+        case 2:
+        {
+            second = mBCUploadFilesList[1];
+        }
+        case 1:
+        {
+            first = mBCUploadFilesList[0];
+        }
+        default:
+        {
 
+        }
+    }
+    BCDataManager::instance().setUpLoadPublishActivity(tital,content,city,begintime,endtime,first,second,third);
+    emit doPublishActivity(Page::PublishActivity);
+}
+
+void BCPublishActivityWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    switch (pageEnum)
+    {
+        case Page::PublishActivity:
+            {
+                if(isSuccess)
+                {
+                    qDebug() << "Release Success" << "\n";
+                    BCToastTips::Instance().setToastTip(QStringLiteral("尊敬的用户，恭喜您活动发布成功"));
+                    BCMainWindow::instance()->showPage(Page::PublishActivity);
+                }
+                else
+                {
+                    QString errorMsg = BCDataManager::instance().getErrorMsg();
+                    BCToastTips::Instance().setToastTip(errorMsg);
+                }
+                break;
+            }
+        case Page::UploadFile:
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                if(isSuccess)
+                {
+                    qDebug() << "UploadFile Success" << "\n";
+                    mBCUploadFilesList.push_back(errorMsg);
+                    BCToastTips::Instance().setToastTip(QStringLiteral("尊敬的用户，恭喜您活动发布成功"));
+                }
+                else
+                {
+                    BCToastTips::Instance().setToastTip(errorMsg);
+                }
+                break;
+            }
+        default:
+        {
+            return;
+        }
+    }
 }
 
 void BCPublishActivityWidget::init()
@@ -85,6 +158,8 @@ void BCPublishActivityWidget::init()
 
     mPublishButton = new BCPolymorphicButton(this);
     mPublishButton->setText(QStringLiteral("发布活动"));
+
+    mBCUploadFilesList.clear();
 }
 
 void BCPublishActivityWidget::initStyle()
@@ -114,4 +189,7 @@ void BCPublishActivityWidget::initConnect()
     connect(mBackButton,&BCPolymorphicButton::clicked,this,[](){
         BCMainWindow::instance()->showPage(Page::Activity);
     });
+    connect(this,&BCPublishActivityWidget::doPublishActivity,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mPublishButton,&BCPolymorphicButton::clicked,this,&BCPublishActivityWidget::slotPublishActivityBtnClicked);
+    connect(BCMessageManager::getInstance(),&BCMessageManager::sendOperationResultSignal,this,&BCPublishActivityWidget::receiveOperationResult);
 }

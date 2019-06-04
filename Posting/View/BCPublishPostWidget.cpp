@@ -1,7 +1,9 @@
 ﻿#include "BCPublishPostWidget.h"
 #include <QPainter>
 #include "BCMainWindow.h"
-
+#include "BCDataManager.h"
+#include "BCMessageManager.h"
+#include "BCToastTips.h"
 BCPublishPostWidget::BCPublishPostWidget(QWidget *parent)
     :QWidget(parent)
 {
@@ -66,11 +68,38 @@ void BCPublishPostWidget::slotSubjectBtnClicked()
         {
             iter.value()->setColorStyle("transparent","transparent","transparent","transparent",
                                         "rgb(247,187,100)",1,"rgb(247,187,100)",20);
+            mBCPostingType = iter.key();
         }
         else
         {
             iter.value()->setColorStyle("transparent","transparent","transparent","transparent",
                                         "rgb(51,51,51)",1,"rgb(51,51,51)",20);
+        }
+    }
+}
+
+void BCPublishPostWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    switch (pageEnum)
+    {
+        case Page::PublishPost:
+            {
+                if(isSuccess)
+                {
+                    qDebug() << "Release Success" << "\n";
+                    BCToastTips::Instance().setToastTip(QStringLiteral("尊敬的用户，恭喜您发布成功"));
+                    BCMainWindow::instance()->showPage(Page::Postings);
+                }
+                else
+                {
+                    QString errorMsg = BCDataManager::instance().getErrorMsg();
+                    BCToastTips::Instance().setToastTip(errorMsg);
+                }
+                break;
+            }
+        default:
+        {
+            return;
         }
     }
 }
@@ -139,6 +168,12 @@ void BCPublishPostWidget::initConnect()
 {
     connect(mBackButton,&BCPolymorphicButton::clicked,this,[](){
         BCMainWindow::instance()->showPage(Page::Postings);
+    });
+    connect(this,&BCPublishPostWidget::doPublishPosting,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(BCMessageManager::getInstance(),&BCMessageManager::sendOperationResultSignal,this,&BCPublishPostWidget::receiveOperationResult);
+    connect(mPublishButton,&BCPolymorphicButton::clicked,this,[this](){
+        BCDataManager::instance().setUpLoadPublishPost(mTitleLineEdit->text(),mInputContentWidget->getContentText(),mBCPostingType);
+        emit doPublishPosting(Page::BCPageEnum::PublishPost);
     });
 }
 

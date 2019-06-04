@@ -29,7 +29,8 @@ enum BCPageEnum
     Search,                       //搜索
     Init,                         //初始化
     Regiest,                      //注册
-    ChangeMessageStatus           //变更消息状态
+    ChangeMessageStatus,          //变更消息状态
+    UploadFile                    //上传文件
 };
 }
 

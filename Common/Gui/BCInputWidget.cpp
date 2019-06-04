@@ -9,6 +9,11 @@ BCInputWidget::BCInputWidget(QWidget *parent)
     initConnect();
 }
 
+QString BCInputWidget::getInputContent()
+{
+    return mContentTextEdit->toPlainText();
+}
+
 void BCInputWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);

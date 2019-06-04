@@ -62,6 +62,9 @@ public:
     /// \brief 设置关注列表信息入参
     void setUpLoadMineFocus(QString userid);
     UpLoadMineFocus getUpLoadMineFocus() const;
+    /// \brief 设置上传文件路径
+    UploadFile getUploadFile() const;
+    void setUploadFile(QString filepath);
 
     void setUpLoadSearch();
     UpLoadSearch getUpLoadSearch() const;
@@ -138,6 +141,7 @@ private:
     UpLoadMineFocus mUpLoadMineFocus;
     UpLoadSearch mUpLoadSearch;
     UpLoadRegiest mUpLoadRegiest;
+    UploadFile mUploadFile;
 
     QMap<QString, QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;

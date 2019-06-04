@@ -11,6 +11,7 @@ class BCInputWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCInputWidget(QWidget *parent = nullptr);
+    QString getInputContent();
 
 protected:
     void paintEvent(QPaintEvent *event);

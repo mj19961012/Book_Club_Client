@@ -225,6 +225,16 @@ BCDataManager::BCDataManager(QObject *parent)
     mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }
 
+UploadFile BCDataManager::getUploadFile() const
+{
+    return mUploadFile;
+}
+
+void BCDataManager::setUploadFile(QString filepath)
+{
+    mUploadFile.filepath = filepath;
+}
+
 QString BCDataManager::getErrorMsg() const
 {
     return mErrorMsg;

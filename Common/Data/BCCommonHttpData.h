@@ -102,4 +102,9 @@ struct UpLoadChangeMessageStatus
     QString messageId;
 };
 
+struct UploadFile
+{
+    QString filepath;
+};
+
 #endif // BKCOMMONHTTPDATA_H

@@ -115,10 +115,11 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             is_success = BCReleaseArticleHandle(parametes.title,parametes.content,parametes.type);
             if(!is_success)
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("发布失败，请稍后重试"));
+                sendOperationResultSignal(is_success,pageEnum);
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::Activity:
@@ -160,10 +161,10 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             is_success = BCReleaseActionHandle(parametes.title,parametes.content,parametes.city,parametes.begintime,parametes.endtime,parametes.first,parametes.second,parametes.third);
             if(!is_success)
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("发布活动失败"));
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::Message:
@@ -319,6 +320,20 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
 
             //TODO emit xxx(true,pageEnum);
+            break;
+        }
+    case Page::UploadFile:
+        {
+            auto parametes = BCDataManager::instance().getUploadFile();
+            QString filemd5 = BCUpLoadSimpleFile(parametes.filepath);
+            if(filemd5.size() <= 0)
+            {
+                BCDataManager::instance().setErrorMsg(QStringLiteral("文件上传失败，请稍后重试!"));
+                emit sendOperationResultSignal(false,Page::UploadFile);
+                return;
+            }
+            BCDataManager::instance().setErrorMsg(filemd5);
+            emit sendOperationResultSignal(true,Page::UploadFile);
             break;
         }
     default:

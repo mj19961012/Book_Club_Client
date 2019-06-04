@@ -7,12 +7,23 @@
 #include <QScrollBar>
 #include "BCDataManager.h"
 #include "BCToastTips.h"
+#include "BCMessageManager.h"
 
 BCInputContentAndFileWidget::BCInputContentAndFileWidget(QWidget *parent)
     :QWidget(parent)
 {
     init();
     initConnect();
+}
+
+QString BCInputContentAndFileWidget::getContentText()
+{
+    return mContentTextEdit->document()->toPlainText();
+}
+
+void BCInputContentAndFileWidget::setAddFileButtonHide()
+{
+    mAddFileButton->hide();
 }
 
 void BCInputContentAndFileWidget::paintEvent(QPaintEvent *event)
@@ -85,6 +96,8 @@ void BCInputContentAndFileWidget::slotAddFileButtonClicked()
         {
             int insertKey = mFilePathMap.size() + 1;
             mFilePathMap[insertKey] = newFileName;
+            BCDataManager::instance().setUploadFile(newFileName);
+            emit doUploadFile(Page::BCPageEnum::UploadFile);
             if(mFilePathMap.size() == 3)
             {
                 mAddFileButton->setVisible(false);
@@ -160,6 +173,7 @@ void BCInputContentAndFileWidget::initStyle()
 void BCInputContentAndFileWidget::initConnect()
 {
     connect(mAddFileButton,&BCPolymorphicButton::clicked,this,&BCInputContentAndFileWidget::slotAddFileButtonClicked);
+    connect(this,&BCInputContentAndFileWidget::doUploadFile,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
 }
 
 void BCInputContentAndFileWidget::createFileWidget()
