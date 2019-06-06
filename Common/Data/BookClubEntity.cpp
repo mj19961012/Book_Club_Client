@@ -150,7 +150,7 @@ void from_json(const nlohmann::json &j,action_info & action)
     {
         action.id = j["id"].get<int>();
     }
-    if(j.find("article_id") != j.end())
+    if(j.find("action_id") != j.end())
     {
         action.action_id = j["action_id"].get<std::string>();
     }

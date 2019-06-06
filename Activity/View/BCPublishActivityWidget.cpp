@@ -109,6 +109,7 @@ void BCPublishActivityWidget::receiveOperationResult(bool isSuccess, Page::BCPag
                     qDebug() << "Release Success" << "\n";
                     BCToastTips::Instance().setToastTip(QStringLiteral("尊敬的用户，恭喜您活动发布成功"));
                     BCMainWindow::instance()->showPage(Page::PublishActivity);
+                    emit doPublishActivity(Page::BCPageEnum::Activity);
                 }
                 else
                 {

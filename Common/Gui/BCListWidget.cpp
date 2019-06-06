@@ -1,4 +1,5 @@
 ﻿#include "BCListWidget.h"
+#include <QDateTime>
 #include "BCMainWindow.h"
 #include "BCPostingListItemWidget.h"
 #include "BCPostingDetailItemWidget.h"
@@ -11,7 +12,8 @@
 #include "BCMessagePostingItemWidget.h"
 #include "BCChatBubbleItemWidget.h"
 #include "BCDataManager.h"
-#include <QDateTime>
+#include "BCToastTips.h"
+
 
 BCListWidget::BCListWidget(QWidget *parent)
     :QListWidget(parent)
@@ -63,6 +65,35 @@ BCListWidget::BCListWidget(QWidget *parent)
     this->verticalScrollBar()->setPageStep(15);
 }
 
+
+//void BCListWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+//{
+//    switch (pageEnum)
+//    {
+//        case Page::Activity :
+//            {
+//                if(isSuccess)
+//                {
+//                    auto values = BCDataManager::instance().getBCActivitiesListMap();
+//                    for(auto &value:values)
+//                    {
+//                        auto time = QDateTime::fromString(QString().fromStdString(value.getreleaseTime()),"yyyy-MM-dd").toString();
+//                        addActivityItem(QString().fromStdString(value.getactionId()),QString().fromStdString(value.getactionTitle()),QString().fromStdString(value.getactionContent()),time,QString::number(value.getpageView()));
+//                    }
+//                }
+//                else
+//                {
+//                    QString errorMsg = BCDataManager::instance().getErrorMsg();
+//                    BCToastTips::Instance().setToastTip(errorMsg);
+//                }
+//                break;
+//            }
+//        default:
+//        {
+//            return;
+//        }
+//    }
+//}
 void BCListWidget::addListItem(ListItem::BCListWidgetType type)
 {
     clearData();

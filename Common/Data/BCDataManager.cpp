@@ -179,6 +179,33 @@ UpLoadPublishPost BCDataManager::getUpLoadPublishPost() const
     return mUpLoadPublishPost;
 }
 
+void BCDataManager::setUpLoadActivity(QString begintime, QString endtime, QString selectcity)
+{
+    mUpLoadActivity.begintime = begintime;
+    mUpLoadActivity.endtime = endtime;
+    mUpLoadActivity.selectcity = selectcity;
+    mUpLoadActivity.pagesize = 20;
+    mUpLoadActivity.pagenum = 0;
+}
+
+void BCDataManager::setUpLoadActivity(QString begintime, QString endtime, QString selectcity, int pagenum)
+{
+    mUpLoadActivity.begintime = begintime;
+    mUpLoadActivity.endtime = endtime;
+    mUpLoadActivity.selectcity = selectcity;
+    mUpLoadActivity.pagesize = 20;
+    mUpLoadActivity.pagenum = pagenum;
+}
+
+void BCDataManager::setUpLoadActivity(QString begintime, QString endtime, QString selectcity, int pagenum, int pagesize)
+{
+    mUpLoadActivity.begintime = begintime;
+    mUpLoadActivity.endtime = endtime;
+    mUpLoadActivity.selectcity = selectcity;
+    mUpLoadActivity.pagesize = pagesize;
+    mUpLoadActivity.pagenum = pagenum;
+}
+
 UpLoadActivity BCDataManager::getUpLoadActivity() const
 {
     return  mUpLoadActivity;
@@ -221,6 +248,7 @@ UpLoadSearch BCDataManager::getUpLoadSearch() const
 
 BCDataManager::BCDataManager(QObject *parent)
     :QObject (parent)
+    ,isLocked(false)
 {
     mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }
@@ -243,6 +271,21 @@ QString BCDataManager::getErrorMsg() const
 void BCDataManager::setErrorMsg(const QString &errorMsg)
 {
     mErrorMsg = errorMsg;
+}
+
+void BCDataManager::Lock()
+{
+    isLocked = true;
+}
+
+void BCDataManager::UnLock()
+{
+    isLocked = false;
+}
+
+bool BCDataManager::isLock()
+{
+    return isLocked;
 }
 
 void BCDataManager::setCurrentLoginUserInfo(const user_info &currentLoginUserInfo)

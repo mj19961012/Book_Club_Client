@@ -121,6 +121,10 @@ public:
     QString getErrorMsg() const;
     void setErrorMsg(const QString &errorMsg);
 
+    void Lock();
+    void UnLock();
+    bool isLock();
+
 private:
     explicit BCDataManager(QObject *parent = nullptr);
     static BCDataManager *sDataManager;
@@ -163,6 +167,7 @@ private:
     user_info mCurrentLoginUserInfo;
 
     QString mErrorMsg;
+    bool isLocked;
 };
 
 #endif // BCDATAMANAGER_H
