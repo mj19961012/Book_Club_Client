@@ -85,12 +85,15 @@ public:
     void setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap);
     /// \brief 帖子主页帖子列表信息
     QMap<QString, article_info> getBCPostingListMap() const;
+    /// \brief 帖子详情信息
+    article_info getPostingInfoWithId(QString postId);
     void setBCArticlesListMap(const QMap<QString, article_info> &bCArticlesListMap);
     /// \brief 活动主页活动列表信息
     QMap<QString, action_info> getBCActivitiesListMap() const;
+    action_info getActionInfoWithId(QString actionId);
     void setBCActivitiesListMap(const QMap<QString, action_info> &bCActivitiesListMap);
     /// \brief 回复信息列表
-    QMap<QString, QMap<QString, message_info> > getBCCommentListMap() const;
+    QMap<QString, message_info>getBCCommentListMap(QString postId) const;
     void setBCCommentListMap(const QMap<QString, QMap<QString, message_info> > &bCCommentListMap);
     /// \brief 文件信息列表
     QMap<QString, file_base_info> getBCFileListMap() const;
@@ -125,6 +128,9 @@ public:
     void UnLock();
     bool isLock();
 
+    QString getBCCityNameWithId(QString cId) const;
+    void setBCCityIdToName(const QMap<QString, QString> &bCCityIdToName);
+
 private:
     explicit BCDataManager(QObject *parent = nullptr);
     static BCDataManager *sDataManager;
@@ -149,6 +155,7 @@ private:
 
     QMap<QString, QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;
+    QMap<QString, QString> mBCCityIdToName;
     QMap<QString, QMap<QString, message_info>> mBCMessageListMap;
     QMap<QString, article_info> mBCArticlesListMap;
     QMap<QString, action_info> mBCActivitiesListMap;

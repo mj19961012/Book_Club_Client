@@ -12,7 +12,7 @@ class BCActivityDetailWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCActivityDetailWidget(QWidget *parent = nullptr);
-    void initData(const QString& text);
+    void initData(const QString& id);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

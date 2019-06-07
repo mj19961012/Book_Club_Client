@@ -36,7 +36,7 @@ const QString &BCDataManager::getAppDataPath()
 void BCDataManager::setUpLoadPostings(int type)
 {
     mUpLoadPostings.type = type;
-    mUpLoadPostings.pagenum = -1;
+    mUpLoadPostings.pagenum = 0;
     mUpLoadPostings.pagesize = 20;
 }
 
@@ -253,6 +253,11 @@ BCDataManager::BCDataManager(QObject *parent)
     mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }
 
+void BCDataManager::setBCCityIdToName(const QMap<QString, QString> &bCCityIdToName)
+{
+    mBCCityIdToName = bCCityIdToName;
+}
+
 UploadFile BCDataManager::getUploadFile() const
 {
     return mUploadFile;
@@ -286,6 +291,11 @@ void BCDataManager::UnLock()
 bool BCDataManager::isLock()
 {
     return isLocked;
+}
+
+QString BCDataManager::getBCCityNameWithId(QString cId) const
+{
+    return mBCCityIdToName[cId];
 }
 
 void BCDataManager::setCurrentLoginUserInfo(const user_info &currentLoginUserInfo)
@@ -383,14 +393,29 @@ QMap<QString, action_info> BCDataManager::getBCActivitiesListMap() const
     return mBCActivitiesListMap;
 }
 
+action_info BCDataManager::getActionInfoWithId(QString actionId)
+{
+    return mBCActivitiesListMap[actionId];
+}
+
 void BCDataManager::setBCActivitiesListMap(const QMap<QString, action_info> &bCActivitiesListMap)
 {
     mBCActivitiesListMap = bCActivitiesListMap;
 }
 
+QMap<QString, message_info> BCDataManager::getBCCommentListMap(QString postId) const
+{
+    return mBCCommentListMap[postId];
+}
+
 QMap<QString, article_info> BCDataManager::getBCPostingListMap() const
 {
     return mBCArticlesListMap;
+}
+
+article_info BCDataManager::getPostingInfoWithId(QString postId)
+{
+    return mBCArticlesListMap[postId];
 }
 
 void BCDataManager::setBCArticlesListMap(const QMap<QString, article_info> &bCArticlesListMap)

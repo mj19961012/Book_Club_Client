@@ -21,7 +21,7 @@ public:
 
 signals:
     void sigItemClicked();
-//    void getPageValues(Page::BCPageEnum);
+    void getPageValues(Page::BCPageEnum);
 public slots:
 //    void receiveOperationResult(bool isSuccess,Page::BCPageEnum pageEnum);
 protected:

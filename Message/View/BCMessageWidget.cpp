@@ -1,12 +1,36 @@
 ﻿#include "BCMessageWidget.h"
 #include "BCCommonEnumData.h"
+#include "BCDataManager.h"
+#include "BCToastTips.h"
 #include <QPainter>
+#include <QDebug>
 
 BCMessageWidget::BCMessageWidget(QWidget * parent)
     :QWidget (parent)
 {
     init();
     initConnect();
+}
+
+void BCMessageWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    qDebug() << "BCMessageWidget::receiveOperationResult" << "\n";
+    switch (pageEnum)
+    {
+        case Page::Message:
+        {
+            if(isSuccess)
+            {
+                mPostingListWidget->addListItem(ListItem::MessageChat);
+            }
+            else
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+            }
+            break;
+        }
+    }
 }
 
 void BCMessageWidget::showPage(MessagePage::BCMessagePageEnum page)

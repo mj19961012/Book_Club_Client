@@ -32,13 +32,13 @@ void BCActivityWidget::initData()
 
 void BCActivityWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
 {
+    qDebug() << "BCActivityWidget::receiveOperationResult" << "\n";
     switch (pageEnum)
     {
-        case Page::BCPageEnum::Activity:
+        case Page::Activity:
         {
             if(isSuccess)
             {
-                qDebug() << "BCActivityWidget::receiveOperationResult" << "\n";
                 mActivityListWidget->addListItem(ListItem::Activity);
             }
             else
@@ -46,6 +46,17 @@ void BCActivityWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum p
                 QString errorMsg = BCDataManager::instance().getErrorMsg();
                 BCToastTips::Instance().setToastTip(errorMsg);
             }
+            break;
+        }
+        case Page::ActivityDetail:
+        {
+            if(!isSuccess)
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+                return;
+            }
+            BCMainWindow::instance()->showPage(Page::ActivityDetail);
             break;
         }
     }
@@ -88,5 +99,6 @@ void BCActivityWidget::initConnect()
         BCMainWindow::instance()->showPage(Page::PublishActivity);
     });
     connect(this,&BCActivityWidget::getActivitiesList,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mActivityListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
     connect(BCMessageManager::getInstance(),&BCMessageManager::sendOperationResultSignal,this,&BCActivityWidget::receiveOperationResult);
 }

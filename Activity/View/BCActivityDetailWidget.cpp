@@ -1,36 +1,31 @@
 ﻿#include "BCActivityDetailWidget.h"
 #include <QScrollBar>
+#include <QDateTime>
 #include "BCMainWindow.h"
+#include "BCDataManager.h"
 
 BCActivityDetailWidget::BCActivityDetailWidget(QWidget *parent)
     :QWidget(parent)
 {
     init();
     initConnect();
-
-    initData("");
 }
 
-void BCActivityDetailWidget::initData(const QString &text)
+void BCActivityDetailWidget::initData(const QString &id)
 {
-    setImage(QStringLiteral("http://192.168.1.3:8123/./static/1558976068.jpeg"));
-    setName(QStringLiteral("人在塔在"));
-    setActivityName(QStringLiteral("啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"));
-    setCity(QStringLiteral("所在城市：杭州市"));
-    setDate(QStringLiteral("活动时间：2018-5-20 至 2019-5-20"));
-    setContent(QStringLiteral("啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"
-                              "啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦啦啦啦啦啦啦啦啦啊啦啦啦啦啦啦啦"));
+    auto action = BCDataManager::instance().getActionInfoWithId(id);
+    auto user = BCDataManager::instance().getPersonalInformationWithId(action.getauthorId().c_str());
+    setImage(user.getheadImage().c_str());
+    setName(user.getnickName().c_str());
+    setActivityName(action.getactionTitle().c_str());
+    QString cityName = BCDataManager::instance().getBCCityNameWithId(QString::fromStdString(action.getactionCity()));
+    setCity(cityName);
+    QString begin = QDateTime::fromTime_t(QString::fromStdString(action.getbeginTime()).toUInt()).toString("yyyy-MM-dd");
+    QString end = QDateTime::fromTime_t(QString::fromStdString(action.getendTime()).toUInt()).toString("yyyy-MM-dd");
+    QString date = QStringLiteral("活动时间：") + begin + QStringLiteral(" 至 ") + end;
+
+    setDate(date);
+    setContent(action.getactionContent().c_str());
 
     initGeometry();
 }

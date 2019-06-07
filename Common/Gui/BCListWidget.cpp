@@ -113,7 +113,8 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
     }
     case ListItem::PostingDetail:
     {
-        addPostingDetailItem("-1");
+        auto paramers = BCDataManager::instance().getUpLoadPostDetail();
+        addPostingDetailItem(paramers.articleid);
         break;
     }
     case ListItem::Activity:
@@ -286,15 +287,19 @@ void BCListWidget::mousePressEvent(QMouseEvent *event)
         else if(ListItem::MessagePosting == mCurrentItemType)
         {
             setMessagePostingItemIsRead(mCurrentItem);
-            BCMainWindow::instance()->showPage(Page::PostDetail);
+            BCDataManager::instance().setUpLoadPostDetail(mListMap.key(mCurrentItem));
+            emit getPageValues(Page::BCPageEnum::PostDetail);
         }
         else if(ListItem::Posting == mCurrentItemType)
         {
-            BCMainWindow::instance()->showPage(Page::PostDetail);
+            BCDataManager::instance().setUpLoadPostDetail(mListMap.key(mCurrentItem));
+            emit getPageValues(Page::BCPageEnum::PostDetail);
         }
         else if(ListItem::Activity == mCurrentItemType)
         {
+            BCDataManager::instance().setUpLoadActivityDetail(mListMap.key(mCurrentItem));
             BCMainWindow::instance()->showPage(Page::ActivityDetail);
+            emit getPageValues(Page::BCPageEnum::ActivityDetail);
         }
         else if(ListItem::MessageChatBubble == mCurrentItemType)
         {
@@ -345,16 +350,10 @@ void BCListWidget::addPostingDetailItem(const QString &id)
         return;
     }
     mListSet.insert(id);
-
+    qDebug()<< "BCListWidget_addPostingDetailItemId:" << id << "\n";
     //详情item
     BCPostingDetailItemWidget *itemWidget = new BCPostingDetailItemWidget(this);
-    itemWidget->initData(QStringLiteral("Qt内存管理机制：Qt Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
-                                        "Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
-                                        "Qt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：QtQt内存管理机制：Qt"
-                                        "在内部能够维护对象的层次结构。对于可视元素，这种层次结构就是子组件与父组件的关系；对于非可视元素，则是一个对象与另一个对象的从属关系。在 Qt 中，在 Qt 中，删除父对象会将其子对象一起删除。"
-                                        "C++中delete 和 new 必须配对使用(一 一对应)：delete少了，则内存泄露，多了麻烦更大。Qt中使用了new却很少delete，因为QObject的类及其继承的类，设置了parent（也可在构造时使用setParent函"
-                                        "数或parent的addChild）故parent被delete时，这个parent的相关所有child都会自动delete，不用用户手动处理。但parent是不区分它的child是new出来的还是在栈上分配的。这体现delete的强大，可以"
-                                        "释放掉任何的对象，而delete栈上对象就会导致内存出错，这需要了解Qt的半自动的内存管理。另一个问题：child不知道它自己是否被delete掉了，故可能会出现野指针。那就要了解Qt的智能指针QPointer。"));
+    itemWidget->initData(id);
     itemWidget->setMaximumWidth(1400);
     itemWidget->adjustSize();
 

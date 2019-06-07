@@ -13,7 +13,7 @@ class BCPostingDetailItemWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCPostingDetailItemWidget(QWidget *parent = nullptr);
-    void initData(const QString& text);
+    void initData(const QString& id);
     void setListWidgetItem(QListWidgetItem* item);
     QListWidgetItem* getListWidgetItem() const;
 

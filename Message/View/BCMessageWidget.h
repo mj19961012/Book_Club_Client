@@ -13,6 +13,8 @@ class BCMessageWidget : public QWidget
 public:
     explicit BCMessageWidget(QWidget * parent = nullptr);
     void showPage(MessagePage::BCMessagePageEnum page);
+public slots:
+    void receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

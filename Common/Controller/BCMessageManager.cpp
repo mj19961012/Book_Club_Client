@@ -43,17 +43,19 @@ BCMessageManager * BCMessageManager::getInstance()
 void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
 {
     bool is_success;
+    qDebug() << "getPageVlaues_with_" << static_cast<int>(pageEnum) << "\n";
     switch(pageEnum)
     {
     case Page::Postings:
         {
             auto parametes = BCDataManager::instance().getUpLoadPostings();
             is_success = BCGetArticlesListHandle(parametes.type,parametes.pagenum,parametes.pagesize);
-            if(is_success)
+            BCDataManager::instance().setBCArticlesListMap(mBCArticlesListMap);
+            if(!is_success)
             {
-                BCDataManager::instance().setBCArticlesListMap(mBCArticlesListMap);
-                emit sendOperationResultSignal(is_success,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("暂无数据可更新!!"));
             }
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::PostDetail:
@@ -67,10 +69,10 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             else
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("获取帖子详情失败!!"));
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::PostMaster:
@@ -132,10 +134,10 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             else
             {
-                emit sendOperationResultSignal(is_success,pageEnum);
+                emit sendOperationResultSignal(false,pageEnum);
                 return;
             }
-            emit sendOperationResultSignal(is_success,pageEnum);
+            emit sendOperationResultSignal(true,pageEnum);
             break;
         }
     case Page::ActivityDetail:
@@ -149,10 +151,10 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             else
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("获取活动详情失败!!"));
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::PublishActivity:
@@ -251,11 +253,14 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             is_success = BCSystemInit();
             if(is_success)
             {
-                qDebug() << "Init Success" << "\n";
+                BCDataManager::instance().setBCCityIdToName(mBCCityIdToName);
+                BCDataManager::instance().setBCChildCityInfoMap(mBCChildCityInfoMap);
+                BCDataManager::instance().setBCParentCityInfoMap(mBCParentCityInfoMap);
             }
             else
             {
-                qDebug() << "Init Success" << "\n";
+                BCDataManager::instance().setErrorMsg(QStringLiteral("获取数据字典失败"));
+                return;
             }
 
             //TODO emit xxx(true,pageEnum);
@@ -419,7 +424,7 @@ bool BCMessageManager::BCGetMessageListHandle(QString accepterId)
 			auto temp_value = (*iter).get<message_info>();
 			qDebug() << "mBCMessageListMap-temp_value-message_id:" << temp_value.message_id.c_str() << "\n";
 			mBCMessageListMap[temp_value.message_id.c_str()] = temp_value;
-//            emit catchPersonalInformationSlot(temp_value.sender_id);
+            emit catchPersonalInformationSignals(temp_value.sender_id);
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
 		qDebug() << "mBCMessageListMap-size:" << mBCMessageListMap.count() << "\n";
@@ -456,7 +461,7 @@ bool BCMessageManager::BCGetArticlesListHandle(int type, int pagenum /*= -1*/,in
 			auto temp_value = (*iter).get<article_info>();
 			qDebug() << "mBCArticlesListMap-temp_value-article_id:" << temp_value.article_id.c_str() << "\n";
 			mBCArticlesListMap[temp_value.article_id.c_str()] = temp_value;
-//            emit catchPersonalInformationSlot(temp_value.author_id);
+            emit catchPersonalInformationSignals(temp_value.author_id);
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
 		qDebug() << "mBCArticlesListMap-size:" << mBCArticlesListMap.count() << "\n";
@@ -512,11 +517,11 @@ bool BCMessageManager::BCGetDetailsOfTheArticle(QString articleid)
 			auto temp_value = (*iter).get<message_info>();
 			qDebug() << "mBCCommentListMap-temp_value-message_id:" << temp_value.message_id.c_str() << "\n";
 			mBCCommentListMap[article.article_id.c_str()][temp_value.message_id.c_str()] = temp_value;
-//            emit catchPersonalInformationSignals(temp_value.sender_id);
+            emit catchPersonalInformationSignals(temp_value.sender_id);
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
 		qDebug() << "mBCCommentListMap-size:" << mBCCommentListMap[article.article_id.c_str()].count() << "\n";
-//        emit catchPersonalInformationSignals(article.author_id);
+        emit catchPersonalInformationSignals(article.author_id);
 	}
 	return json_str["code"] == 200;
 }
@@ -600,7 +605,7 @@ bool BCMessageManager::BCGetDetailsOfTheAction(QString actionid)
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
 		qDebug() << "mBCCommentListMap-size:" << mBCCommentListMap[action.action_id.c_str()].count() << "\n";
-//        emit catchPersonalInformationSignals(action.author_id);
+        emit catchPersonalInformationSignals(action.author_id);
 	}
 	return json_str["code"] == 200;
 }
@@ -610,7 +615,7 @@ bool BCMessageManager::BCSendMessageHandle(QString messgae_body, QString sender_
 	QString message_id = QUuid::createUuid().toString();
     auto send_time = QDateTime::currentDateTime().toTime_t();
 	QString parametes = QString("message_id=%1&messgae_body=%2&sender_id=%3&accepter_id=%4&session_id=%5&send_time=%6&message_type=%7").arg(message_id).arg(messgae_body).arg(sender_id).arg(accepter_id).arg(session_id).arg(send_time).arg(message_type);
-	qDebug() << "BCSendMessageHandle parametes:" << parametes << "\n";
+//	qDebug() << "BCSendMessageHandle parametes:" << parametes << "\n";
 
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_SEND_MESSAGE), parametes);
 	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
@@ -651,10 +656,13 @@ bool BCMessageManager::BCSystemInit()
         {
             //qDebug() << "parent:" << iter.key().c_str() << "\n";
             mBCParentCityInfoMap[iter.key().c_str()] = QString::fromStdString(iter.value()["name"].get<std::string>());
+            mBCCityIdToName[iter.key().c_str()] = QString::fromStdString(iter.value()["name"].get<std::string>());
             for(auto it = iter.value()["child"].begin(); it != iter.value()["child"].end(); ++it)
             {
                 //qDebug() << iter.key().c_str() << "--" << it.key().c_str() << it.value()["name"].get<std::string>().c_str() << "\n";
                 mBCChildCityInfoMap[iter.key().c_str()][it.key().c_str()] = QString::fromStdString(it.value()["name"].get<std::string>());
+                mBCCityIdToName[it.key().c_str()] = QString::fromStdString(it.value()["name"].get<std::string>());
+//                qDebug() << it.key().c_str() << "---" << it.value()["name"].get<std::string>().c_str() << "\n";
             }
         }
         qDebug() << "Dictionary Data parsing complete" << "\n";
@@ -829,7 +837,7 @@ QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter,
 {
 // 	QString url_str = GET_API(BC_API_INIT_CITY);
 
-	qDebug() << "BCHttpRequestHandle url_str:" << requrl << "\n";
+//	qDebug() << "BCHttpRequestHandle url_str:" << requrl << "\n";
 
 	QUrl url(requrl);
 	QNetworkAccessManager m_accessManager;
@@ -839,11 +847,11 @@ QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter,
 
 	QByteArray postData;
 	postData.append(parameter);
-	qDebug() << "BCHttpRequestHandle before request:" << "\n";
+//	qDebug() << "BCHttpRequestHandle before request:" << "\n";
 
 	QNetworkReply* reply = m_accessManager.post(request, postData);
 
-	qDebug() << "BCHttpRequestHandle after request:" << "\n";
+//	qDebug() << "BCHttpRequestHandle after request:" << "\n";
 
 	while (!reply->isFinished())
 	{
@@ -852,7 +860,7 @@ QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter,
 	}
 
 	QString reply_str = reply->readAll();
-    qDebug() << "BCHttpRequestHandle return:" << reply_str << "\n";
+//    qDebug() << "BCHttpRequestHandle return:" << reply_str << "\n";
 	return reply_str;
 }
 

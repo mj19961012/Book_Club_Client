@@ -27,6 +27,7 @@ public slots:
 private:
     QMap<QString, QMap<QString, QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;
+    QMap<QString, QString> mBCCityIdToName;
 	QMap<QString, message_info> mBCMessageListMap;
 	QMap<QString, article_info> mBCArticlesListMap;
 	QMap<QString, action_info> mBCActivitiesListMap;

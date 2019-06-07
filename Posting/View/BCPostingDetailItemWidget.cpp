@@ -1,6 +1,8 @@
 ﻿#include "BCPostingDetailItemWidget.h"
 #include <QPainter>
 #include <QScrollBar>
+#include <QDateTime>
+#include "BCDataManager.h"
 
 BCPostingDetailItemWidget::BCPostingDetailItemWidget(QWidget *parent)
     :QWidget(parent)
@@ -8,14 +10,16 @@ BCPostingDetailItemWidget::BCPostingDetailItemWidget(QWidget *parent)
     init();
 }
 
-void BCPostingDetailItemWidget::initData(const QString &text)
+void BCPostingDetailItemWidget::initData(const QString &id)
 {
-    setName(QStringLiteral("人在塔在人在塔在人在塔在人在塔在人在塔在"));
-    setAuthorHeadImage(QStringLiteral(":/res/common/main_logo.png"));
-    setAuthorName(QStringLiteral("RoadTeeth"));
-    setReadCount(QStringLiteral("阅读数：65535"));
-    setDateTime(QStringLiteral("2019-05-20 15:20:00"));
-    setContent(text + text + text + text + text);
+    auto post = BCDataManager::instance().getPostingInfoWithId(id);
+    auto user = BCDataManager::instance().getPersonalInformationWithId(post.getauthorId().c_str());
+    setName(post.getarticleTitle().c_str());
+    setAuthorHeadImage(user.getheadImage().c_str());
+    setAuthorName(user.getnickName().c_str());
+    setReadCount(QString::number(post.getpageView()));
+    setDateTime(QDateTime::fromTime_t(QString::fromStdString(post.getreleaseTime()).toUInt()).toString("yyyy-MM-dd hh:mm:ss"));
+    setContent(post.getarticleContent().c_str());
     setComment(QStringLiteral("（已有") + QString::number(65535) + QStringLiteral("条评论）"));
 
     initStyle();
