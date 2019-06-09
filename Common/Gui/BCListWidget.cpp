@@ -147,15 +147,17 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
         }
         break;
     }
-    case ListItem::MineInterest:
+    case ListItem::MineFollowed:
     {
         auto values = BCDataManager::instance().getBCMineFocusListMap();
 
         for(auto &value:values)
         {
             auto user = BCDataManager::instance().getPersonalInformationWithId(value.getfollowerId().c_str());
-            addMineInterestItem(QString().fromStdString(value.getinterestId()),QString().fromStdString(user.getheadImage()),QString().fromStdString(user.getnickName()));
+            addMineFollowedItem(QString().fromStdString(value.getinterestId()),QString().fromStdString(user.getheadImage()),QString().fromStdString(user.getnickName()));
         }
+
+        addMineFollowedItem("111",":/res/common/defaultHeadImage.png","Rudy");
         break;
     }
     case ListItem::MessageChat:
@@ -352,6 +354,10 @@ void BCListWidget::mousePressEvent(QMouseEvent *event)
         {
             BCMainWindow::instance()->showPage(Page::ActivityDetail);
         }
+        else if(ListItem::MineFollowed == mCurrentItemType)
+        {
+            emit sigMineFollowedItemClicked();
+        }
     }
 }
 
@@ -497,7 +503,7 @@ void BCListWidget::addMineAvtivityItem(const QString &id,const QString& title,co
     update();
 }
 
-void BCListWidget::addMineInterestItem(const QString &id,const QString& image,const QString& name)
+void BCListWidget::addMineFollowedItem(const QString &id,const QString& image,const QString& name)
 {
     if(mListSet.find(id) != mListSet.end())
     {

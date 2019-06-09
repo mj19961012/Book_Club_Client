@@ -1,7 +1,5 @@
 HEADERS += \
-    $$PWD/BCLoginLineEdit.h \
-    $$PWD/BCRegisterCityButton.h
+    $$PWD/BCLoginLineEdit.h
 
 SOURCES += \
-    $$PWD/BCLoginLineEdit.cpp \
-    $$PWD/BCRegisterCityButton.cpp
+    $$PWD/BCLoginLineEdit.cpp

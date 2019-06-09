@@ -3,6 +3,7 @@
 #include <QScrollBar>
 #include <QDateTime>
 #include <QDebug>
+#include "BCMainWindow.h"
 #include "BCDataManager.h"
 #include "BCMessageManager.h"
 
@@ -21,7 +22,7 @@ void BCPostingDetailItemWidget::initData(const QString &id)
     setName(post.getarticleTitle().c_str());
     setAuthorHeadImage(user.getheadImage().c_str());
     setAuthorName(user.getnickName().c_str());
-    setReadCount(QString::number(post.getpageView()));
+    setReadCount(QStringLiteral("阅读数：") + QString::number(post.getpageView()));
     setDateTime(QDateTime::fromTime_t(QString::fromStdString(post.getreleaseTime()).toUInt()).toString("yyyy-MM-dd hh:mm:ss"));
     setContent(post.getarticleContent().c_str());
     setComment(QStringLiteral("（已有") + QString::number(65535) + QStringLiteral("条评论）"));
@@ -78,9 +79,6 @@ void BCPostingDetailItemWidget::initStyle()
     mNameLabel->setStyle("transparent","#333333",Qt::AlignLeft | Qt::AlignVCenter);
     mNameLabel->setFontStyle(30,75);
 
-    mAuthorHeadImageLabel->setPixmap(QPixmap(":/res/common/defaultHeadImage.png"));
-    mAuthorHeadImageLabel->setScaledContents(true);
-
     mAuthorNameLabel->setStyle("transparent","#333333",Qt::AlignCenter);
     mAuthorNameLabel->setFontStyle(20,63);
 
@@ -128,6 +126,10 @@ void BCPostingDetailItemWidget::initStyle()
 
 void BCPostingDetailItemWidget::initConnect()
 {
+    connect(mAuthorHeadImageView,&BCImageView::clicked,this,[](){
+        BCMainWindow::instance()->showPage(Page::PostMaster);
+    });
+
     connect(this,&BCPostingDetailItemWidget::doReleaseComment,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
     connect(mPublishCommentWidget,&BCInputWidget::onSubmitButtonClicked,this,[this](){
         auto post = BCDataManager::instance().getPostingInfoWithId(mPostId);
@@ -151,7 +153,7 @@ void BCPostingDetailItemWidget::initGeometry()
     mPropertyHLayout->setSpacing(30);
 
     mPropertyWidget->setFixedHeight(60);
-    mAuthorHeadImageLabel->setFixedSize(60,60);
+    mAuthorHeadImageView->setFixedSize(60,60);
     mNameLabel->setFixedHeight(30);
     mPublishCommentWidget->setFixedHeight(150);
     mCommentLabel->setFixedHeight(20);
@@ -170,12 +172,12 @@ void BCPostingDetailItemWidget::createPropertyWidget()
     mPropertyWidget = new QWidget(this);
     mPropertyHLayout = new QHBoxLayout(mPropertyWidget);
 
-    mAuthorHeadImageLabel = new BCPolymorphicLabel(mPropertyWidget);
+    mAuthorHeadImageView = new BCImageView(mPropertyWidget,true);
     mAuthorNameLabel = new BCPolymorphicLabel(mPropertyWidget);
     mReadCountLabel = new BCPolymorphicLabel(mPropertyWidget);
     mDateTimeLabel = new BCPolymorphicLabel(mPropertyWidget);
 
-    mPropertyHLayout->addWidget(mAuthorHeadImageLabel);
+    mPropertyHLayout->addWidget(mAuthorHeadImageView);
     mPropertyHLayout->addWidget(mAuthorNameLabel);
     mPropertyHLayout->addStretch(0);
     mPropertyHLayout->addWidget(mReadCountLabel);
@@ -191,7 +193,7 @@ void BCPostingDetailItemWidget::setName(const QString &name)
 
 void BCPostingDetailItemWidget::setAuthorHeadImage(const QString &image)
 {
-    mAuthorHeadImageLabel->setText(image);
+    mAuthorHeadImageView->setImage(image);
 }
 
 void BCPostingDetailItemWidget::setAuthorName(const QString &name)

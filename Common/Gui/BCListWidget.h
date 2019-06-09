@@ -22,6 +22,8 @@ public:
 signals:
     void sigItemClicked();
     void getPageValues(Page::BCPageEnum);
+    void sigMineFollowedItemClicked();
+
 public slots:
 //    void receiveOperationResult(bool isSuccess,Page::BCPageEnum pageEnum);
 protected:
@@ -37,7 +39,7 @@ private:
     void addActivityItem(const QString &id, const QString& name, const QString& content,const QString& date,const QString& num);
     void addMinePostingItem(const QString &id,const QString& title,const QString& content,const QString& date);
     void addMineAvtivityItem(const QString &id,const QString& title,const QString& content,const QString& date);
-    void addMineInterestItem(const QString &id,const QString& image,const QString& name);
+    void addMineFollowedItem(const QString &id,const QString& image,const QString& name);
     void addMessageChatItem(const QString &id,const QString& image,const QString& name,const QString& date,const QString& content,const bool isRead);
     void addMessagePostingItem(const QString &id,const QString& title,const QString& date,const QString& content,const bool isRead);
 

@@ -10,7 +10,8 @@ HEADERS += \
     $$PWD/BCImageView.h \
     $$PWD/BCInformationLineEdit.h \
     $$PWD/BCListWidget.h \
-    $$PWD/BCInputWidget.h
+    $$PWD/BCInputWidget.h \
+    $$PWD/BCCityButton.h
 
 SOURCES += \
     $$PWD/BCNavigationBar.cpp \
@@ -24,4 +25,5 @@ SOURCES += \
     $$PWD/BCImageView.cpp \
     $$PWD/BCInformationLineEdit.cpp \
     $$PWD/BCListWidget.cpp \
-    $$PWD/BCInputWidget.cpp
+    $$PWD/BCInputWidget.cpp \
+    $$PWD/BCCityButton.cpp

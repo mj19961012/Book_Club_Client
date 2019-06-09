@@ -9,7 +9,8 @@ namespace MinePage
         EditMineInformation,
         MinePosting,
         MineActivity,
-        InterestList,
+        FollowedList,
+        MineFollowedPostingsMaster,
     };
 }
 

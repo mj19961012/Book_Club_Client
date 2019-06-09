@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/BCPostingListItemWidget.h \
     $$PWD/BCPostingDetailWidget.h \
     $$PWD/BCPostingCommentItemWidget.h \
-    $$PWD/BCPostingDetailItemWidget.h
+    $$PWD/BCPostingDetailItemWidget.h \
+    $$PWD/BCPostMasterWidget.h
 
 SOURCES += \
     $$PWD/BCPostingWidget.cpp \
@@ -12,4 +13,5 @@ SOURCES += \
     $$PWD/BCPostingListItemWidget.cpp \
     $$PWD/BCPostingDetailWidget.cpp \
     $$PWD/BCPostingCommentItemWidget.cpp \
-    $$PWD/BCPostingDetailItemWidget.cpp
+    $$PWD/BCPostingDetailItemWidget.cpp \
+    $$PWD/BCPostMasterWidget.cpp

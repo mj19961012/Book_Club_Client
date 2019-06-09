@@ -5,6 +5,7 @@
 #include <QLayout>
 #include <QTextBrowser>
 #include <QListWidgetItem>
+#include "BCImageView.h"
 #include "BCPolymorphicLabel.h"
 #include "BCInputWidget.h"
 #include "BCCommonEnumData.h"
@@ -47,7 +48,7 @@ private:
     BCInputWidget *mPublishCommentWidget{};
     BCPolymorphicLabel *mCommentLabel{};
 
-    BCPolymorphicLabel *mAuthorHeadImageLabel{};
+    BCImageView *mAuthorHeadImageView{};
     BCPolymorphicLabel *mAuthorNameLabel{};
     BCPolymorphicLabel *mReadCountLabel{};
     BCPolymorphicLabel *mDateTimeLabel{};

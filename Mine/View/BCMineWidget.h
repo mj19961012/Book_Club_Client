@@ -9,6 +9,7 @@
 #include "BCListWidget.h"
 #include "BCMineInfoWidget.h"
 #include "BCMineUpdateInfoWidget.h"
+#include "BCMineFollowedPostingMasterWidget.h"
 
 class BCMineWidget : public QWidget
 {
@@ -41,7 +42,8 @@ private:
     BCMineUpdateInfoWidget *mMineUpdateInfoWidget{};
     BCListWidget *mMinePostingListWidget;
     BCListWidget *mMineActivityListWidget;
-    BCListWidget *mMineInterestListWidget;
+    BCListWidget *mMineFollowedListWidget;
+    BCMineFollowedPostingMasterWidget *mMineFollowedPostingMasterWidget{};
 
 private:
     QMap<MinePage::BCMinePageEnum,BCPolymorphicButton*> mButtonMap{};

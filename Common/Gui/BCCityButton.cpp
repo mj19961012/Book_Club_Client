@@ -1,7 +1,7 @@
-﻿#include "BCRegisterCityButton.h"
+﻿#include "BCCityButton.h"
 #include <QPainter>
 
-BCRegisterCityButton::BCRegisterCityButton(QWidget *parent)
+BCCityButton::BCCityButton(QWidget *parent)
     :QPushButton(parent)
 {
     setObjectName("BCRegisterCityButton");
@@ -12,7 +12,7 @@ BCRegisterCityButton::BCRegisterCityButton(QWidget *parent)
                   "}");
 }
 
-void BCRegisterCityButton::paintEvent(QPaintEvent *event)
+void BCCityButton::paintEvent(QPaintEvent *event)
 {
     QPushButton::paintEvent(event);
 

@@ -90,7 +90,7 @@ enum BCListWidgetType
     Activity,             //活动列表item
     MinePosting,
     MineAvtivity,
-    MineInterest,
+    MineFollowed,
     MessageChat,
     MessagePosting,
     MessageChatBubble,

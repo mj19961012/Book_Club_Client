@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/BCMineUpdateInfoWidget.h \
     $$PWD/BCMinePostingItemWidget.h \
     $$PWD/BCMineActivityItemWidget.h \
-    $$PWD/BCMineInterestItemWidget.h
+    $$PWD/BCMineInterestItemWidget.h \
+    $$PWD/BCMineFollowedPostingMasterWidget.h
 
 SOURCES += \
     $$PWD/BCMineWidget.cpp \
@@ -12,4 +13,5 @@ SOURCES += \
     $$PWD/BCMineUpdateInfoWidget.cpp \
     $$PWD/BCMinePostingItemWidget.cpp \
     $$PWD/BCMineActivityItemWidget.cpp \
-    $$PWD/BCMineInterestItemWidget.cpp
+    $$PWD/BCMineInterestItemWidget.cpp \
+    $$PWD/BCMineFollowedPostingMasterWidget.cpp

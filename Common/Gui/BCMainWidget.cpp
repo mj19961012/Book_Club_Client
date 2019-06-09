@@ -27,12 +27,16 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         }
     case Page::PostDetail:
         mStackWidget->setCurrentWidget(mPostingDetailWidget);
+        mNavigationBar->setSelectItem(NavigationBar::Postings);
         mPostingDetailWidget->initData();
         break;
     case Page::PostMaster:
+        mStackWidget->setCurrentWidget(mPostMasterWidget);
+        mPostMasterWidget->initData();
         break;
     case Page::PublishPost:
         mStackWidget->setCurrentWidget(mPublishPostWidget);
+        mNavigationBar->setSelectItem(NavigationBar::Postings);
         break;
     case Page::Activity:
         {
@@ -50,12 +54,14 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
     case Page::ActivityDetail:
         {
             mStackWidget->setCurrentWidget(mActivityDetailWidget);
+            mNavigationBar->setSelectItem(NavigationBar::Activity);
             auto paramer = BCDataManager::instance().getUpLoadActivityDetail();
             mActivityDetailWidget->initData(paramer.actionid);
             break;
         }
     case Page::PublishActivity:
         mStackWidget->setCurrentWidget(mPublishActivityWidget);
+        mNavigationBar->setSelectItem(NavigationBar::Activity);
         break;
     case Page::Message:
         mStackWidget->setCurrentWidget(mMessageWidget);
@@ -65,6 +71,7 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
     case Page::Chat:
         {
             mStackWidget->setCurrentWidget(mMessageChatWidget);
+            mNavigationBar->setSelectItem(NavigationBar::Message);
             auto paramer = BCDataManager::instance().getUpLoadChat();
             mMessageChatWidget->initData();
             break;
@@ -75,8 +82,6 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mMineWidget->showPage(MinePage::MineInformation);
         break;
     case Page::MineFocus:
-        break;
-    case Page::ChangeMessageStatus:
         break;
     default:
         break;
@@ -175,6 +180,8 @@ void BCMainWidget::addPage(Page::BCPageEnum pageEnum)
     }
     case Page::PostMaster:
     {
+        mPostMasterWidget = new BCPostMasterWidget(this);
+        mStackWidget->addWidget(mPostMasterWidget);
         break;
     }
     case Page::PublishPost:

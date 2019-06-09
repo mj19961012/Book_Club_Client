@@ -1,5 +1,6 @@
 ﻿#include "BCMineWidget.h"
 #include "BCCommonEnumData.h"
+#include "BCToastTips.h"
 #include <QPainter>
 
 BCMineWidget::BCMineWidget(QWidget *parent)
@@ -28,9 +29,13 @@ void BCMineWidget::showPage(MinePage::BCMinePageEnum page)
         mStackedWidget->setCurrentWidget(mMineActivityListWidget);
         mMineActivityListWidget->addListItem(ListItem::MineAvtivity);
         break;
-    case MinePage::InterestList:
-        mStackedWidget->setCurrentWidget(mMineInterestListWidget);
-        mMineInterestListWidget->addListItem(ListItem::MineInterest);
+    case MinePage::FollowedList:
+        mStackedWidget->setCurrentWidget(mMineFollowedListWidget);
+        mMineFollowedListWidget->addListItem(ListItem::MineFollowed);
+        break;
+    case MinePage::MineFollowedPostingsMaster:
+        mStackedWidget->setCurrentWidget(mMineFollowedPostingMasterWidget);
+        mMineFollowedPostingMasterWidget->initData();
         break;
     }
 }
@@ -103,7 +108,7 @@ void BCMineWidget::init()
     mButtonMap[MinePage::MineInformation] = mMineInfoButton;
     mButtonMap[MinePage::MinePosting] = mMinePostingButton;
     mButtonMap[MinePage::MineActivity] = mMineActivityButton;
-    mButtonMap[MinePage::InterestList] = mInterestListButton;
+    mButtonMap[MinePage::FollowedList] = mInterestListButton;
 
     mMineInfoButton->setText(QStringLiteral("个人信息"));
     mMinePostingButton->setText(QStringLiteral("我的帖子"));
@@ -116,7 +121,8 @@ void BCMineWidget::init()
     addPage(MinePage::EditMineInformation);
     addPage(MinePage::MinePosting);
     addPage(MinePage::MineActivity);
-    addPage(MinePage::InterestList);
+    addPage(MinePage::FollowedList);
+    addPage(MinePage::MineFollowedPostingsMaster);
 }
 
 void BCMineWidget::initStyle()
@@ -154,6 +160,19 @@ void BCMineWidget::initConnect()
     connect(mMineInfoWidget,&BCMineInfoWidget::sigEditInfo,this,[this](){
         showPage(MinePage::EditMineInformation);
     });
+    connect(mMineUpdateInfoWidget,&BCMineUpdateInfoWidget::sigEditInfoBack,this,[this](){
+        showPage(MinePage::MineInformation);
+    });
+    connect(mMineUpdateInfoWidget,&BCMineUpdateInfoWidget::sigUpdateInfo,this,[this](){
+        showPage(MinePage::MineInformation);
+        BCToastTips::Instance().setToastTip(QStringLiteral("修改成功~"));
+    });
+    connect(mMineFollowedListWidget,&BCListWidget::sigMineFollowedItemClicked,this,[this](){
+        showPage(MinePage::MineFollowedPostingsMaster);
+    });
+    connect(mMineFollowedPostingMasterWidget,&BCMineFollowedPostingMasterWidget::sigMineFollowedPostingMasterBack,this,[this](){
+        showPage(MinePage::FollowedList);
+    });
 }
 
 void BCMineWidget::addPage(MinePage::BCMinePageEnum page)
@@ -184,10 +203,16 @@ void BCMineWidget::addPage(MinePage::BCMinePageEnum page)
         mStackedWidget->addWidget(mMineActivityListWidget);
         break;
     }
-    case MinePage::InterestList:
+    case MinePage::FollowedList:
     {
-        mMineInterestListWidget = new BCListWidget(this);
-        mStackedWidget->addWidget(mMineInterestListWidget);
+        mMineFollowedListWidget = new BCListWidget(this);
+        mStackedWidget->addWidget(mMineFollowedListWidget);
+        break;
+    }
+    case MinePage::MineFollowedPostingsMaster:
+    {
+        mMineFollowedPostingMasterWidget = new BCMineFollowedPostingMasterWidget(this);
+        mStackedWidget->addWidget(mMineFollowedPostingMasterWidget);
         break;
     }
     }

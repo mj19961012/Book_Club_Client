@@ -151,7 +151,7 @@ void BCRegisterWidget::init()
     mNameLineEdit->setMaxLength(12);
     mNameLineEdit->setPlaceholderText(QStringLiteral("昵称"));
 
-    mCityButton = new BCRegisterCityButton(this);
+    mCityButton = new BCCityButton(this);
 
     mSchoolLineEdit = new BCInformationLineEdit(this);
     mSchoolLineEdit->setMaxLength(12);

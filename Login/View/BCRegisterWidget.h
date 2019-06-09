@@ -4,7 +4,7 @@
 #include <QWidget>
 #include "BCPolymorphicButton.h"
 #include "BCInformationLineEdit.h"
-#include "BCRegisterCityButton.h"
+#include "BCCityButton.h"
 #include "BCImageView.h"
 #include "BCCommonEnumData.h"
 
@@ -35,7 +35,7 @@ private:
     BCImageView *mImageView{};
 
     BCInformationLineEdit* mNameLineEdit{};
-    BCRegisterCityButton *mCityButton{};
+    BCCityButton *mCityButton{};
     BCInformationLineEdit* mSchoolLineEdit{};
     BCInformationLineEdit* mPhoneLineEdit{};
     BCInformationLineEdit* mPasswordLineEdit{};
