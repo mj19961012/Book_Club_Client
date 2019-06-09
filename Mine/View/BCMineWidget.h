@@ -8,6 +8,7 @@
 #include "BCMineEnumData.h"
 #include "BCListWidget.h"
 #include "BCMineInfoWidget.h"
+#include "BCMineUpdateInfoWidget.h"
 
 class BCMineWidget : public QWidget
 {
@@ -37,6 +38,7 @@ private:
     QStackedWidget *mStackedWidget{};
 
     BCMineInfoWidget *mMineInfoWidget{};
+    BCMineUpdateInfoWidget *mMineUpdateInfoWidget{};
     BCListWidget *mMinePostingListWidget;
     BCListWidget *mMineActivityListWidget;
     BCListWidget *mMineInterestListWidget;

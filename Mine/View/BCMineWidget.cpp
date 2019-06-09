@@ -18,6 +18,7 @@ void BCMineWidget::showPage(MinePage::BCMinePageEnum page)
         mMineInfoWidget->initData();
         break;
     case MinePage::EditMineInformation:
+        mStackedWidget->setCurrentWidget(mMineUpdateInfoWidget);
         break;
     case MinePage::MinePosting:
         mStackedWidget->setCurrentWidget(mMinePostingListWidget);
@@ -150,6 +151,9 @@ void BCMineWidget::initConnect()
     {
         connect(iter,&BCPolymorphicButton::clicked,this,&BCMineWidget::slotMineButtonClicked);
     }
+    connect(mMineInfoWidget,&BCMineInfoWidget::sigEditInfo,this,[this](){
+        showPage(MinePage::EditMineInformation);
+    });
 }
 
 void BCMineWidget::addPage(MinePage::BCMinePageEnum page)
@@ -164,8 +168,8 @@ void BCMineWidget::addPage(MinePage::BCMinePageEnum page)
     }
     case MinePage::EditMineInformation:
     {
-
-//        mStackedWidget->addWidget(mMainWidget);
+        mMineUpdateInfoWidget = new BCMineUpdateInfoWidget(this);
+        mStackedWidget->addWidget(mMineUpdateInfoWidget);
         break;
     }
     case MinePage::MinePosting:

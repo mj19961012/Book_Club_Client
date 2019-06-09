@@ -14,12 +14,14 @@ public:
     explicit BCMineInfoWidget(QWidget *parent = nullptr);
     void initData();
 
+signals:
+    void sigEditInfo();
+
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
 
 private slots:
-    void slotEditButtonClicked();
     void slotLogoutButtonClicked();
 
 private:

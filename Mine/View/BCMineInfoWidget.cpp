@@ -42,11 +42,6 @@ void BCMineInfoWidget::resizeEvent(QResizeEvent *event)
     initStyle();
 }
 
-void BCMineInfoWidget::slotEditButtonClicked()
-{
-
-}
-
 void BCMineInfoWidget::slotLogoutButtonClicked()
 {
     BCMainWindow::instance()->showBasePage(BasePage::Login);
@@ -104,7 +99,7 @@ void BCMineInfoWidget::initStyle()
 
 void BCMineInfoWidget::initConnect()
 {
-    connect(mEditInfoButton,&BCPolymorphicButton::clicked,this,&BCMineInfoWidget::slotEditButtonClicked);
+    connect(mEditInfoButton,&BCPolymorphicButton::clicked,this,&BCMineInfoWidget::sigEditInfo);
     connect(mLogoutButton,&BCPolymorphicButton::clicked,this,&BCMineInfoWidget::slotLogoutButtonClicked);
 }
 

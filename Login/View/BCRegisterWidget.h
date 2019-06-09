@@ -26,9 +26,7 @@ signals:
     void doRegiestSignal(Page::BCPageEnum pageNum);
 private:
     void init();
-
     void initStyle();
-
     void initConnect();
 
 private:
