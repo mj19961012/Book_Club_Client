@@ -63,9 +63,12 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mMessageWidget->showPage(MessagePage::ChatList);
         break;
     case Page::Chat:
-        mStackWidget->setCurrentWidget(mMessageChatWidget);
-        mMessageChatWidget->initData();
-        break;
+        {
+            mStackWidget->setCurrentWidget(mMessageChatWidget);
+            auto paramer = BCDataManager::instance().getUpLoadChat();
+            mMessageChatWidget->initData();
+            break;
+        }
     case Page::PersonalInformation:
         mStackWidget->setCurrentWidget(mMineWidget);
         mNavigationBar->setSelectItem(NavigationBar::PersonalInformation);

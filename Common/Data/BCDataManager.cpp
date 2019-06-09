@@ -1,7 +1,7 @@
 ﻿#include "BCDataManager.h"
 #include <QStandardPaths>
 #include <QDir>
-
+#include <QDebug>
 BCDataManager *BCDataManager::sDataManager = nullptr;
 
 BCDataManager &BCDataManager::instance()
@@ -253,6 +253,18 @@ BCDataManager::BCDataManager(QObject *parent)
     mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }
 
+UpLoadChangeMessageStatus BCDataManager::getUploadChangeMessageStatus() const
+{
+    return mUploadChangeMessageStatus;
+}
+
+void BCDataManager::setUploadChangeMessageStatus(const QString &sessionId, const QString &senderId, const int messageType)
+{
+    mUploadChangeMessageStatus.sessionId = sessionId;
+    mUploadChangeMessageStatus.senderId = senderId;
+    mUploadChangeMessageStatus.messageType = messageType;
+}
+
 void BCDataManager::setBCCityIdToName(const QMap<QString, QString> &bCCityIdToName)
 {
     mBCCityIdToName = bCCityIdToName;
@@ -441,11 +453,35 @@ QMap<QString, message_info> BCDataManager::getBCMessageListMap() const
     return temp_list;
 }
 
+message_info BCDataManager::getBCMessageInfoWithId(QString msgId)
+{
+    QMap<QString, message_info> temp_list;
+    for(auto &messages : mBCMessageListMap)
+    {
+        for(auto &message : messages)
+        {
+            temp_list[message.getmessageId().c_str()] = message;
+        }
+    }
+    return temp_list[msgId];
+}
+
 void BCDataManager::setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap)
 {
     for(auto &message : bCMessageListMap)
     {
-        mBCMessageListMap[QString().fromStdString(message.getsessionId())][QString().fromStdString(message.getmessageId())] = message;
+        qDebug() << "message.getsenderId():" << message.getsenderId().c_str() << "\n";
+        qDebug() << "message.getsessionId():" << message.getsessionId().c_str() << "\n";
+        qDebug() << "mCurrentLoginUserInfo.getuserId():" << mCurrentLoginUserInfo.getuserId().c_str() << "\n";
+        if(message.getsenderId() == mCurrentLoginUserInfo.getuserId())
+        {
+            qDebug() << "add mine message" << "\n";
+            mBCMessageListMap[QString().fromStdString(message.getsenderId())][QString().fromStdString(message.getmessageId())] = message;
+        }
+        else
+        {
+            mBCMessageListMap[QString().fromStdString(message.getsessionId())][QString().fromStdString(message.getmessageId())] = message;
+        }
     }
 }
 

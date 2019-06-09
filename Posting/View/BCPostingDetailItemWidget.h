@@ -7,6 +7,7 @@
 #include <QListWidgetItem>
 #include "BCPolymorphicLabel.h"
 #include "BCInputWidget.h"
+#include "BCCommonEnumData.h"
 
 class BCPostingDetailItemWidget : public QWidget
 {
@@ -19,7 +20,7 @@ public:
 
 signals:
     void sigResizeItem(int height);
-
+    void doReleaseComment(Page::BCPageEnum);
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
@@ -27,6 +28,7 @@ protected:
 private:
     void init();
     void initStyle();
+    void initConnect();
     void initGeometry();
     void createPropertyWidget();
     void setName(const QString& name);
@@ -55,6 +57,7 @@ private:
 
 private:
     QListWidgetItem *mCurrentItem{};
+    QString mPostId{};
 };
 
 #endif // BCPOSTINGDETAILITEMWIDGET_H

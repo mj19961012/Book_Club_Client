@@ -179,10 +179,11 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             else
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("暂无未读消息!!"));
+                emit sendOperationResultSignal(false,pageEnum);
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(true,pageEnum);
             break;
         }
     case Page::Chat:
@@ -191,10 +192,13 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             is_success = BCSendMessageHandle(parametes.messgaebody,parametes.senderid,parametes.accepterid,parametes.sessionid,parametes.messagetype);
             if(!is_success)
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("发送失败!!"));
+                emit sendOperationResultSignal(false,pageEnum);
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            BCDataManager::instance().setBCMessageListMap(mBCMessageListMap);
+            qDebug() << "BCMessageListMap_size:" << mBCMessageListMap.count() << "\n";
+            emit sendOperationResultSignal(true,pageEnum);
             break;
         }
     case Page::PersonalInformation:
@@ -303,28 +307,22 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
         }
     case Page::ChangeMessageStatus:
         {
-            auto parametes = BCDataManager::instance().getUpLoadChat();
-            is_success = BCGetMessageListHandle(parametes.accepterid);
-            if(is_success)
-            {
-                BCDataManager::instance().setBCMessageListMap(mBCMessageListMap);
-            }
-            else
-            {
-                //TODO emit xxx(false,pageEnum);
-                return;
-            }
-            is_success = BCChangeMessageStatusHandle(parametes.senderid,parametes.accepterid);
-            if(is_success)
-            {
-                qDebug() << "ChangeMessageStatus Success" << "\n";
-            }
-            else
-            {
-                qDebug() << "ChangeMessageStatus Success" << "\n";
-            }
+            auto parametes = BCDataManager::instance().getUploadChangeMessageStatus();
+            is_success = BCChangeMessageStatusHandle(parametes.senderId,parametes.sessionId,parametes.messageType);
+//            if(!is_success)
+//            {
+//                BCDataManager::instance().setErrorMsg(QStringLiteral("暂无未读消息!!"));
+//                emit sendOperationResultSignal(false,Page::Message);
+//                return;
+//            }
+            is_success = BCGetMessageListHandle(parametes.sessionId);
 
-            //TODO emit xxx(true,pageEnum);
+            BCDataManager::instance().setBCMessageListMap(mBCMessageListMap);
+            if(!is_success)
+            {
+                BCDataManager::instance().setErrorMsg(QStringLiteral("暂无未读消息!!"));
+            }
+            emit sendOperationResultSignal(is_success,Page::Message);
             break;
         }
     case Page::UploadFile:
@@ -350,10 +348,12 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
 
 void BCMessageManager::catchPersonalInformationSlot(std::string userId)
 {
+    qDebug() << "BCMessageManager::catchPersonalInformationSlot" << "\n";
     if(BCDataManager::instance().checkUserInformaitonCatched(QString().fromStdString(userId)))
     {
         return;
     }
+    qDebug() << "BCGetPersonalInformationHandle:"<< userId.c_str() << "\n";
     this->BCGetPersonalInformationHandle(QString().fromStdString(userId));
 //    std::thread thread(
 //                [&userId,this]()
@@ -459,7 +459,7 @@ bool BCMessageManager::BCGetArticlesListHandle(int type, int pagenum /*= -1*/,in
 		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
 		{
 			auto temp_value = (*iter).get<article_info>();
-			qDebug() << "mBCArticlesListMap-temp_value-article_id:" << temp_value.article_id.c_str() << "\n";
+            qDebug() << "mBCArticlesListMap-temp_value-author_id:" << temp_value.author_id.c_str() << "\n";
 			mBCArticlesListMap[temp_value.article_id.c_str()] = temp_value;
             emit catchPersonalInformationSignals(temp_value.author_id);
 		}
@@ -616,19 +616,24 @@ bool BCMessageManager::BCSendMessageHandle(QString messgae_body, QString sender_
     auto send_time = QDateTime::currentDateTime().toTime_t();
 	QString parametes = QString("message_id=%1&messgae_body=%2&sender_id=%3&accepter_id=%4&session_id=%5&send_time=%6&message_type=%7").arg(message_id).arg(messgae_body).arg(sender_id).arg(accepter_id).arg(session_id).arg(send_time).arg(message_type);
 //	qDebug() << "BCSendMessageHandle parametes:" << parametes << "\n";
-
+    mBCMessageListMap.clear();
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_SEND_MESSAGE), parametes);
-	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
-
+    qDebug() << "BCSendMessageHandle reply_str:" << reply_str << "\n";
+    nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+    if(json_str["code"] == 200)
+    {
+        auto message = json_str["message"].get<message_info>();
+        mBCMessageListMap[message.message_id.c_str()] = message;
+    }
 	qDebug() << "BCSendMessageHandle json_str:" << reply_str.length() << "\n";
 	qDebug() << "BCSendMessageHandle json_str[\"msg\"]:" << json_str["msg"].get<std::string>().c_str() << "\n";
 
     return json_str["code"] == 200;
 }
 
-bool BCMessageManager::BCChangeMessageStatusHandle(QString sendId, QString accepterId)
+bool BCMessageManager::BCChangeMessageStatusHandle(QString sendId, QString sessionId, int messageType)
 {
-    QString parametes = QString("sender_id=%1&accepter_id=%2").arg(sendId).arg(accepterId);
+    QString parametes = QString("sender_id=%1&session_id=%2&message_type=%3").arg(sendId).arg(sessionId).arg(messageType);
     QString reply_str = BCHttpRequestHandle(GET_API(BC_API_CHANGE_MESSAGE_STATUS), parametes);
     qDebug() << "BCChangeMessageStatusHandle parametes:" << parametes << "\n";
 

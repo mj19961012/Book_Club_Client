@@ -7,13 +7,13 @@ BCMessageChatItemWidget::BCMessageChatItemWidget(QWidget *parent)
     init();
 }
 
-void BCMessageChatItemWidget::initData(const QString& image,const QString& name,const QString& date,const QString& content)
+void BCMessageChatItemWidget::initData(const QString& image, const QString& name, const QString& date, const QString& content, const bool isRead)
 {
     setHeadImage(image);
     setName(name);
     setDate(date);
     setContent(content);
-    setIsRead(false);
+    setIsRead(isRead);
 }
 
 void BCMessageChatItemWidget::setIsRead(const bool &isRead)

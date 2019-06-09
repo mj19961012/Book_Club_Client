@@ -82,6 +82,7 @@ public:
     /// \brief 私信消息列表
     QMap<QString, message_info> getBCMessageListMap(QString sessionId) const;
     QMap<QString, message_info> getBCMessageListMap() const;
+    message_info getBCMessageInfoWithId(QString msgId);
     void setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap);
     /// \brief 帖子主页帖子列表信息
     QMap<QString, article_info> getBCPostingListMap() const;
@@ -131,6 +132,9 @@ public:
     QString getBCCityNameWithId(QString cId) const;
     void setBCCityIdToName(const QMap<QString, QString> &bCCityIdToName);
 
+    UpLoadChangeMessageStatus getUploadChangeMessageStatus() const;
+    void setUploadChangeMessageStatus(const QString &sessionId,const QString& senderId,const int messageType);
+
 private:
     explicit BCDataManager(QObject *parent = nullptr);
     static BCDataManager *sDataManager;
@@ -152,6 +156,7 @@ private:
     UpLoadSearch mUpLoadSearch;
     UpLoadRegiest mUpLoadRegiest;
     UploadFile mUploadFile;
+    UpLoadChangeMessageStatus mUploadChangeMessageStatus;
 
     QMap<QString, QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;

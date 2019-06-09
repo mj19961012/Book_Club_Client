@@ -53,7 +53,7 @@ private:
     bool BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum = -1, int pagesize = 20);
     bool BCGetDetailsOfTheAction(QString actionid);
     bool BCSendMessageHandle(QString messgae_body, QString sender_id, QString accepter_id, QString session_id, int message_type);
-    bool BCChangeMessageStatusHandle(QString sendId,QString accepterId);
+    bool BCChangeMessageStatusHandle(QString sendId,QString sessionId,int messageType);
     bool BCSystemInit();
     bool BCGetSomebodyPostArticlesHandle(QString user_id, int pagenum = -1, int pagesize = 20);
     bool BCGetSomebodyPostActivitiesHandle(QString user_id, int pagenum = -1, int pagesize = 20);

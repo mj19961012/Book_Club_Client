@@ -2,6 +2,7 @@
 #include "BCCommonEnumData.h"
 #include "BCDataManager.h"
 #include "BCToastTips.h"
+#include "BCMessageManager.h"
 #include <QPainter>
 #include <QDebug>
 
@@ -21,7 +22,7 @@ void BCMessageWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pa
         {
             if(isSuccess)
             {
-                mPostingListWidget->addListItem(ListItem::MessageChat);
+                showPage(MessagePage::ChatList);
             }
             else
             {
@@ -136,6 +137,9 @@ void BCMessageWidget::initConnect()
     connect(mChatListButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotMessageButtonClicked);
     connect(mPostingListButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotMessageButtonClicked);
     connect(mHasBeenReadButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotHasBeenReadButtonClicked);
+    connect(BCMessageManager::getInstance(),&BCMessageManager::sendOperationResultSignal,this,&BCMessageWidget::receiveOperationResult);
+    connect(mChatListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mPostingListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
 }
 
 void BCMessageWidget::addPage(MessagePage::BCMessagePageEnum page)
