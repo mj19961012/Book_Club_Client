@@ -10,8 +10,8 @@ BCMineActivityItemWidget::BCMineActivityItemWidget(QWidget *parent)
 void BCMineActivityItemWidget::initData(const QString& title,const QString& content,const QString& date)
 {
     setTitle(title);
-    setDate(content);
-    setContent(date);
+    setContent(content);
+    setDate(date);
 }
 
 void BCMineActivityItemWidget::paintEvent(QPaintEvent *event)

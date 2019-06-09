@@ -33,6 +33,7 @@ private:
     void initStyle();
     void initConnect();
     void addPage(MinePage::BCMinePageEnum page);
+    void switchPageButtonStyle(MinePage::BCMinePageEnum page);
 
 private:
     BCPolymorphicButton *mMineInfoButton{};

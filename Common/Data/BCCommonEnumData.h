@@ -96,6 +96,8 @@ enum BCListWidgetType
     MessageChat,
     MessagePosting,
     MessageChatBubble,
+    MineFollowMasterPostings,
+    MineFollowMasterActivity,
 };
 }
 

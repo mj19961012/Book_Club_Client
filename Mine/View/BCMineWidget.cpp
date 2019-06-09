@@ -19,6 +19,7 @@ void BCMineWidget::showPage(MinePage::BCMinePageEnum page)
     {
     case MinePage::MineInformation:
         mStackedWidget->setCurrentWidget(mMineInfoWidget);
+        switchPageButtonStyle(MinePage::MineInformation);
         mMineInfoWidget->initData();
         break;
     case MinePage::EditMineInformation:
@@ -67,7 +68,7 @@ void BCMineWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageE
                 BCToastTips::Instance().setToastTip(errorMsg);
                 return;
             }
-            mMineInterestListWidget->addListItem(ListItem::MineInterest);
+            mMineFollowedListWidget->addListItem(ListItem::MineFollowed);
             break;
         }
     }
@@ -160,35 +161,14 @@ void BCMineWidget::init()
 
 void BCMineWidget::initStyle()
 {
-    for(auto iter = mButtonMap.begin(); iter != mButtonMap.end(); iter++)
-    {
-        if(iter.key() == MinePage::MineInformation)
-        {
-            iter.value()->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
-                                        "#333333",QString("2,2,2,0").split(","),
-                                        QString("#F7BB64,#F7BB64,#F7BB64,#F7BB64").split(","),0);
-        }
-        else
-        {
-            iter.value()->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
-                                        "#333333",QString("0,0,0,2").split(","),
-                                        QString("transparent,transparent,transparent,#F7BB64").split(","),0);
-        }
-        iter.value()->setFontStyle(25);
-    }
+    switchPageButtonStyle(MinePage::MineInformation);
 }
 
 void BCMineWidget::initConnect()
 {
     connect(mMinePostingListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
     connect(mMineActivityListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
-    connect(mMineInterestListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mMineFollowedListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
     for(auto &iter : mButtonMap)
     {
         connect(iter,&BCPolymorphicButton::clicked,this,&BCMineWidget::slotMineButtonClicked);
@@ -251,5 +231,31 @@ void BCMineWidget::addPage(MinePage::BCMinePageEnum page)
         mStackedWidget->addWidget(mMineFollowedPostingMasterWidget);
         break;
     }
+    }
+}
+
+void BCMineWidget::switchPageButtonStyle(MinePage::BCMinePageEnum page)
+{
+    for(auto iter = mButtonMap.begin(); iter != mButtonMap.end(); iter++)
+    {
+        if(iter.key() == page)
+        {
+            iter.value()->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,1), stop:1 rgb(255,255,255))",
+                                        "#333333",QString("2,2,2,0").split(","),
+                                        QString("#F7BB64,#F7BB64,#F7BB64,#F7BB64").split(","),0);
+        }
+        else
+        {
+            iter.value()->setColorStyle("qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                        "qlineargradient(spread:pad, x1:0.5, y1:0, x2:0.5, y2:1, stop:0 rgba(247,187,100,0.5), stop:1 rgb(255,255,255))",
+                                        "#333333",QString("0,0,0,2").split(","),
+                                        QString("transparent,transparent,transparent,#F7BB64").split(","),0);
+        }
+        iter.value()->setFontStyle(25);
     }
 }

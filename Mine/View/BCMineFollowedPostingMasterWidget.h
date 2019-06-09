@@ -2,6 +2,7 @@
 #define BCMINEFOLLOWEDPOSTINGMASTERWIDGET_H
 
 #include <QWidget>
+#include <QStackedWidget>
 #include "BCImageView.h"
 #include "BCPolymorphicLabel.h"
 #include "BCPolymorphicButton.h"
@@ -16,10 +17,14 @@ public:
 
 signals:
     void sigMineFollowedPostingMasterBack();
+    void sigChat();
 
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
+
+private:
+    void slotStackedButtonClicked();
 
 private:
     void init();
@@ -43,6 +48,10 @@ private:
     BCPolymorphicLabel *mSchoolLabel{};
     BCPolymorphicLabel *mFansNumLabel{};
 
+    BCPolymorphicButton *mPostingsButton{};
+    BCPolymorphicButton *mActivityButton{};
+
+    QStackedWidget *mStackedWidget{};
     BCListWidget *mPostingsListWidget{};
     BCListWidget *mActivityListWidget{};
 };

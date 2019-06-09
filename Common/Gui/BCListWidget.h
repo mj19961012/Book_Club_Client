@@ -42,8 +42,10 @@ private:
     void addMineFollowedItem(const QString &id,const QString& image,const QString& name);
     void addMessageChatItem(const QString &id,const QString& image,const QString& name,const QString& date,const QString& content,const bool isRead);
     void addMessagePostingItem(const QString &id,const QString& title,const QString& date,const QString& content,const bool isRead);
-
     void addMessageChatBubbleItem(const QString &id, const MessagePage::BCMessageBubbleEnum& isMe,const QString& image,const QString& content);
+    void addMineFollowedMasterPostingItem(const QString &id,const QString& title,const QString& content,const QString& date);
+    void addMineFollowedMasterActivityItem(const QString &id,const QString& title,const QString& content,const QString& date);
+
 private:
     void clearData();
     void setMessageChatItemIsRead(QListWidgetItem* item);

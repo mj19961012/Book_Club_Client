@@ -143,7 +143,7 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
         for(auto &value:values)
         {
             auto time = QDateTime::fromTime_t(QString::fromStdString(value.getreleaseTime()).toUInt()).toString("yyyy-MM-dd hh:mm:ss");
-            addMineAvtivityItem(QString().fromStdString(value.getactionId()),QString().fromStdString(value.getactionTitle()),time,QString().fromStdString(value.getactionContent()));
+            addMineAvtivityItem(QString().fromStdString(value.getactionId()),QString().fromStdString(value.getactionTitle()),QString().fromStdString(value.getactionContent()),time);
         }
         break;
     }
@@ -205,6 +205,22 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
             {
                 addMessageChatBubbleItem(QString().fromStdString(value.getmessageId()),MessagePage::Mine,QString().fromStdString(user_mine.getheadImage()),QString().fromStdString(value.getmessgaeBody()));
             }
+        }
+        break;
+    }
+    case ListItem::MineFollowMasterPostings:
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            addMineFollowedMasterPostingItem(QString::number(i),QStringLiteral("他的帖子"),"666666666666666","2019-05-20");
+        }
+        break;
+    }
+    case ListItem::MineFollowMasterActivity:
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            addMineFollowedMasterActivityItem(QString::number(i),QStringLiteral("他的活动"),"666666666666666","2019-05-20");
         }
         break;
     }
@@ -362,6 +378,14 @@ void BCListWidget::mousePressEvent(QMouseEvent *event)
         else if(ListItem::MineFollowed == mCurrentItemType)
         {
             emit sigMineFollowedItemClicked();
+        }
+        else if(ListItem::MineFollowMasterPostings == mCurrentItemType)
+        {
+            BCMainWindow::instance()->showPage(Page::PostDetail);
+        }
+        else if(ListItem::MineFollowMasterActivity == mCurrentItemType)
+        {
+            BCMainWindow::instance()->showPage(Page::ActivityDetail);
         }
     }
 }
@@ -593,6 +617,52 @@ void BCListWidget::addMessageChatBubbleItem(const QString &id, const MessagePage
     QListWidgetItem *listItem = new QListWidgetItem();
 
     listItem->setSizeHint(QSize(this->width() - 20,itemWidget->height()));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addMineFollowedMasterPostingItem(const QString &id,const QString& title,const QString& content,const QString& date)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCMinePostingItemWidget *itemWidget = new BCMinePostingItemWidget(this);
+
+    itemWidget->initData(title,content,date);
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,150));
+    this->insertItem(this->count(),listItem);
+    this->setItemWidget(listItem, itemWidget);
+    mListMap.insert(id,listItem);
+
+    update();
+}
+
+void BCListWidget::addMineFollowedMasterActivityItem(const QString &id, const QString &title, const QString &content, const QString &date)
+{
+    if(mListSet.find(id) != mListSet.end())
+    {
+        return;
+    }
+    mListSet.insert(id);
+
+    BCMineActivityItemWidget *itemWidget = new BCMineActivityItemWidget(this);
+
+    itemWidget->initData(title,content,date);
+    itemWidget->adjustSize();
+
+    QListWidgetItem *listItem = new QListWidgetItem();
+
+    listItem->setSizeHint(QSize(this->width() - 20,150));
     this->insertItem(this->count(),listItem);
     this->setItemWidget(listItem, itemWidget);
     mListMap.insert(id,listItem);
