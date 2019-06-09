@@ -114,26 +114,29 @@ public:
     /// \brief 他人发布的活动列表(查看他人主页信息)
     QList<action_info> getCurrentCatchActivitiesList() const;
     void setCurrentCatchActivitiesList(const QList<action_info> &currentCatchActivitiesList);
-
+    /// \brief 检查用户信息
     bool checkUserInformaitonCatched(QString userId);
     user_info getPersonalInformationWithId(QString userId);
     void addPersonalInformationToList(user_info user);
-
+    /// \brief 缓存当前登录用户数据
     user_info getCurrentLoginUserInfo() const;
     void setCurrentLoginUserInfo(const user_info &currentLoginUserInfo);
-
+    /// \brief 错误信息
     QString getErrorMsg() const;
     void setErrorMsg(const QString &errorMsg);
-
+    /// \brief 加锁
     void Lock();
     void UnLock();
     bool isLock();
 
     QString getBCCityNameWithId(QString cId) const;
     void setBCCityIdToName(const QMap<QString, QString> &bCCityIdToName);
-
+    /// \brief 变更消息状态
     UpLoadChangeMessageStatus getUploadChangeMessageStatus() const;
     void setUploadChangeMessageStatus(const QString &sessionId,const QString& senderId,const int messageType);
+    /// \brief 关注信息
+    UpLoadInterest getUpLoadInterest() const;
+    void setUpLoadInterest(const QString &userId,const QString &followId);
 
 private:
     explicit BCDataManager(QObject *parent = nullptr);
@@ -157,6 +160,7 @@ private:
     UpLoadRegiest mUpLoadRegiest;
     UploadFile mUploadFile;
     UpLoadChangeMessageStatus mUploadChangeMessageStatus;
+    UpLoadInterest mUpLoadInterest;
 
     QMap<QString, QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;

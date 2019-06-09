@@ -20,35 +20,35 @@ void BCNavigationBar::setSelectItem(NavigationBar::BCNavigationBarEnum barEnum)
         mPostingsItem->setIsSelected(true);
         mActivityItem->setIsSelected(false);
         mMessageItem->setIsSelected(false);
-        mSearchItem->setIsSelected(false);
+//        mSearchItem->setIsSelected(false);
         mMineInfoItem->setIsSelected(false);
         break;
     case NavigationBar::Activity:
         mPostingsItem->setIsSelected(false);
         mActivityItem->setIsSelected(true);
         mMessageItem->setIsSelected(false);
-        mSearchItem->setIsSelected(false);
+//        mSearchItem->setIsSelected(false);
         mMineInfoItem->setIsSelected(false);
         break;
     case NavigationBar::Message:
         mPostingsItem->setIsSelected(false);
         mActivityItem->setIsSelected(false);
         mMessageItem->setIsSelected(true);
-        mSearchItem->setIsSelected(false);
+//        mSearchItem->setIsSelected(false);
         mMineInfoItem->setIsSelected(false);
         break;
-    case NavigationBar::Search:
-        mPostingsItem->setIsSelected(false);
-        mActivityItem->setIsSelected(false);
-        mMessageItem->setIsSelected(false);
-        mSearchItem->setIsSelected(true);
-        mMineInfoItem->setIsSelected(false);
-        break;
+//    case NavigationBar::Search:
+//        mPostingsItem->setIsSelected(false);
+//        mActivityItem->setIsSelected(false);
+//        mMessageItem->setIsSelected(false);
+//        mSearchItem->setIsSelected(true);
+//        mMineInfoItem->setIsSelected(false);
+//        break;
     case NavigationBar::PersonalInformation:
         mPostingsItem->setIsSelected(false);
         mActivityItem->setIsSelected(false);
         mMessageItem->setIsSelected(false);
-        mSearchItem->setIsSelected(false);
+//        mSearchItem->setIsSelected(false);
         mMineInfoItem->setIsSelected(true);
         break;
     }
@@ -79,8 +79,9 @@ void BCNavigationBar::resizeEvent(QResizeEvent *event)
     mPostingsItem->setGeometry(0,300,this->width(),100);
     mActivityItem->setGeometry(0,430,this->width(),100);
     mMessageItem->setGeometry(0,560,this->width(),100);
-    mSearchItem->setGeometry(0,690,this->width(),100);
-    mMineInfoItem->setGeometry(0,820,this->width(),100);
+//    mSearchItem->setGeometry(0,690,this->width(),100);
+    mMineInfoItem->setGeometry(0,690,this->width(),100);
+//    mMineInfoItem->setGeometry(0,820,this->width(),100);
 }
 
 void BCNavigationBar::init()
@@ -96,8 +97,8 @@ void BCNavigationBar::init()
     mMessageItem = new BCNavigationBarItem(this);
     mMessageItem->setType(NavigationBar::Message);
 
-    mSearchItem = new BCNavigationBarItem(this);
-    mSearchItem->setType(NavigationBar::Search);
+//    mSearchItem = new BCNavigationBarItem(this);
+//    mSearchItem->setType(NavigationBar::Search);
 
     mMineInfoItem = new BCNavigationBarItem(this);
     mMineInfoItem->setType(NavigationBar::PersonalInformation);
@@ -129,10 +130,10 @@ void BCNavigationBar::initConnect()
         emit sigNavigationBarClicked(NavigationBar::Message);
     });
 
-    connect(mSearchItem,&BCNavigationBarItem::clicked,this,[this](){
-        setSelectItem(NavigationBar::Search);
-        emit sigNavigationBarClicked(NavigationBar::Search);
-    });
+//    connect(mSearchItem,&BCNavigationBarItem::clicked,this,[this](){
+//        setSelectItem(NavigationBar::Search);
+//        emit sigNavigationBarClicked(NavigationBar::Search);
+//    });
 
     connect(mMineInfoItem,&BCNavigationBarItem::clicked,this,[this](){
         setSelectItem(NavigationBar::PersonalInformation);

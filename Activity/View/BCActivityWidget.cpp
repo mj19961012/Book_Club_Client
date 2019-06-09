@@ -40,6 +40,7 @@ void BCActivityWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum p
             if(isSuccess)
             {
                 mActivityListWidget->addListItem(ListItem::Activity);
+//                BCMainWindow::instance()->showPage(Page::Activity);
             }
             else
             {

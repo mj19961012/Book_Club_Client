@@ -6,6 +6,7 @@
 #include "BCImageView.h"
 #include "BCPolymorphicLabel.h"
 #include "BCPolymorphicButton.h"
+#include "BCCommonEnumData.h"
 
 class BCActivityDetailWidget : public QWidget
 {
@@ -13,7 +14,10 @@ class BCActivityDetailWidget : public QWidget
 public:
     explicit BCActivityDetailWidget(QWidget *parent = nullptr);
     void initData(const QString& id);
-
+signals:
+    void doInterestSomeBody(Page::BCPageEnum);
+public slots:
+    void receiveOperationResult(bool isSuccess,Page::BCPageEnum pageEnum);
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;

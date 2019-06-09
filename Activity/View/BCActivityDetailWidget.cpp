@@ -3,6 +3,8 @@
 #include <QDateTime>
 #include "BCMainWindow.h"
 #include "BCDataManager.h"
+#include "BCMessageManager.h"
+#include "BCToastTips.h"
 
 BCActivityDetailWidget::BCActivityDetailWidget(QWidget *parent)
     :QWidget(parent)
@@ -23,11 +25,45 @@ void BCActivityDetailWidget::initData(const QString &id)
     QString begin = QDateTime::fromTime_t(QString::fromStdString(action.getbeginTime()).toUInt()).toString("yyyy-MM-dd");
     QString end = QDateTime::fromTime_t(QString::fromStdString(action.getendTime()).toUInt()).toString("yyyy-MM-dd");
     QString date = QStringLiteral("活动时间：") + begin + QStringLiteral(" 至 ") + end;
+    auto currentUser = BCDataManager::instance().getCurrentLoginUserInfo();
+
+    if(currentUser.getuserId() == user.getuserId())
+    {
+        mAttentionButton->hide();
+    }
+    else
+    {
+        BCDataManager::instance().setUpLoadInterest(QString().fromStdString(currentUser.getuserId()),QString().fromStdString(user.getuserId()));
+    }
 
     setDate(date);
     setContent(action.getactionContent().c_str());
 
     initGeometry();
+}
+
+void BCActivityDetailWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    qDebug() << "BCActivityDetailWidget::receiveOperationResult" << "\n";
+    switch (pageEnum)
+    {
+        case Page::Interest:
+        {
+            if(isSuccess)
+            {
+                BCToastTips::Instance().setToastTip(QStringLiteral("关注成功!"));
+                auto user = BCDataManager::instance().getCurrentLoginUserInfo();
+                BCDataManager::instance().setUpLoadMineFocus(QString().fromStdString(user.getuserId()));
+                emit doInterestSomeBody(Page::BCPageEnum::MineFocus);
+            }
+            else
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+            }
+            break;
+        }
+    }
 }
 
 void BCActivityDetailWidget::paintEvent(QPaintEvent *event)
@@ -141,6 +177,11 @@ void BCActivityDetailWidget::initConnect()
     connect(mBackButton,&BCPolymorphicButton::clicked,this,[](){
         BCMainWindow::instance()->showPage(Page::Activity);
     });
+    connect(this,&BCActivityDetailWidget::doInterestSomeBody,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mAttentionButton,&BCPolymorphicButton::clicked,this,[this](){
+        emit doInterestSomeBody(Page::BCPageEnum::Interest);
+    });
+    connect(BCMessageManager::getInstance(),&BCMessageManager::sendOperationResultSignal,this,&BCActivityDetailWidget::receiveOperationResult);
 }
 
 void BCActivityDetailWidget::setImage(const QString &image)

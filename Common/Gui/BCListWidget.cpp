@@ -143,7 +143,7 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
         for(auto &value:values)
         {
             auto time = QDateTime::fromTime_t(QString::fromStdString(value.getreleaseTime()).toUInt()).toString("yyyy-MM-dd hh:mm:ss");
-            addMineAvtivityItem(QString().fromStdString(value.getactionId()),QString().fromStdString(value.getactionTitle()),QString().fromStdString(value.getactionContent()),time);
+            addMineAvtivityItem(QString().fromStdString(value.getactionId()),QString().fromStdString(value.getactionTitle()),time,QString().fromStdString(value.getactionContent()));
         }
         break;
     }
@@ -348,11 +348,16 @@ void BCListWidget::mousePressEvent(QMouseEvent *event)
 //        }
         else if(ListItem::MinePosting == mCurrentItemType)
         {
-            BCMainWindow::instance()->showPage(Page::PostDetail);
+//            BCMainWindow::instance()->showPage(Page::PostDetail);
+            BCDataManager::instance().setUpLoadPostDetail(mListMap.key(mCurrentItem));
+            emit getPageValues(Page::BCPageEnum::PostDetail);
         }
         else if(ListItem::MineAvtivity == mCurrentItemType)
         {
+//            BCMainWindow::instance()->showPage(Page::ActivityDetail);
+            BCDataManager::instance().setUpLoadActivityDetail(mListMap.key(mCurrentItem));
             BCMainWindow::instance()->showPage(Page::ActivityDetail);
+            emit getPageValues(Page::BCPageEnum::ActivityDetail);
         }
         else if(ListItem::MineFollowed == mCurrentItemType)
         {

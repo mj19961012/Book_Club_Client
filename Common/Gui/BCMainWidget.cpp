@@ -114,6 +114,7 @@ void BCMainWidget::slotNavigationBarSelected(NavigationBar::BCNavigationBarEnum 
     switch(enumData)
     {
     case NavigationBar::Postings:
+        emit getPageValuesSignal(Page::Postings);
         showPage(Page::Postings);
         break;
     case NavigationBar::Activity:
@@ -122,10 +123,11 @@ void BCMainWidget::slotNavigationBarSelected(NavigationBar::BCNavigationBarEnum 
     case NavigationBar::Message:
         showPage(Page::Message);
         break;
-    case NavigationBar::Search:
-        showPage(Page::Search);
-        break;
+//    case NavigationBar::Search:
+//        showPage(Page::Search);
+//        break;
     case NavigationBar::PersonalInformation:
+        emit getPageValuesSignal(Page::PostMaster);
         showPage(Page::PersonalInformation);
         break;
     }
@@ -148,7 +150,7 @@ void BCMainWidget::init()
     addPage(Page::Chat);
     addPage(Page::PersonalInformation);
     addPage(Page::MineFocus);
-    addPage(Page::Search);
+//    addPage(Page::Search);
 }
 
 void BCMainWidget::initStyle()

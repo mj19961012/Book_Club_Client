@@ -90,6 +90,7 @@ void BCMessageChatWidget::initConnect()
         chat.sessionid = chat.accepterid;
         chat.messgaebody = mInputWidget->getInputContent();
         chat.messagetype = 1;
+        mInputWidget->clearInputContent();
         BCDataManager::instance().setUpLoadChat(chat.messgaebody,chat.senderid,chat.accepterid,chat.sessionid,chat.messagetype);
         emit doSendMessage(Page::BCPageEnum::Chat);
     });

@@ -108,7 +108,7 @@ void BCPublishActivityWidget::receiveOperationResult(bool isSuccess, Page::BCPag
                 {
                     qDebug() << "Release Success" << "\n";
                     BCToastTips::Instance().setToastTip(QStringLiteral("尊敬的用户，恭喜您活动发布成功"));
-                    BCMainWindow::instance()->showPage(Page::PublishActivity);
+                    BCMainWindow::instance()->showPage(Page::Activity);
                     emit doPublishActivity(Page::BCPageEnum::Activity);
                 }
                 else
@@ -125,7 +125,7 @@ void BCPublishActivityWidget::receiveOperationResult(bool isSuccess, Page::BCPag
                 {
                     qDebug() << "UploadFile Success" << "\n";
                     mBCUploadFilesList.push_back(errorMsg);
-                    BCToastTips::Instance().setToastTip(QStringLiteral("尊敬的用户，恭喜您活动发布成功"));
+                    BCToastTips::Instance().setToastTip(QStringLiteral("尊敬的用户，恭喜您文件上传成功"));
                 }
                 else
                 {
