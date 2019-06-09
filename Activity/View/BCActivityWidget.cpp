@@ -73,13 +73,18 @@ void BCActivityWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 
     mAddActivityButton->setGeometry(75,20,200,50);
+    mSelectCityButton->setGeometry(75,90,700,50);
+    mSelectDateButton->setGeometry(mSelectCityButton->pos().x() + mSelectCityButton->width() + 20,90,700,50);
     mActivityListWidget->setGeometry(75,150,this->width() - 150,this->height() - 150);
 }
 
 void BCActivityWidget::init()
 {
     mAddActivityButton = new BCPolymorphicButton(this);
-
+    mSelectCityButton = new BCCityButton(this);
+    mSelectCityButton->initData(QStringLiteral("所在城市："));
+    mSelectDateButton = new BCDateButton(this);
+    mSelectDateButton->initData(QStringLiteral("按活动时间筛选："));
     mActivityListWidget = new BCListWidget(this);
 }
 

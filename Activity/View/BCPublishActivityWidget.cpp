@@ -32,21 +32,6 @@ void BCPublishActivityWidget::paintEvent(QPaintEvent *event)
     painter.setPen(QPen(QColor(51,51,51),1));
     painter.drawText(75,152,this->width() - 150,30,Qt::AlignLeft | Qt::AlignVCenter,
                      QStringLiteral("请输入1~30位字符，支持数字、字母、汉字和特殊字符。"));
-
-    font.setPixelSize(25);
-    font.setWeight(25);
-    painter.setFont(font);
-    painter.setPen(QPen(QColor(51,51,51),1));
-    painter.drawText(75,222,this->width() - 150,30,Qt::AlignLeft | Qt::AlignVCenter,
-                     QStringLiteral("选择所在城市："));
-
-    font.setPixelSize(25);
-    font.setWeight(25);
-    painter.setFont(font);
-    painter.setPen(QPen(QColor(51,51,51),1));
-    painter.drawText(75,292,this->width() - 150,30,Qt::AlignLeft | Qt::AlignVCenter,
-                     QStringLiteral("选择活动时间："));
-
 }
 
 void BCPublishActivityWidget::resizeEvent(QResizeEvent *event)
@@ -55,10 +40,8 @@ void BCPublishActivityWidget::resizeEvent(QResizeEvent *event)
 
     mBackButton->setGeometry(75,25,50,50);
     mTitleLineEdit->setGeometry(75,100,this->width() - 150,50);
-    mCityButton->setGeometry(250,222,this->width() - 525,30);
-    mCityArrowButton->setGeometry(mCityButton->pos().x() + mCityButton->width(),222,200,30);
-    mDateTimeButton->setGeometry(250,292,this->width() - 525,30);
-    mDateTimeArrowButton->setGeometry(mDateTimeButton->pos().x() + mDateTimeButton->width(),292,200,30);
+    mSelectCityButton->setGeometry(75,210,this->width() - 150,50);
+    mSelectDateButton->setGeometry(75,280,this->width() - 150,50);
     mInputContentWidget->setGeometry(75,362,this->width() - 150,500);
     mPublishButton->setGeometry(this->width()/2 - 100,904,200,50);
 
@@ -148,12 +131,10 @@ void BCPublishActivityWidget::init()
     mTitleLineEdit->setPlaceholderText(QStringLiteral("输入标题"));
     mTitleLineEdit->setMaxLength(30);
 
-    mCityButton = new BCPolymorphicButton(this);
-    mCityArrowButton = new BCPolymorphicButton(this);
-    mCityArrowButton->setArrowType(Qt::DownArrow);
-    mDateTimeButton = new BCPolymorphicButton(this);
-    mDateTimeArrowButton = new BCPolymorphicButton(this);
-    mDateTimeArrowButton->setArrowType(Qt::DownArrow);
+    mSelectCityButton = new BCCityButton(this);
+    mSelectCityButton->initData(QStringLiteral("选择所在城市："));
+    mSelectDateButton = new BCDateButton(this);
+    mSelectDateButton->initData(QStringLiteral("选择活动时间："));
 
     mInputContentWidget = new BCInputContentAndFileWidget(this);
 

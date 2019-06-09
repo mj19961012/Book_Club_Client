@@ -5,6 +5,8 @@
 #include "BCPolymorphicButton.h"
 #include "BCListWidget.h"
 #include "BCCommonEnumData.h"
+#include "BCCityButton.h"
+#include "BCDateButton.h"
 
 class BCActivityWidget : public QWidget
 {
@@ -27,6 +29,8 @@ private:
 
 private:
     BCPolymorphicButton *mAddActivityButton{};
+    BCCityButton *mSelectCityButton{};
+    BCDateButton *mSelectDateButton{};
     BCListWidget *mActivityListWidget{};
 
     int mPageSize;

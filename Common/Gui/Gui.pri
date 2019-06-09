@@ -11,7 +11,8 @@ HEADERS += \
     $$PWD/BCInformationLineEdit.h \
     $$PWD/BCListWidget.h \
     $$PWD/BCInputWidget.h \
-    $$PWD/BCCityButton.h
+    $$PWD/BCCityButton.h \
+    $$PWD/BCDateButton.h
 
 SOURCES += \
     $$PWD/BCNavigationBar.cpp \
@@ -26,4 +27,5 @@ SOURCES += \
     $$PWD/BCInformationLineEdit.cpp \
     $$PWD/BCListWidget.cpp \
     $$PWD/BCInputWidget.cpp \
-    $$PWD/BCCityButton.cpp
+    $$PWD/BCCityButton.cpp \
+    $$PWD/BCDateButton.cpp

@@ -156,8 +156,6 @@ void BCListWidget::addListItem(ListItem::BCListWidgetType type)
             auto user = BCDataManager::instance().getPersonalInformationWithId(value.getfollowerId().c_str());
             addMineFollowedItem(QString().fromStdString(value.getinterestId()),QString().fromStdString(user.getheadImage()),QString().fromStdString(user.getnickName()));
         }
-
-        addMineFollowedItem("111",":/res/common/defaultHeadImage.png","Rudy");
         break;
     }
     case ListItem::MessageChat:

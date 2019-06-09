@@ -101,6 +101,7 @@ void BCMineUpdateInfoWidget::init()
     mNameLineEdit->setPlaceholderText(QStringLiteral("昵称"));
 
     mCityButton = new BCCityButton(this);
+    mCityButton->initData(QStringLiteral("所在城市："));
 
     mSchoolLineEdit = new BCInformationLineEdit(this);
     mSchoolLineEdit->setMaxLength(12);

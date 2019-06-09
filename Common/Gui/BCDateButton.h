@@ -1,17 +1,18 @@
-﻿#ifndef BCCITYBUTTON_H
-#define BCCITYBUTTON_H
+﻿#ifndef BCDATEBUTTON_H
+#define BCDATEBUTTON_H
 
 #include <QToolButton>
 
-class BCCityButton : public QToolButton
+class BCDateButton : public QToolButton
 {
     Q_OBJECT
 public:
-    explicit BCCityButton(QWidget *parent = nullptr);
+    explicit BCDateButton(QWidget *parent = nullptr);
+
     void initData(const QString& text);
 
 signals:
-    void sigSelectCity();
+    void sigSelectDate();
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -26,4 +27,4 @@ private:
     QString mButtonText{};
 };
 
-#endif // BCCITYBUTTON_H
+#endif // BCDATEBUTTON_H

@@ -7,6 +7,8 @@
 #include "BCPolymorphicButton.h"
 #include "BCInputContentAndFileWidget.h"
 #include "BCCommonEnumData.h"
+#include "BCCityButton.h"
+#include "BCDateButton.h"
 
 class BCPublishActivityWidget :public QWidget
 {
@@ -30,10 +32,8 @@ private:
 private:
     BCPolymorphicButton *mBackButton{};
     QLineEdit *mTitleLineEdit{};
-    BCPolymorphicButton *mCityButton{};
-    BCPolymorphicButton *mCityArrowButton{};
-    BCPolymorphicButton *mDateTimeButton{};
-    BCPolymorphicButton *mDateTimeArrowButton{};
+    BCCityButton *mSelectCityButton{};
+    BCDateButton *mSelectDateButton{};
     BCInputContentAndFileWidget *mInputContentWidget{};
     BCPolymorphicButton *mPublishButton{};
 

@@ -1,32 +1,36 @@
-﻿#include "BCCityButton.h"
+﻿#include "BCDateButton.h"
 #include <QPainter>
 #include <QMenu>
 #include <QAction>
 
-BCCityButton::BCCityButton(QWidget *parent)
+BCDateButton::BCDateButton(QWidget *parent)
     :QToolButton(parent)
 {
     init();
     initStyle();
 }
 
-void BCCityButton::initData(const QString& text)
+void BCDateButton::initData(const QString& text)
 {
     setButtonText(text);
 
     QMenu *menu = new QMenu();
 
     menu->addAction(QStringLiteral("全部"));
-    for(int i = 0; i < 10; i++)
+    for(int i = 1; i <= 12; i++)
     {
-        menu->addAction(QString::number(i));
+        menu->addAction(QStringLiteral("2018年") + QString::number(i) + QStringLiteral("月"));
+    }
+    for(int i = 1; i <= 12; i++)
+    {
+        menu->addAction(QStringLiteral("2019年") + QString::number(i) + QStringLiteral("月"));
     }
 
     this->setMenu(menu);
     initConnect();
 }
 
-void BCCityButton::paintEvent(QPaintEvent *event)
+void BCDateButton::paintEvent(QPaintEvent *event)
 {
     QToolButton::paintEvent(event);
 
@@ -48,7 +52,7 @@ void BCCityButton::paintEvent(QPaintEvent *event)
     }
 }
 
-void BCCityButton::init()
+void BCDateButton::init()
 {
     setObjectName("BCRegisterCityButton");
     setStyleSheet("QToolButton#BCRegisterCityButton{"
@@ -62,7 +66,7 @@ void BCCityButton::init()
     setPopupMode(QToolButton::InstantPopup);
 }
 
-void BCCityButton::initStyle()
+void BCDateButton::initStyle()
 {
     QFont font;
     font.setFamily("Microsoft YaHei");
@@ -70,15 +74,15 @@ void BCCityButton::initStyle()
     this->setFont(font);
 }
 
-void BCCityButton::initConnect()
+void BCDateButton::initConnect()
 {
     connect(this->menu(),&QMenu::triggered,this,[this](QAction *action){
         this->setText(action->text());
-        emit sigSelectCity();
+        emit sigSelectDate();
     });
 }
 
-void BCCityButton::setButtonText(const QString &text)
+void BCDateButton::setButtonText(const QString &text)
 {
     mButtonText = text;
 }
