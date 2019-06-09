@@ -62,7 +62,7 @@ void BCDataManager::setUpLoadPostDetail(QString postid)
 void BCDataManager::setUpLoadPostMaster(QString userid)
 {
     mUpLoadPostMaster.userid = userid;
-    mUpLoadPostMaster.pagenum = -1;
+    mUpLoadPostMaster.pagenum = 0;
     mUpLoadPostMaster.pagesize = 20;
 }
 
@@ -251,6 +251,17 @@ BCDataManager::BCDataManager(QObject *parent)
     ,isLocked(false)
 {
     mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
+
+UpLoadInterest BCDataManager::getUpLoadInterest() const
+{
+    return mUpLoadInterest;
+}
+
+void BCDataManager::setUpLoadInterest(const QString &userId, const QString &followId)
+{
+    mUpLoadInterest.userId = userId;
+    mUpLoadInterest.followId = followId;
 }
 
 UpLoadChangeMessageStatus BCDataManager::getUploadChangeMessageStatus() const

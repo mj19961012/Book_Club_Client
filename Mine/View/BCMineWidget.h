@@ -15,7 +15,10 @@ class BCMineWidget : public QWidget
 public:
     explicit BCMineWidget(QWidget *parent = nullptr);
     void showPage(MinePage::BCMinePageEnum page);
-
+signals:
+    void getPageValues(Page::BCPageEnum);
+public slots:
+    void receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum);
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);

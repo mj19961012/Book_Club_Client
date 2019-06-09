@@ -1,5 +1,6 @@
 ﻿#include "BCMineInfoWidget.h"
 #include "BCMainWindow.h"
+#include "BCDataManager.h"
 
 BCMineInfoWidget::BCMineInfoWidget(QWidget *parent)
     :QWidget (parent)
@@ -10,13 +11,15 @@ BCMineInfoWidget::BCMineInfoWidget(QWidget *parent)
 
 void BCMineInfoWidget::initData()
 {
-    setHeadImage(QStringLiteral(":/res/common/defaultHeadImage.png"));
-    setName(QStringLiteral("土卡拉"));
-    setCity(QStringLiteral("土卡拉"));
-    setSchool(QStringLiteral("土卡拉"));
-    setPhone(QStringLiteral("19900002222"));
-    setPassword(QStringLiteral("123456"));
-    setFansNum(QStringLiteral("666"));
+    auto user = BCDataManager::instance().getCurrentLoginUserInfo();
+    setHeadImage(QString().fromStdString(user.getheadImage()));
+    setName(QString().fromStdString(user.getnickName()));
+    auto city = BCDataManager::instance().getBCCityNameWithId(QString().fromStdString(user.getCity()));
+    setCity(city);
+    setSchool(QString().fromStdString(user.getSchool()));
+    setPhone(QString().fromStdString(user.getphoneNumber()));
+    setPassword(QStringLiteral("******"));
+    setFansNum(QString::number(user.getfunsNumber()));
 }
 
 void BCMineInfoWidget::paintEvent(QPaintEvent *event)
@@ -50,6 +53,7 @@ void BCMineInfoWidget::slotEditButtonClicked()
 void BCMineInfoWidget::slotLogoutButtonClicked()
 {
     BCMainWindow::instance()->showBasePage(BasePage::Login);
+    BCDataManager::instance().release();
 }
 
 void BCMineInfoWidget::init()

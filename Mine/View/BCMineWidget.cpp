@@ -1,6 +1,9 @@
 ﻿#include "BCMineWidget.h"
 #include "BCCommonEnumData.h"
 #include <QPainter>
+#include "BCDataManager.h"
+#include "BCToastTips.h"
+#include "BCMessageManager.h"
 
 BCMineWidget::BCMineWidget(QWidget *parent)
     :QWidget (parent)
@@ -31,6 +34,36 @@ void BCMineWidget::showPage(MinePage::BCMinePageEnum page)
         mStackedWidget->setCurrentWidget(mMineInterestListWidget);
         mMineInterestListWidget->addListItem(ListItem::MineInterest);
         break;
+    }
+}
+
+void BCMineWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    qDebug() << "BCMineWidget::receiveOperationResult" << "\n";
+    switch (pageEnum)
+    {
+        case Page::PostMaster:
+        {
+            if(!isSuccess)
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+                return;
+            }
+            showPage(MinePage::MineInformation);
+            break;
+        }
+        case Page::Interest:
+        {
+            if(!isSuccess)
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+                return;
+            }
+            mMineInterestListWidget->addListItem(ListItem::MineInterest);
+            break;
+        }
     }
 }
 
@@ -146,6 +179,9 @@ void BCMineWidget::initStyle()
 
 void BCMineWidget::initConnect()
 {
+    connect(mMinePostingListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mMineActivityListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mMineInterestListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
     for(auto &iter : mButtonMap)
     {
         connect(iter,&BCPolymorphicButton::clicked,this,&BCMineWidget::slotMineButtonClicked);

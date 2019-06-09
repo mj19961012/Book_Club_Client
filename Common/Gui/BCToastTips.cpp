@@ -18,6 +18,11 @@ BCToastTips &BCToastTips::Instance()
 
 void BCToastTips::setToastTip(QString strMessage, QColor backgroundColor, double opacity, int durationSeconds)
 {
+    if(!(strMessage.count() > 0))
+    {
+        return;
+    }
+
     setVisible(false);
     mMessageText = strMessage;
     mBackgroundColor = backgroundColor;

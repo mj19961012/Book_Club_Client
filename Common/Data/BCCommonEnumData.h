@@ -30,7 +30,9 @@ enum BCPageEnum
     Init,                         //初始化
     Regiest,                      //注册
     ChangeMessageStatus,          //变更消息状态
-    UploadFile                    //上传文件
+    UploadFile,                   //上传文件
+    Interest,                     //关注
+    CancleInterest,               //取消关注
 };
 }
 

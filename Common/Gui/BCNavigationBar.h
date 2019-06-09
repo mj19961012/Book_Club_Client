@@ -30,7 +30,7 @@ private:
     class BCNavigationBarItem* mPostingsItem{};
     class BCNavigationBarItem* mActivityItem{};
     class BCNavigationBarItem* mMessageItem{};
-    class BCNavigationBarItem* mSearchItem{};
+//    class BCNavigationBarItem* mSearchItem{};
     class BCNavigationBarItem* mMineInfoItem{};
 };
 

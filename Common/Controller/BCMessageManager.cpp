@@ -84,11 +84,6 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
                 BCDataManager::instance().setCurrentCatchArticlesList(mCurrentCatchArticlesList);
                 BCDataManager::instance().setCurrentCatchArticlesListAuthor(mCurrentCatchArticlesListAuthor);
             }
-            else
-            {
-                //TODO emit xxx(false,pageEnum);
-                return;
-            }
 
             is_success = BCGetSomebodyPostActivitiesHandle(parametes.userid,parametes.pagenum,parametes.pagesize);
             if(is_success)
@@ -96,10 +91,11 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
                 BCDataManager::instance().setCurrentCatchActivitiesList(mCurrentCatchActivitiesList);
                 BCDataManager::instance().setCurrentCatchActivitiesLisAuthor(mCurrentCatchActivitiesLisAuthor);
             }
-            else
+
+            is_success = BCGetInterestListWithSomeoneHandle(parametes.userid);
+            if(is_success)
             {
-                //TODO emit xxx(false,pageEnum);
-                return;
+                BCDataManager::instance().setBCInterestListMap(mBCInterestListMap);
             }
 
             is_success = BCGetPersonalInformationHandle(mCurrentCatchArticlesListAuthor);
@@ -108,7 +104,7 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
                 //TODO emit xxx(false,pageEnum);
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::PublishPost:
@@ -215,7 +211,7 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             mCurrentUser.head_image = head_image.toStdString();
             qDebug() << "head_img" << head_image << "\n";
             BCDataManager::instance().setCurrentLoginUserInfo(mCurrentUser);
-
+            BCDataManager::instance().setUpLoadPostMaster(QString().fromStdString(mCurrentUser.getuserId()));
 //            is_success = BCGetArticlesListHandle(1,0,20);
             if(BCGetArticlesListHandle(1,0,20))
             {
@@ -337,6 +333,18 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             BCDataManager::instance().setErrorMsg(filemd5);
             emit sendOperationResultSignal(true,Page::UploadFile);
+            break;
+        }
+    case Page::Interest:
+        {
+            auto parametes = BCDataManager::instance().getUpLoadInterest();
+            is_success = BCFollowSomeBodyHandle(parametes.userId,parametes.followId);
+            if(is_success)
+            {
+                QString message = QStringLiteral("我对您发布的活动比较感兴趣，希望能跟您聊聊");
+                is_success = BCSendMessageHandle(message,parametes.userId,parametes.followId,parametes.followId,1);
+            }
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     default:
@@ -685,7 +693,7 @@ bool BCMessageManager::BCSystemInit()
 bool BCMessageManager::BCGetSomebodyPostArticlesHandle(QString user_id, int pagenum , int pagesize)
 {
     QString parametes = QString("userid=%1&page_num=%2&page_size=%3").arg(user_id).arg(pagenum).arg(pagesize);
-    QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ACTIVITIES_LIST), parametes);
+    QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ARTICLES_LIST_WITH_SOMEONE), parametes);
     qDebug() << "BCGetSomebodyPostArticlesHandle json_str:" << reply_str.length() << "\n";
     qDebug() << "BCGetSomebodyPostArticlesHandle json_str:" << reply_str << "\n";
     nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
@@ -722,7 +730,7 @@ bool BCMessageManager::BCGetSomebodyPostArticlesHandle(QString user_id, int page
 bool BCMessageManager::BCGetSomebodyPostActivitiesHandle(QString user_id, int pagenum, int pagesize)
 {
     QString parametes = QString("userid=%1&page_num=%2&page_size=%3").arg(user_id).arg(pagenum).arg(pagesize);
-    QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ACTIVITIES_LIST), parametes);
+    QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ACTIVITIES_LIST_WITH_SOMEONE), parametes);
     qDebug() << "BCGetSomebodyPostActivitiesHandle json_str:" << reply_str.length() << "\n";
     qDebug() << "BCGetSomebodyPostActivitiesHandle json_str:" << reply_str << "\n";
     nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());

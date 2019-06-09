@@ -109,4 +109,10 @@ struct UploadFile
     QString filepath;
 };
 
+struct UpLoadInterest
+{
+    QString userId;
+    QString followId;
+};
+
 #endif // BKCOMMONHTTPDATA_H
