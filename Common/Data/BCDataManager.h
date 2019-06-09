@@ -62,6 +62,9 @@ public:
     /// \brief 设置关注列表信息入参
     void setUpLoadMineFocus(QString userid);
     UpLoadMineFocus getUpLoadMineFocus() const;
+    /// \brief 设置上传文件路径
+    UploadFile getUploadFile() const;
+    void setUploadFile(QString filepath);
 
     void setUpLoadSearch();
     UpLoadSearch getUpLoadSearch() const;
@@ -79,15 +82,19 @@ public:
     /// \brief 私信消息列表
     QMap<QString, message_info> getBCMessageListMap(QString sessionId) const;
     QMap<QString, message_info> getBCMessageListMap() const;
+    message_info getBCMessageInfoWithId(QString msgId);
     void setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap);
     /// \brief 帖子主页帖子列表信息
     QMap<QString, article_info> getBCPostingListMap() const;
+    /// \brief 帖子详情信息
+    article_info getPostingInfoWithId(QString postId);
     void setBCArticlesListMap(const QMap<QString, article_info> &bCArticlesListMap);
     /// \brief 活动主页活动列表信息
     QMap<QString, action_info> getBCActivitiesListMap() const;
+    action_info getActionInfoWithId(QString actionId);
     void setBCActivitiesListMap(const QMap<QString, action_info> &bCActivitiesListMap);
     /// \brief 回复信息列表
-    QMap<QString, QMap<QString, message_info> > getBCCommentListMap() const;
+    QMap<QString, message_info>getBCCommentListMap(QString postId) const;
     void setBCCommentListMap(const QMap<QString, QMap<QString, message_info> > &bCCommentListMap);
     /// \brief 文件信息列表
     QMap<QString, file_base_info> getBCFileListMap() const;
@@ -118,6 +125,16 @@ public:
     QString getErrorMsg() const;
     void setErrorMsg(const QString &errorMsg);
 
+    void Lock();
+    void UnLock();
+    bool isLock();
+
+    QString getBCCityNameWithId(QString cId) const;
+    void setBCCityIdToName(const QMap<QString, QString> &bCCityIdToName);
+
+    UpLoadChangeMessageStatus getUploadChangeMessageStatus() const;
+    void setUploadChangeMessageStatus(const QString &sessionId,const QString& senderId,const int messageType);
+
 private:
     explicit BCDataManager(QObject *parent = nullptr);
     static BCDataManager *sDataManager;
@@ -138,9 +155,12 @@ private:
     UpLoadMineFocus mUpLoadMineFocus;
     UpLoadSearch mUpLoadSearch;
     UpLoadRegiest mUpLoadRegiest;
+    UploadFile mUploadFile;
+    UpLoadChangeMessageStatus mUploadChangeMessageStatus;
 
     QMap<QString, QMap<QString,QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;
+    QMap<QString, QString> mBCCityIdToName;
     QMap<QString, QMap<QString, message_info>> mBCMessageListMap;
     QMap<QString, article_info> mBCArticlesListMap;
     QMap<QString, action_info> mBCActivitiesListMap;
@@ -159,6 +179,7 @@ private:
     user_info mCurrentLoginUserInfo;
 
     QString mErrorMsg;
+    bool isLocked;
 };
 
 #endif // BCDATAMANAGER_H

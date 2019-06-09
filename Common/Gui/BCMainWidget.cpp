@@ -2,6 +2,7 @@
 #include <QPainter>
 #include "BCMessageEnumData.h"
 #include "BCMineEnumData.h"
+#include "BCDataManager.h"
 #include "BCMessageManager.h"
 
 BCMainWidget::BCMainWidget(QWidget *parent)
@@ -17,10 +18,13 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
     switch(pageEnum)
     {
     case Page::Postings:
-        emit getPageValuesSignal(pageEnum);
-        mStackWidget->setCurrentWidget(mPostingWidget);
-        mNavigationBar->setSelectItem(NavigationBar::Postings);
-        break;
+        {
+            BCDataManager::instance().setUpLoadPostings(1,0,20);
+            emit getPageValuesSignal(pageEnum);
+            mStackWidget->setCurrentWidget(mPostingWidget);
+            mNavigationBar->setSelectItem(NavigationBar::Postings);
+            break;
+        }
     case Page::PostDetail:
         mStackWidget->setCurrentWidget(mPostingDetailWidget);
         mPostingDetailWidget->initData();
@@ -31,12 +35,25 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mStackWidget->setCurrentWidget(mPublishPostWidget);
         break;
     case Page::Activity:
-        mStackWidget->setCurrentWidget(mActivityWidget);
-        mNavigationBar->setSelectItem(NavigationBar::Activity);
-        break;
+        {
+            auto user = BCDataManager::instance().getCurrentLoginUserInfo();
+            QString begin = QString::number(QDateTime::currentDateTime().toTime_t() - 24 * 3600 * 3);
+            QString end = QString::number(QDateTime::currentDateTime().toTime_t() + 24 * 3600 * 3);
+            QString city = QString().fromStdString(user.getCity());
+            city = "110000";
+            BCDataManager::instance().setUpLoadActivity(begin,end,city,0,20);
+            emit getPageValuesSignal(pageEnum);
+            mStackWidget->setCurrentWidget(mActivityWidget);
+            mNavigationBar->setSelectItem(NavigationBar::Activity);
+            break;
+        }
     case Page::ActivityDetail:
-        mStackWidget->setCurrentWidget(mActivityDetailWidget);
-        break;
+        {
+            mStackWidget->setCurrentWidget(mActivityDetailWidget);
+            auto paramer = BCDataManager::instance().getUpLoadActivityDetail();
+            mActivityDetailWidget->initData(paramer.actionid);
+            break;
+        }
     case Page::PublishActivity:
         mStackWidget->setCurrentWidget(mPublishActivityWidget);
         break;
@@ -46,9 +63,12 @@ void BCMainWidget::showPage(Page::BCPageEnum pageEnum)
         mMessageWidget->showPage(MessagePage::ChatList);
         break;
     case Page::Chat:
-        mStackWidget->setCurrentWidget(mMessageChatWidget);
-        mMessageChatWidget->initData();
-        break;
+        {
+            mStackWidget->setCurrentWidget(mMessageChatWidget);
+            auto paramer = BCDataManager::instance().getUpLoadChat();
+            mMessageChatWidget->initData();
+            break;
+        }
     case Page::PersonalInformation:
         mStackWidget->setCurrentWidget(mMineWidget);
         mNavigationBar->setSelectItem(NavigationBar::PersonalInformation);

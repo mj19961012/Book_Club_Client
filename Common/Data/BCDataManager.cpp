@@ -1,7 +1,7 @@
 ﻿#include "BCDataManager.h"
 #include <QStandardPaths>
 #include <QDir>
-
+#include <QDebug>
 BCDataManager *BCDataManager::sDataManager = nullptr;
 
 BCDataManager &BCDataManager::instance()
@@ -36,7 +36,7 @@ const QString &BCDataManager::getAppDataPath()
 void BCDataManager::setUpLoadPostings(int type)
 {
     mUpLoadPostings.type = type;
-    mUpLoadPostings.pagenum = -1;
+    mUpLoadPostings.pagenum = 0;
     mUpLoadPostings.pagesize = 20;
 }
 
@@ -179,6 +179,33 @@ UpLoadPublishPost BCDataManager::getUpLoadPublishPost() const
     return mUpLoadPublishPost;
 }
 
+void BCDataManager::setUpLoadActivity(QString begintime, QString endtime, QString selectcity)
+{
+    mUpLoadActivity.begintime = begintime;
+    mUpLoadActivity.endtime = endtime;
+    mUpLoadActivity.selectcity = selectcity;
+    mUpLoadActivity.pagesize = 20;
+    mUpLoadActivity.pagenum = 0;
+}
+
+void BCDataManager::setUpLoadActivity(QString begintime, QString endtime, QString selectcity, int pagenum)
+{
+    mUpLoadActivity.begintime = begintime;
+    mUpLoadActivity.endtime = endtime;
+    mUpLoadActivity.selectcity = selectcity;
+    mUpLoadActivity.pagesize = 20;
+    mUpLoadActivity.pagenum = pagenum;
+}
+
+void BCDataManager::setUpLoadActivity(QString begintime, QString endtime, QString selectcity, int pagenum, int pagesize)
+{
+    mUpLoadActivity.begintime = begintime;
+    mUpLoadActivity.endtime = endtime;
+    mUpLoadActivity.selectcity = selectcity;
+    mUpLoadActivity.pagesize = pagesize;
+    mUpLoadActivity.pagenum = pagenum;
+}
+
 UpLoadActivity BCDataManager::getUpLoadActivity() const
 {
     return  mUpLoadActivity;
@@ -221,8 +248,36 @@ UpLoadSearch BCDataManager::getUpLoadSearch() const
 
 BCDataManager::BCDataManager(QObject *parent)
     :QObject (parent)
+    ,isLocked(false)
 {
     mAppDataPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
+
+UpLoadChangeMessageStatus BCDataManager::getUploadChangeMessageStatus() const
+{
+    return mUploadChangeMessageStatus;
+}
+
+void BCDataManager::setUploadChangeMessageStatus(const QString &sessionId, const QString &senderId, const int messageType)
+{
+    mUploadChangeMessageStatus.sessionId = sessionId;
+    mUploadChangeMessageStatus.senderId = senderId;
+    mUploadChangeMessageStatus.messageType = messageType;
+}
+
+void BCDataManager::setBCCityIdToName(const QMap<QString, QString> &bCCityIdToName)
+{
+    mBCCityIdToName = bCCityIdToName;
+}
+
+UploadFile BCDataManager::getUploadFile() const
+{
+    return mUploadFile;
+}
+
+void BCDataManager::setUploadFile(QString filepath)
+{
+    mUploadFile.filepath = filepath;
 }
 
 QString BCDataManager::getErrorMsg() const
@@ -233,6 +288,26 @@ QString BCDataManager::getErrorMsg() const
 void BCDataManager::setErrorMsg(const QString &errorMsg)
 {
     mErrorMsg = errorMsg;
+}
+
+void BCDataManager::Lock()
+{
+    isLocked = true;
+}
+
+void BCDataManager::UnLock()
+{
+    isLocked = false;
+}
+
+bool BCDataManager::isLock()
+{
+    return isLocked;
+}
+
+QString BCDataManager::getBCCityNameWithId(QString cId) const
+{
+    return mBCCityIdToName[cId];
 }
 
 void BCDataManager::setCurrentLoginUserInfo(const user_info &currentLoginUserInfo)
@@ -330,14 +405,29 @@ QMap<QString, action_info> BCDataManager::getBCActivitiesListMap() const
     return mBCActivitiesListMap;
 }
 
+action_info BCDataManager::getActionInfoWithId(QString actionId)
+{
+    return mBCActivitiesListMap[actionId];
+}
+
 void BCDataManager::setBCActivitiesListMap(const QMap<QString, action_info> &bCActivitiesListMap)
 {
     mBCActivitiesListMap = bCActivitiesListMap;
 }
 
+QMap<QString, message_info> BCDataManager::getBCCommentListMap(QString postId) const
+{
+    return mBCCommentListMap[postId];
+}
+
 QMap<QString, article_info> BCDataManager::getBCPostingListMap() const
 {
     return mBCArticlesListMap;
+}
+
+article_info BCDataManager::getPostingInfoWithId(QString postId)
+{
+    return mBCArticlesListMap[postId];
 }
 
 void BCDataManager::setBCArticlesListMap(const QMap<QString, article_info> &bCArticlesListMap)
@@ -363,11 +453,35 @@ QMap<QString, message_info> BCDataManager::getBCMessageListMap() const
     return temp_list;
 }
 
+message_info BCDataManager::getBCMessageInfoWithId(QString msgId)
+{
+    QMap<QString, message_info> temp_list;
+    for(auto &messages : mBCMessageListMap)
+    {
+        for(auto &message : messages)
+        {
+            temp_list[message.getmessageId().c_str()] = message;
+        }
+    }
+    return temp_list[msgId];
+}
+
 void BCDataManager::setBCMessageListMap(const QMap<QString, message_info> &bCMessageListMap)
 {
     for(auto &message : bCMessageListMap)
     {
-        mBCMessageListMap[QString().fromStdString(message.getsessionId())][QString().fromStdString(message.getmessageId())] = message;
+        qDebug() << "message.getsenderId():" << message.getsenderId().c_str() << "\n";
+        qDebug() << "message.getsessionId():" << message.getsessionId().c_str() << "\n";
+        qDebug() << "mCurrentLoginUserInfo.getuserId():" << mCurrentLoginUserInfo.getuserId().c_str() << "\n";
+        if(message.getsenderId() == mCurrentLoginUserInfo.getuserId())
+        {
+            qDebug() << "add mine message" << "\n";
+            mBCMessageListMap[QString().fromStdString(message.getsenderId())][QString().fromStdString(message.getmessageId())] = message;
+        }
+        else
+        {
+            mBCMessageListMap[QString().fromStdString(message.getsessionId())][QString().fromStdString(message.getmessageId())] = message;
+        }
     }
 }
 

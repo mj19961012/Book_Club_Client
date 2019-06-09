@@ -1,21 +1,29 @@
 ﻿#include "BCPostingDetailItemWidget.h"
 #include <QPainter>
 #include <QScrollBar>
+#include <QDateTime>
+#include <QDebug>
+#include "BCDataManager.h"
+#include "BCMessageManager.h"
 
 BCPostingDetailItemWidget::BCPostingDetailItemWidget(QWidget *parent)
     :QWidget(parent)
 {
     init();
+    initConnect();
 }
 
-void BCPostingDetailItemWidget::initData(const QString &text)
+void BCPostingDetailItemWidget::initData(const QString &id)
 {
-    setName(QStringLiteral("人在塔在人在塔在人在塔在人在塔在人在塔在"));
-    setAuthorHeadImage(QStringLiteral(":/res/common/main_logo.png"));
-    setAuthorName(QStringLiteral("RoadTeeth"));
-    setReadCount(QStringLiteral("阅读数：65535"));
-    setDateTime(QStringLiteral("2019-05-20 15:20:00"));
-    setContent(text + text + text + text + text);
+    mPostId = id;
+    auto post = BCDataManager::instance().getPostingInfoWithId(id);
+    auto user = BCDataManager::instance().getPersonalInformationWithId(post.getauthorId().c_str());
+    setName(post.getarticleTitle().c_str());
+    setAuthorHeadImage(user.getheadImage().c_str());
+    setAuthorName(user.getnickName().c_str());
+    setReadCount(QString::number(post.getpageView()));
+    setDateTime(QDateTime::fromTime_t(QString::fromStdString(post.getreleaseTime()).toUInt()).toString("yyyy-MM-dd hh:mm:ss"));
+    setContent(post.getarticleContent().c_str());
     setComment(QStringLiteral("（已有") + QString::number(65535) + QStringLiteral("条评论）"));
 
     initStyle();
@@ -116,6 +124,22 @@ void BCPostingDetailItemWidget::initStyle()
 
     mCommentLabel->setStyle("transparent","#333333",Qt::AlignLeft | Qt::AlignVCenter);
     mCommentLabel->setFontStyle(15,25);
+}
+
+void BCPostingDetailItemWidget::initConnect()
+{
+    connect(this,&BCPostingDetailItemWidget::doReleaseComment,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mPublishCommentWidget,&BCInputWidget::onSubmitButtonClicked,this,[this](){
+        auto post = BCDataManager::instance().getPostingInfoWithId(mPostId);
+        auto user = BCDataManager::instance().getCurrentLoginUserInfo();
+
+        BCDataManager::instance().setUpLoadChat(mPublishCommentWidget->getInputContent(),QString().fromStdString(user.getuserId()),QString().fromStdString(post.getauthorId()),QString().fromStdString(post.getarticleId()),0);
+        emit doReleaseComment(Page::BCPageEnum::Chat);
+        qDebug() << "mPublishCommentWidget::onSubmitButtonClicked" << mPublishCommentWidget->getInputContent() << "\n";
+        mPublishCommentWidget->clearInputContent();
+        BCDataManager::instance().setUpLoadPostDetail(QString().fromStdString(post.getarticleId()));
+        emit doReleaseComment(Page::BCPageEnum::PostDetail);
+    });
 }
 
 void BCPostingDetailItemWidget::initGeometry()

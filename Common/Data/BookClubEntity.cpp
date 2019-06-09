@@ -95,6 +95,10 @@ void from_json(const nlohmann::json &j,article_info & article)
     {
         article.article_id = j["article_id"].get<std::string>();
     }
+    if(j.find("author_id") != j.end())
+    {
+        article.author_id = j["author_id"].get<std::string>();
+    }
     if(j.find("article_title") != j.end())
     {
         article.article_title = j["article_title"].get<std::string>();
@@ -150,7 +154,7 @@ void from_json(const nlohmann::json &j,action_info & action)
     {
         action.id = j["id"].get<int>();
     }
-    if(j.find("article_id") != j.end())
+    if(j.find("action_id") != j.end())
     {
         action.action_id = j["action_id"].get<std::string>();
     }

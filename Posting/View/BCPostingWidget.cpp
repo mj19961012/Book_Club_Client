@@ -6,6 +6,7 @@
 #include "BCCommonEnumData.h"
 #include "../Common/Gui/BCToastTips.h"
 #include "BCDataManager.h"
+#include "BCMessageManager.h"
 
 
 BCPostingWidget::BCPostingWidget(QWidget *parent)
@@ -17,6 +18,36 @@ BCPostingWidget::BCPostingWidget(QWidget *parent)
     setButtonText();
 
     initData();
+}
+
+void BCPostingWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    qDebug() << "BCPostingWidget::receiveOperationResult" << "\n";
+    switch (pageEnum)
+    {
+        case Page::Postings:
+        {
+            if(!isSuccess)
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+                return;
+            }
+            mPostingListWidget->addListItem(ListItem::Posting);
+            break;
+        }
+        case Page::PostDetail:
+        {
+            if(!isSuccess)
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+                return;
+            }
+            BCMainWindow::instance()->showPage(Page::PostDetail);
+            break;
+        }
+    }
 }
 
 void BCPostingWidget::initData()
@@ -54,6 +85,10 @@ void BCPostingWidget::slotSubjectBtnClicked()
         {
             iter.value()->setColorStyle("transparent","transparent","transparent","transparent",
                                         "rgb(247,187,100)",1,"rgb(247,187,100)",20);
+//            auto parametes = BCDataManager::instance().getUpLoadPostings();
+//            parametes.type = iter.key();
+            BCDataManager::instance().setUpLoadPostings(iter.key());
+            emit getPostingList(Page::Postings);
         }
         else
         {
@@ -108,6 +143,9 @@ void BCPostingWidget::initConnect()
     connect(mAddPostingsButton,&BCPolymorphicButton::clicked,this,[](){
         BCMainWindow::instance()->showPage(Page::PublishPost);
     });
+    connect(this,&BCPostingWidget::getPostingList,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mPostingListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(BCMessageManager::getInstance(),&BCMessageManager::sendOperationResultSignal,this,&BCPostingWidget::receiveOperationResult);
 }
 
 void BCPostingWidget::setButtonText()

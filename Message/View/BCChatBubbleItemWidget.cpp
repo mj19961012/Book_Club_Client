@@ -6,14 +6,12 @@ BCChatBubbleItemWidget::BCChatBubbleItemWidget(QWidget *parent)
     init();
 }
 
-void BCChatBubbleItemWidget::initData(const MessagePage::BCMessageBubbleEnum &isMeEnum)
+void BCChatBubbleItemWidget::initData(const MessagePage::BCMessageBubbleEnum &isMeEnum, const QString &headImg, const QString &msg)
 {
-    setFriendImageView("http://192.168.1.3:8123/./static/1558976068.jpeg");
-    setMyImageView("http://192.168.1.3:8123/./static/1558976068.jpeg");
-    setMessage(QStringLiteral("啦啦啦"));
-
+    setMessage(msg);
     if(MessagePage::Friend == isMeEnum)
     {
+        setFriendImageView(headImg);
         if(mMessageWidget->isVisible())
             mMainHLayout->removeWidget(mMessageWidget);
         if(mMyImageWidget->isVisible())
@@ -28,6 +26,7 @@ void BCChatBubbleItemWidget::initData(const MessagePage::BCMessageBubbleEnum &is
     }
     else if (MessagePage::Mine == isMeEnum)
     {
+        setMyImageView(headImg);
         if(mMessageWidget->isVisible())
             mMainHLayout->removeWidget(mMessageWidget);
         if(mFriendImageWidget->isVisible())

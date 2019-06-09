@@ -27,6 +27,7 @@ public slots:
 private:
     QMap<QString, QMap<QString, QString>> mBCChildCityInfoMap;
     QMap<QString, QString> mBCParentCityInfoMap;
+    QMap<QString, QString> mBCCityIdToName;
 	QMap<QString, message_info> mBCMessageListMap;
 	QMap<QString, article_info> mBCArticlesListMap;
 	QMap<QString, action_info> mBCActivitiesListMap;
@@ -52,7 +53,7 @@ private:
     bool BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum = -1, int pagesize = 20);
     bool BCGetDetailsOfTheAction(QString actionid);
     bool BCSendMessageHandle(QString messgae_body, QString sender_id, QString accepter_id, QString session_id, int message_type);
-    bool BCChangeMessageStatusHandle(QString sendId,QString accepterId);
+    bool BCChangeMessageStatusHandle(QString sendId,QString sessionId,int messageType);
     bool BCSystemInit();
     bool BCGetSomebodyPostArticlesHandle(QString user_id, int pagenum = -1, int pagesize = 20);
     bool BCGetSomebodyPostActivitiesHandle(QString user_id, int pagenum = -1, int pagesize = 20);

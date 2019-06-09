@@ -13,6 +13,10 @@ class BCPostingWidget : public QWidget
 public:
     explicit BCPostingWidget(QWidget *parent = nullptr);
     void initData();
+signals:
+    void getPostingList(Page::BCPageEnum);
+public slots:
+    void receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum);
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);

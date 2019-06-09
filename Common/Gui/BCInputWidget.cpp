@@ -9,6 +9,16 @@ BCInputWidget::BCInputWidget(QWidget *parent)
     initConnect();
 }
 
+QString BCInputWidget::getInputContent()
+{
+    return mContentTextEdit->toPlainText();
+}
+
+void BCInputWidget::clearInputContent()
+{
+    mContentTextEdit->setText("");
+}
+
 void BCInputWidget::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
@@ -91,7 +101,9 @@ void BCInputWidget::initStyle()
 
 void BCInputWidget::initConnect()
 {
-
+    connect(mSubmitButton,&BCPolymorphicButton::clicked,this,[this](){
+        emit onSubmitButtonClicked();
+     });
 }
 
 void BCInputWidget::createButtonWidget()

@@ -10,7 +10,7 @@ class BCPostingCommentItemWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCPostingCommentItemWidget(QWidget *parent = nullptr);
-    void initData();
+    void initData(const QString& headImage,const QString& name,const QString &content,const QString &date);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

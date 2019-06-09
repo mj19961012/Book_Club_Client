@@ -1,6 +1,9 @@
 ﻿#include "BCActivityWidget.h"
+#include <QDateTime>
 #include "BCMainWindow.h"
-#include "BCCommonEnumData.h"
+#include "BCMessageManager.h"
+#include "BCDataManager.h"
+#include "BCToastTips.h"
 
 BCActivityWidget::BCActivityWidget(QWidget *parent)
     :QWidget (parent)
@@ -14,7 +17,49 @@ BCActivityWidget::BCActivityWidget(QWidget *parent)
 
 void BCActivityWidget::initData()
 {
-    mActivityListWidget->addListItem(ListItem::Activity);
+//    mActivityListWidget->addListItem(ListItem::Activity);
+    auto user = BCDataManager::instance().getCurrentLoginUserInfo();
+    QString begin = QString::number(QDateTime::currentDateTime().toTime_t() - 24 * 3600 * 3);
+    QString end = QString::number(QDateTime::currentDateTime().toTime_t() + 24 * 3600 * 3);
+    QString city = QString().fromStdString(user.getCity());
+    city = "110000";
+    mPageNum = 0;
+    mPageSize = 20;
+    BCDataManager::instance().setUpLoadActivity(begin,end,city,mPageNum,mPageSize);
+
+    emit getActivitiesList(Page::BCPageEnum::Activity);
+}
+
+void BCActivityWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    qDebug() << "BCActivityWidget::receiveOperationResult" << "\n";
+    switch (pageEnum)
+    {
+        case Page::Activity:
+        {
+            if(isSuccess)
+            {
+                mActivityListWidget->addListItem(ListItem::Activity);
+            }
+            else
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+            }
+            break;
+        }
+        case Page::ActivityDetail:
+        {
+            if(!isSuccess)
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+                return;
+            }
+            BCMainWindow::instance()->showPage(Page::ActivityDetail);
+            break;
+        }
+    }
 }
 
 void BCActivityWidget::paintEvent(QPaintEvent *event)
@@ -53,4 +98,7 @@ void BCActivityWidget::initConnect()
     connect(mAddActivityButton,&BCPolymorphicButton::clicked,this,[](){
         BCMainWindow::instance()->showPage(Page::PublishActivity);
     });
+    connect(this,&BCActivityWidget::getActivitiesList,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mActivityListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(BCMessageManager::getInstance(),&BCMessageManager::sendOperationResultSignal,this,&BCActivityWidget::receiveOperationResult);
 }

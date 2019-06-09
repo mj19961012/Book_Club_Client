@@ -99,7 +99,14 @@ struct UpLoadRegiest
 
 struct UpLoadChangeMessageStatus
 {
-    QString messageId;
+    QString sessionId;
+    QString senderId;
+    int messageType;
+};
+
+struct UploadFile
+{
+    QString filepath;
 };
 
 #endif // BKCOMMONHTTPDATA_H

@@ -2,10 +2,10 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <QTDIR>D:\include\QT\Qt5.11.3\5.11.3\msvc2015</QTDIR>
-    <LocalDebuggerEnvironment>PATH=D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(PATH)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(PATH)</LocalDebuggerEnvironment>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <QTDIR>D:\include\QT\Qt5.11.3\5.11.3\msvc2015</QTDIR>
-    <LocalDebuggerEnvironment>PATH=D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(PATH)</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>PATH=D:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(QTDIR)\bin%3bD:\INCLUDE\QT\QT5.11.3\5.11.3\MSVC2015\bin%3b$(PATH)</LocalDebuggerEnvironment>
   </PropertyGroup>
 </Project>

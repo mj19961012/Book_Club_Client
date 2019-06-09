@@ -12,7 +12,7 @@ class BCChatBubbleItemWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCChatBubbleItemWidget(QWidget *parent = nullptr);
-    void initData(const MessagePage::BCMessageBubbleEnum& isMeEnum);
+    void initData(const MessagePage::BCMessageBubbleEnum& isMeEnum,const QString& headImg,const QString &msg);
     int getMessageHeight() const;
 
 protected:

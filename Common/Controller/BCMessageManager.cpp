@@ -43,17 +43,19 @@ BCMessageManager * BCMessageManager::getInstance()
 void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
 {
     bool is_success;
+    qDebug() << "getPageVlaues_with_" << static_cast<int>(pageEnum) << "\n";
     switch(pageEnum)
     {
     case Page::Postings:
         {
             auto parametes = BCDataManager::instance().getUpLoadPostings();
             is_success = BCGetArticlesListHandle(parametes.type,parametes.pagenum,parametes.pagesize);
-            if(is_success)
+            BCDataManager::instance().setBCArticlesListMap(mBCArticlesListMap);
+            if(!is_success)
             {
-                BCDataManager::instance().setBCArticlesListMap(mBCArticlesListMap);
-                // TODO emit xxx(is_success,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("暂无数据可更新!!"));
             }
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::PostDetail:
@@ -67,10 +69,10 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             else
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("获取帖子详情失败!!"));
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::PostMaster:
@@ -115,10 +117,11 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             is_success = BCReleaseArticleHandle(parametes.title,parametes.content,parametes.type);
             if(!is_success)
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("发布失败，请稍后重试"));
+                sendOperationResultSignal(is_success,pageEnum);
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::Activity:
@@ -131,10 +134,10 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             else
             {
-                //TODO emit xxx(false,pageEnum);
+                emit sendOperationResultSignal(false,pageEnum);
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(true,pageEnum);
             break;
         }
     case Page::ActivityDetail:
@@ -148,10 +151,10 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             else
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("获取活动详情失败!!"));
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::PublishActivity:
@@ -160,10 +163,10 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             is_success = BCReleaseActionHandle(parametes.title,parametes.content,parametes.city,parametes.begintime,parametes.endtime,parametes.first,parametes.second,parametes.third);
             if(!is_success)
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("发布活动失败"));
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(is_success,pageEnum);
             break;
         }
     case Page::Message:
@@ -176,10 +179,11 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             }
             else
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("暂无未读消息!!"));
+                emit sendOperationResultSignal(false,pageEnum);
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            emit sendOperationResultSignal(true,pageEnum);
             break;
         }
     case Page::Chat:
@@ -188,10 +192,13 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             is_success = BCSendMessageHandle(parametes.messgaebody,parametes.senderid,parametes.accepterid,parametes.sessionid,parametes.messagetype);
             if(!is_success)
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("发送失败!!"));
+                emit sendOperationResultSignal(false,pageEnum);
                 return;
             }
-            //TODO emit xxx(true,pageEnum);
+            BCDataManager::instance().setBCMessageListMap(mBCMessageListMap);
+            qDebug() << "BCMessageListMap_size:" << mBCMessageListMap.count() << "\n";
+            emit sendOperationResultSignal(true,pageEnum);
             break;
         }
     case Page::PersonalInformation:
@@ -250,11 +257,14 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
             is_success = BCSystemInit();
             if(is_success)
             {
-                qDebug() << "Init Success" << "\n";
+                BCDataManager::instance().setBCCityIdToName(mBCCityIdToName);
+                BCDataManager::instance().setBCChildCityInfoMap(mBCChildCityInfoMap);
+                BCDataManager::instance().setBCParentCityInfoMap(mBCParentCityInfoMap);
             }
             else
             {
-                qDebug() << "Init Success" << "\n";
+                BCDataManager::instance().setErrorMsg(QStringLiteral("获取数据字典失败"));
+                return;
             }
 
             //TODO emit xxx(true,pageEnum);
@@ -297,28 +307,36 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
         }
     case Page::ChangeMessageStatus:
         {
-            auto parametes = BCDataManager::instance().getUpLoadChat();
-            is_success = BCGetMessageListHandle(parametes.accepterid);
-            if(is_success)
+            auto parametes = BCDataManager::instance().getUploadChangeMessageStatus();
+            is_success = BCChangeMessageStatusHandle(parametes.senderId,parametes.sessionId,parametes.messageType);
+//            if(!is_success)
+//            {
+//                BCDataManager::instance().setErrorMsg(QStringLiteral("暂无未读消息!!"));
+//                emit sendOperationResultSignal(false,Page::Message);
+//                return;
+//            }
+            is_success = BCGetMessageListHandle(parametes.sessionId);
+
+            BCDataManager::instance().setBCMessageListMap(mBCMessageListMap);
+            if(!is_success)
             {
-                BCDataManager::instance().setBCMessageListMap(mBCMessageListMap);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("暂无未读消息!!"));
             }
-            else
+            emit sendOperationResultSignal(is_success,Page::Message);
+            break;
+        }
+    case Page::UploadFile:
+        {
+            auto parametes = BCDataManager::instance().getUploadFile();
+            QString filemd5 = BCUpLoadSimpleFile(parametes.filepath);
+            if(filemd5.size() <= 0)
             {
-                //TODO emit xxx(false,pageEnum);
+                BCDataManager::instance().setErrorMsg(QStringLiteral("文件上传失败，请稍后重试!"));
+                emit sendOperationResultSignal(false,Page::UploadFile);
                 return;
             }
-            is_success = BCChangeMessageStatusHandle(parametes.senderid,parametes.accepterid);
-            if(is_success)
-            {
-                qDebug() << "ChangeMessageStatus Success" << "\n";
-            }
-            else
-            {
-                qDebug() << "ChangeMessageStatus Success" << "\n";
-            }
-
-            //TODO emit xxx(true,pageEnum);
+            BCDataManager::instance().setErrorMsg(filemd5);
+            emit sendOperationResultSignal(true,Page::UploadFile);
             break;
         }
     default:
@@ -330,17 +348,20 @@ void BCMessageManager::getPageVlaues(Page::BCPageEnum pageEnum)
 
 void BCMessageManager::catchPersonalInformationSlot(std::string userId)
 {
+    qDebug() << "BCMessageManager::catchPersonalInformationSlot" << "\n";
     if(BCDataManager::instance().checkUserInformaitonCatched(QString().fromStdString(userId)))
     {
         return;
     }
-    std::thread thread(
-                [&userId,this]()
-                {
-                    this->BCGetPersonalInformationHandle(QString().fromStdString(userId));
-                }
-                );
-    thread.detach();
+    qDebug() << "BCGetPersonalInformationHandle:"<< userId.c_str() << "\n";
+    this->BCGetPersonalInformationHandle(QString().fromStdString(userId));
+//    std::thread thread(
+//                [&userId,this]()
+//                {
+//                    this->BCGetPersonalInformationHandle(QString().fromStdString(userId));
+//                }
+//                );
+//    thread.detach();
 }
 
 bool BCMessageManager::BCLoginHandle(QString username,QString password)
@@ -403,7 +424,7 @@ bool BCMessageManager::BCGetMessageListHandle(QString accepterId)
 			auto temp_value = (*iter).get<message_info>();
 			qDebug() << "mBCMessageListMap-temp_value-message_id:" << temp_value.message_id.c_str() << "\n";
 			mBCMessageListMap[temp_value.message_id.c_str()] = temp_value;
-            emit catchPersonalInformationSlot(temp_value.sender_id);
+            emit catchPersonalInformationSignals(temp_value.sender_id);
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
 		qDebug() << "mBCMessageListMap-size:" << mBCMessageListMap.count() << "\n";
@@ -438,9 +459,9 @@ bool BCMessageManager::BCGetArticlesListHandle(int type, int pagenum /*= -1*/,in
 		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
 		{
 			auto temp_value = (*iter).get<article_info>();
-			qDebug() << "mBCArticlesListMap-temp_value-article_id:" << temp_value.article_id.c_str() << "\n";
+            qDebug() << "mBCArticlesListMap-temp_value-author_id:" << temp_value.author_id.c_str() << "\n";
 			mBCArticlesListMap[temp_value.article_id.c_str()] = temp_value;
-            emit catchPersonalInformationSlot(temp_value.author_id);
+            emit catchPersonalInformationSignals(temp_value.author_id);
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
 		qDebug() << "mBCArticlesListMap-size:" << mBCArticlesListMap.count() << "\n";
@@ -507,20 +528,21 @@ bool BCMessageManager::BCGetDetailsOfTheArticle(QString articleid)
 
 bool BCMessageManager::BCGetActivitiesListHandle(QString begintime, QString endtime, QString selectcity, int pagenum, int pagesize)
 {
+    if (pagenum >= 0)
+    {
+        mMainActivitiesPageNum = pagenum;
+    }
+    else
+    {
+        pagenum = mMainActivitiesPageNum;
+    }
 	QString parametes = QString("page_num=%1&page_size=%2&action_city=%3&begin_time=%4&end_time=%5").arg(pagenum).arg(pagesize).arg(selectcity).arg(begintime).arg(endtime);
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_GET_ACTIVITIES_LIST), parametes);
 	qDebug() << "BCGetActivitiesListHandle json_str:" << reply_str.length() << "\n";
 	qDebug() << "BCGetActivitiesListHandle json_str:" << reply_str << "\n";
 	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
 	mBCActivitiesListMap.clear();
-	if (pagenum >= 0)
-	{
-        mMainActivitiesPageNum = pagenum;
-	}
-	else
-	{
-        pagenum = mMainActivitiesPageNum;
-	}
+
 	if (json_str["code"] == 200)
 	{
 		nlohmann::json json_list = json_str["list"];
@@ -528,12 +550,13 @@ bool BCMessageManager::BCGetActivitiesListHandle(QString begintime, QString endt
 		for (auto iter = json_list.begin(); iter != json_list.end(); ++iter)
 		{
 			auto temp_value = (*iter).get<action_info>();
+            qDebug() << "mBCActivitiesListMap-iter-dump:" << iter->dump().c_str() << "\n";
 			qDebug() << "mBCActivitiesListMap-temp_value-action_id:" << temp_value.action_id.c_str() << "\n";
 			mBCActivitiesListMap[temp_value.action_id.c_str()] = temp_value;
             emit catchPersonalInformationSignals(temp_value.author_id);
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
-		qDebug() << "mBCActivitiesListMap-size:" << mBCArticlesListMap.count() << "\n";
+        qDebug() << "mBCActivitiesListMap-size:" << mBCActivitiesListMap.count() << "\n";
 	}
 	else
 	{
@@ -592,20 +615,25 @@ bool BCMessageManager::BCSendMessageHandle(QString messgae_body, QString sender_
 	QString message_id = QUuid::createUuid().toString();
     auto send_time = QDateTime::currentDateTime().toTime_t();
 	QString parametes = QString("message_id=%1&messgae_body=%2&sender_id=%3&accepter_id=%4&session_id=%5&send_time=%6&message_type=%7").arg(message_id).arg(messgae_body).arg(sender_id).arg(accepter_id).arg(session_id).arg(send_time).arg(message_type);
-	qDebug() << "BCSendMessageHandle parametes:" << parametes << "\n";
-
+//	qDebug() << "BCSendMessageHandle parametes:" << parametes << "\n";
+    mBCMessageListMap.clear();
 	QString reply_str = BCHttpRequestHandle(GET_API(BC_API_SEND_MESSAGE), parametes);
-	nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
-
+    qDebug() << "BCSendMessageHandle reply_str:" << reply_str << "\n";
+    nlohmann::json json_str = nlohmann::json::parse(reply_str.toStdString());
+    if(json_str["code"] == 200)
+    {
+        auto message = json_str["message"].get<message_info>();
+        mBCMessageListMap[message.message_id.c_str()] = message;
+    }
 	qDebug() << "BCSendMessageHandle json_str:" << reply_str.length() << "\n";
 	qDebug() << "BCSendMessageHandle json_str[\"msg\"]:" << json_str["msg"].get<std::string>().c_str() << "\n";
 
     return json_str["code"] == 200;
 }
 
-bool BCMessageManager::BCChangeMessageStatusHandle(QString sendId, QString accepterId)
+bool BCMessageManager::BCChangeMessageStatusHandle(QString sendId, QString sessionId, int messageType)
 {
-    QString parametes = QString("sender_id=%1&accepter_id=%2").arg(sendId).arg(accepterId);
+    QString parametes = QString("sender_id=%1&session_id=%2&message_type=%3").arg(sendId).arg(sessionId).arg(messageType);
     QString reply_str = BCHttpRequestHandle(GET_API(BC_API_CHANGE_MESSAGE_STATUS), parametes);
     qDebug() << "BCChangeMessageStatusHandle parametes:" << parametes << "\n";
 
@@ -633,10 +661,13 @@ bool BCMessageManager::BCSystemInit()
         {
             //qDebug() << "parent:" << iter.key().c_str() << "\n";
             mBCParentCityInfoMap[iter.key().c_str()] = QString::fromStdString(iter.value()["name"].get<std::string>());
+            mBCCityIdToName[iter.key().c_str()] = QString::fromStdString(iter.value()["name"].get<std::string>());
             for(auto it = iter.value()["child"].begin(); it != iter.value()["child"].end(); ++it)
             {
                 //qDebug() << iter.key().c_str() << "--" << it.key().c_str() << it.value()["name"].get<std::string>().c_str() << "\n";
                 mBCChildCityInfoMap[iter.key().c_str()][it.key().c_str()] = QString::fromStdString(it.value()["name"].get<std::string>());
+                mBCCityIdToName[it.key().c_str()] = QString::fromStdString(it.value()["name"].get<std::string>());
+//                qDebug() << it.key().c_str() << "---" << it.value()["name"].get<std::string>().c_str() << "\n";
             }
         }
         qDebug() << "Dictionary Data parsing complete" << "\n";
@@ -766,7 +797,7 @@ bool BCMessageManager::BCGetInterestListWithSomeoneHandle(QString user_id)
 			auto temp_value = (*iter).get<interest_list>();
 			qDebug() << "mBCMessageListMap-temp_value-message_id:" << temp_value.interest_id.c_str() << "\n";
 			mBCInterestListMap[temp_value.interest_id.c_str()] = temp_value;
-            emit catchPersonalInformationSignals(temp_value.follower_id);
+//            emit catchPersonalInformationSignals(temp_value.follower_id);
 		}
 		qDebug() << "Dictionary Data parsing complete" << "\n";
 		qDebug() << "mBCInterestListMap-size:" << mBCInterestListMap.count() << "\n";
@@ -791,7 +822,13 @@ bool BCMessageManager::BCGetPersonalInformationHandle(QString user_id)
         auto user = json_str["user"].get<user_info>();
         QString head_image = QString("%1/%2").arg(BC_API_URL).arg(user.head_image.c_str());
         user.head_image = head_image.toStdString();
+        while (BCDataManager::instance().isLock())
+        {
+            QApplication::processEvents();
+        }
+        BCDataManager::instance().Lock();
         BCDataManager::instance().addPersonalInformationToList(user);
+        BCDataManager::instance().UnLock();
     }
     else
     {
@@ -805,7 +842,7 @@ QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter,
 {
 // 	QString url_str = GET_API(BC_API_INIT_CITY);
 
-	qDebug() << "BCHttpRequestHandle url_str:" << requrl << "\n";
+//	qDebug() << "BCHttpRequestHandle url_str:" << requrl << "\n";
 
 	QUrl url(requrl);
 	QNetworkAccessManager m_accessManager;
@@ -815,11 +852,11 @@ QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter,
 
 	QByteArray postData;
 	postData.append(parameter);
-	qDebug() << "BCHttpRequestHandle before request:" << "\n";
+//	qDebug() << "BCHttpRequestHandle before request:" << "\n";
 
 	QNetworkReply* reply = m_accessManager.post(request, postData);
 
-	qDebug() << "BCHttpRequestHandle after request:" << "\n";
+//	qDebug() << "BCHttpRequestHandle after request:" << "\n";
 
 	while (!reply->isFinished())
 	{
@@ -828,7 +865,7 @@ QString BCMessageManager::BCHttpRequestHandle(QString requrl, QString parameter,
 	}
 
 	QString reply_str = reply->readAll();
-
+//    qDebug() << "BCHttpRequestHandle return:" << reply_str << "\n";
 	return reply_str;
 }
 

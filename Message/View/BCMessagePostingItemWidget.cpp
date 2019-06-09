@@ -7,12 +7,12 @@ BCMessagePostingItemWidget::BCMessagePostingItemWidget(QWidget *parent)
     init();
 }
 
-void BCMessagePostingItemWidget::initData(const QString& title,const QString& date,const QString& content)
+void BCMessagePostingItemWidget::initData(const QString& title,const QString& date,const QString& content,const bool isRead)
 {
     setTitle(title);
     setDate(date);
     setContent(content);
-    setIsRead(false);
+    setIsRead(isRead);
 }
 
 void BCMessagePostingItemWidget::setIsRead(const bool &isRead)

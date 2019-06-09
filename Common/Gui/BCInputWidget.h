@@ -11,7 +11,10 @@ class BCInputWidget : public QWidget
     Q_OBJECT
 public:
     explicit BCInputWidget(QWidget *parent = nullptr);
-
+    QString getInputContent();
+    void clearInputContent();
+signals:
+    void onSubmitButtonClicked();
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);

@@ -37,7 +37,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Activity\View\BCActivityDetailWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Activity\View\BCActivityListItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Activity\View\BCActivityWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Message\View\BCChatBubbleItemWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Common\Data\BCDataManager.cpp">
@@ -53,6 +62,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Common\Gui\BCInputContentAndFileWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Gui\BCInputWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Gui\BCListWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Login\Controller\BCLoginController.cpp">
@@ -73,7 +88,34 @@
     <ClCompile Include="App\BCMainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Message\View\BCMessageChatItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Message\View\BCMessageChatWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Common\Controller\BCMessageManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Message\View\BCMessagePostingItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Message\View\BCMessageWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine\View\BCMineActivityItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine\View\BCMineInfoWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine\View\BCMineInterestItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine\View\BCMinePostingItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mine\View\BCMineUpdateInfoWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mine\View\BCMineWidget.cpp">
@@ -91,7 +133,16 @@
     <ClCompile Include="Common\Gui\BCPolymorphicLabel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Posting\View\BCPostingListWidget.cpp">
+    <ClCompile Include="Posting\View\BCPostingCommentItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Posting\View\BCPostingDetailItemWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Posting\View\BCPostingDetailWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Posting\View\BCPostingListItemWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Posting\View\BCPostingWidget.cpp">
@@ -120,7 +171,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="Activity\View\BCActivityDetailWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Activity\View\BCActivityListItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <QtMoc Include="Activity\View\BCActivityWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Message\View\BCChatBubbleItemWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <ClInclude Include="Common\Api\BCCommonApiDef.hpp">
@@ -147,6 +207,12 @@
     <QtMoc Include="Common\Gui\BCInputContentAndFileWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Common\Gui\BCInputWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Common\Gui\BCListWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="Login\Controller\BCLoginController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -168,13 +234,46 @@
     <QtMoc Include="App\BCMainWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <ClInclude Include="Common\Controller\BCMessageManager.h">
+    <QtMoc Include="Message\View\BCMessageChatItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Message\View\BCMessageChatWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="Message\Data\BCMessageEnumData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Message\Data\BCMessageHttpData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="Common\Controller\BCMessageManager.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Message\View\BCMessagePostingItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Message\View\BCMessageWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Mine\View\BCMineActivityItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="Mine\Data\BCMineEnumData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mine\Data\BCMineHttpData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <QtMoc Include="Mine\View\BCMineInfoWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Mine\View\BCMineInterestItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Mine\View\BCMinePostingItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <ClInclude Include="Mine\View\BCMineUpdateInfoWidget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <QtMoc Include="Mine\View\BCMineWidget.h">
@@ -192,12 +291,21 @@
     <QtMoc Include="Common\Gui\BCPolymorphicLabel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Posting\View\BCPostingCommentItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Posting\View\BCPostingDetailItemWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Posting\View\BCPostingDetailWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
     <ClInclude Include="Posting\Data\BCPostingEnumData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Posting\View\BCPostingListWidget.h">
+    <QtMoc Include="Posting\View\BCPostingListItemWidget.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
+    </QtMoc>
     <QtMoc Include="Posting\View\BCPostingWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -268,6 +376,42 @@
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
@@ -291,6 +435,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\Login\down.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\Mine\enter.png">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\common\exit.png">

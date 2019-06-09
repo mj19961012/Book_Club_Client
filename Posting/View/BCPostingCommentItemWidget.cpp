@@ -7,12 +7,12 @@ BCPostingCommentItemWidget::BCPostingCommentItemWidget(QWidget *parent)
     init();
 }
 
-void BCPostingCommentItemWidget::initData()
+void BCPostingCommentItemWidget::initData(const QString &headImage, const QString &name, const QString &content, const QString &date)
 {
-    setHeadImage(QStringLiteral(":/res/common/defaultHeadImage.png"));
-    setName(QStringLiteral("人在塔在人在塔在人在塔在人在塔在人在塔在"));
-    setDateTime(QStringLiteral("2019-05-20 15:20:00"));
-    setContent(QStringLiteral("人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在人在塔在"));
+    setHeadImage(headImage);
+    setName(name);
+    setDateTime(date);
+    setContent(content);
 
     initGeometry();
 }

@@ -1,12 +1,37 @@
 ﻿#include "BCMessageWidget.h"
 #include "BCCommonEnumData.h"
+#include "BCDataManager.h"
+#include "BCToastTips.h"
+#include "BCMessageManager.h"
 #include <QPainter>
+#include <QDebug>
 
 BCMessageWidget::BCMessageWidget(QWidget * parent)
     :QWidget (parent)
 {
     init();
     initConnect();
+}
+
+void BCMessageWidget::receiveOperationResult(bool isSuccess, Page::BCPageEnum pageEnum)
+{
+    qDebug() << "BCMessageWidget::receiveOperationResult" << "\n";
+    switch (pageEnum)
+    {
+        case Page::Message:
+        {
+            if(isSuccess)
+            {
+                showPage(MessagePage::ChatList);
+            }
+            else
+            {
+                QString errorMsg = BCDataManager::instance().getErrorMsg();
+                BCToastTips::Instance().setToastTip(errorMsg);
+            }
+            break;
+        }
+    }
 }
 
 void BCMessageWidget::showPage(MessagePage::BCMessagePageEnum page)
@@ -112,6 +137,9 @@ void BCMessageWidget::initConnect()
     connect(mChatListButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotMessageButtonClicked);
     connect(mPostingListButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotMessageButtonClicked);
     connect(mHasBeenReadButton,&BCPolymorphicButton::clicked,this,&BCMessageWidget::slotHasBeenReadButtonClicked);
+    connect(BCMessageManager::getInstance(),&BCMessageManager::sendOperationResultSignal,this,&BCMessageWidget::receiveOperationResult);
+    connect(mChatListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
+    connect(mPostingListWidget,&BCListWidget::getPageValues,BCMessageManager::getInstance(),&BCMessageManager::getPageVlaues);
 }
 
 void BCMessageWidget::addPage(MessagePage::BCMessagePageEnum page)
